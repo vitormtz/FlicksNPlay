@@ -8,24 +8,23 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class UsuarioController extends Adapter<UsuarioModel,Integer> {
+public class UsuarioController extends Adapter<UsuarioModel, Integer> {
+
     @Override
-    public void create( UsuarioModel usuario )
-    {
+    public void create(UsuarioModel usuario) {
     }
-    
+
     @Override
-    public UsuarioModel read( Integer id_usuario ) {
+    public UsuarioModel read(Integer id_usuario) {
         UsuarioModel usuario = null;
         DataBaseConnectionManager dbcm;
-        try
-        {
+        try {
             dbcm = ConectionController.getInstance().getDB();
-            
+
             String sql = "SELECT id_usuario, nome FROM usuarios WHERE id_usuario = ?";
-            
-            ResultSet rs = dbcm.runPreparedQuerySQL(sql, id_usuario );
-            
+
+            ResultSet rs = dbcm.runPreparedQuerySQL(sql, id_usuario);
+
             if (rs.isBeforeFirst()) // acho alguma coisa?
             {
                 rs.next();
@@ -38,36 +37,33 @@ public class UsuarioController extends Adapter<UsuarioModel,Integer> {
                 String cpf = rs.getString("cpf");
                 String dtNasc = rs.getString("dt_nasc");
                 String senha = rs.getString("senha");
-                
-                usuario = new UsuarioModel(id,cidade,nome,endereco,email,cpf,dtNasc,senha);
+                boolean nvAcess = rs.getBoolean("nivel_acesso");
+                String cargo = rs.getString("cargo");
+                usuario = new UsuarioModel(id, cidade, nome, endereco, email, cpf, dtNasc, senha, nvAcess, cargo);
             }
-        } 
-        catch (DataBaseException | SQLException ex)
-        {
+        } catch (DataBaseException | SQLException ex) {
             System.out.println("Algo de errado aconteceu");
         }
-        
+
         return usuario;
     }
-    
+
     @Override
     public ArrayList<UsuarioModel> readAll() {
         ArrayList<UsuarioModel> usuarios = new ArrayList();
-        
+
         DataBaseConnectionManager dbcm;
-        try
-        {
+        try {
             dbcm = ConectionController.getInstance().getDB();
-            
+
             String sql = "SELECT * FROM usuarios;";
-            
-            ResultSet rs = dbcm.runQuerySQL( sql );
-            
+
+            ResultSet rs = dbcm.runQuerySQL(sql);
+
             if (rs.isBeforeFirst()) // acho alguma coisa?
             {
                 rs.next();
-                while (!rs.isAfterLast())
-                {
+                while (!rs.isAfterLast()) {
                     int id = rs.getInt("id_usuario");
                     int cidade = rs.getInt("id_cidade");
                     String nome = rs.getString("nome");
@@ -76,23 +72,21 @@ public class UsuarioController extends Adapter<UsuarioModel,Integer> {
                     String cpf = rs.getString("cpf");
                     String dtNasc = rs.getString("dt_nasc");
                     String senha = rs.getString("senha");
-
-                    UsuarioModel usuario = new UsuarioModel(id,cidade,nome,endereco,email,cpf,dtNasc,senha);
+                    boolean nvAcess = rs.getBoolean("nivel_acesso");
+                    String cargo = rs.getString("cargo");
+                    UsuarioModel usuario = new UsuarioModel(id, cidade, nome, endereco, email, cpf, dtNasc, senha, nvAcess, cargo);
                     usuarios.add(usuario);
-                    
+
                     rs.next();
                 }
             }
 
-        } 
-        catch (DataBaseException | SQLException ex)
-        {
+        } catch (DataBaseException | SQLException ex) {
             System.out.println("Algo de errado aconteceu");
         }
-        
         return usuarios;
     }
-    
+
     @Override
     public void update(UsuarioModel usuario) {
     }

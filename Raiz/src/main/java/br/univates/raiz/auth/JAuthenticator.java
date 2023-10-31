@@ -52,9 +52,13 @@ public class JAuthenticator extends javax.swing.JDialog
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.setName("Login"); // NOI18N
 
+        campoPassword.setText("senha123");
+
         jLabel1.setText("Senha:");
 
         jLabel2.setText("Usuário:");
+
+        campoLogName.setText("João Silva");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

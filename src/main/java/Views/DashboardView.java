@@ -13,8 +13,22 @@ public class DashboardView extends javax.swing.JFrame {
     /**
      * Creates new form DashboardView
      */
-    public DashboardView() {
+    public DashboardView(boolean cargo) {
         initComponents();
+        setExtendedState(MAXIMIZED_BOTH);
+        if (!cargo) {
+            jMenuFilmesJogos.setVisible(false);
+            jMenuPagamentos.setVisible(false);
+            jMenuRelatorios.setVisible(false);
+            jMenuCadastro.setVisible(false);
+            jMenuAlugar.setVisible(true);
+        }else {
+            jMenuFilmesJogos.setVisible(true);
+            jMenuPagamentos.setVisible(true);
+            jMenuRelatorios.setVisible(true);
+            jMenuCadastro.setVisible(true);
+            jMenuAlugar.setVisible(false);
+        }
     }
 
     /**
@@ -33,8 +47,16 @@ public class DashboardView extends javax.swing.JFrame {
         jMenuItemFilmes = new javax.swing.JMenuItem();
         jMenuPagamentos = new javax.swing.JMenu();
         jMenuItemTiposPagamentos = new javax.swing.JMenuItem();
+        jMenuRelatorios = new javax.swing.JMenu();
+        jMenuItemTiposPagamentos2 = new javax.swing.JMenuItem();
+        jMenuCadastro = new javax.swing.JMenu();
+        jMenuItemTiposPagamentos3 = new javax.swing.JMenuItem();
+        jMenuAlugar = new javax.swing.JMenu();
+        jMenuItemTiposPagamentos1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setExtendedState(2222);
+        setResizable(false);
 
         jMenuFilmesJogos.setText("Filmes/Jogos");
 
@@ -66,6 +88,42 @@ public class DashboardView extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenuPagamentos);
 
+        jMenuRelatorios.setText("Relatórios");
+
+        jMenuItemTiposPagamentos2.setText("Tipos de Pagamentos");
+        jMenuItemTiposPagamentos2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemTiposPagamentos2ActionPerformed(evt);
+            }
+        });
+        jMenuRelatorios.add(jMenuItemTiposPagamentos2);
+
+        jMenuBar1.add(jMenuRelatorios);
+
+        jMenuCadastro.setText("Cadastro");
+
+        jMenuItemTiposPagamentos3.setText("Tipos de Pagamentos");
+        jMenuItemTiposPagamentos3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemTiposPagamentos3ActionPerformed(evt);
+            }
+        });
+        jMenuCadastro.add(jMenuItemTiposPagamentos3);
+
+        jMenuBar1.add(jMenuCadastro);
+
+        jMenuAlugar.setText("Alugar");
+
+        jMenuItemTiposPagamentos1.setText("Tipos de Pagamentos");
+        jMenuItemTiposPagamentos1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemTiposPagamentos1ActionPerformed(evt);
+            }
+        });
+        jMenuAlugar.add(jMenuItemTiposPagamentos1);
+
+        jMenuBar1.add(jMenuAlugar);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -93,48 +151,31 @@ public class DashboardView extends javax.swing.JFrame {
         tipoPagamentoView.setVisible(true);
     }//GEN-LAST:event_jMenuItemTiposPagamentosActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DashboardView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DashboardView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DashboardView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DashboardView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void jMenuItemTiposPagamentos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemTiposPagamentos1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItemTiposPagamentos1ActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new DashboardView().setVisible(true);
-            }
-        });
-    }
+    private void jMenuItemTiposPagamentos2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemTiposPagamentos2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItemTiposPagamentos2ActionPerformed
+
+    private void jMenuItemTiposPagamentos3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemTiposPagamentos3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItemTiposPagamentos3ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu jMenuAlugar;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu jMenuCadastro;
     private javax.swing.JMenu jMenuFilmesJogos;
     private javax.swing.JMenuItem jMenuItemFilmes;
     private javax.swing.JMenuItem jMenuItemGeneros;
     private javax.swing.JMenuItem jMenuItemJogos;
     private javax.swing.JMenuItem jMenuItemTiposPagamentos;
+    private javax.swing.JMenuItem jMenuItemTiposPagamentos1;
+    private javax.swing.JMenuItem jMenuItemTiposPagamentos2;
+    private javax.swing.JMenuItem jMenuItemTiposPagamentos3;
     private javax.swing.JMenu jMenuPagamentos;
+    private javax.swing.JMenu jMenuRelatorios;
     // End of variables declaration//GEN-END:variables
 }

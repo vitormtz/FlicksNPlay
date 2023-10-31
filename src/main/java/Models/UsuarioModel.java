@@ -9,8 +9,11 @@ public class UsuarioModel {
     private String cpf;
     private String dtNasc;
     private String senha;
+    private boolean nvAcess;
+    private String cargo;
+    
 
-    public UsuarioModel(int id, int cidade, String nome, String endereco, String email, String cpf, String dtNasc, String senha) {
+    public UsuarioModel(int id, int cidade, String nome, String endereco, String email, String cpf, String dtNasc, String senha, boolean nvAcess, String cargo) {
         this.id = id;
         this.cidade = cidade;
         this.nome = nome;
@@ -19,9 +22,11 @@ public class UsuarioModel {
         this.cpf = cpf;
         this.dtNasc = dtNasc;
         this.senha = senha;
+        this.nvAcess = nvAcess;
+        this.cargo = cargo;
     }
 
-    public UsuarioModel(int cidade, String nome, String endereco, String email, String cpf, String dtNasc, String senha ) {
+    public UsuarioModel(int cidade, String nome, String endereco, String email, String cpf, String dtNasc, String senha, boolean nvAcess, String cargo) {
         this.cidade = cidade;
         this.nome = nome;
         this.endereco = endereco;
@@ -29,6 +34,24 @@ public class UsuarioModel {
         this.cpf = cpf;
         this.dtNasc = dtNasc;
         this.senha = senha;
+        this.nvAcess = nvAcess;
+        this.cargo = cargo;
+    }
+
+    public String getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
+    }
+
+    public boolean isNvAcess() {
+        return nvAcess;
+    }
+
+    public void setNvAcess(boolean nvAcess) {
+        this.nvAcess = nvAcess;
     }
 
     public int getId() {
