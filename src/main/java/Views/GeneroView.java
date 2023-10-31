@@ -21,7 +21,7 @@ public class GeneroView extends javax.swing.JFrame {
      */
     public GeneroView() {
         initComponents();
-        
+
         carregarGeneros();
         jButtonExcluir.setEnabled(false);
         jButtonAtualizar.setEnabled(false);
@@ -202,9 +202,9 @@ public class GeneroView extends javax.swing.JFrame {
     private void jButtonConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmarActionPerformed
         String nome = this.jTextFieldNome.getText();
         String tipo = (String) this.jComboBoxTipo.getSelectedItem();
-        
-        if(validaCampos()) {
-            JOptionPane.showMessageDialog(null, "Valores não inseridos","Erro",JOptionPane.ERROR_MESSAGE);
+
+        if (validaCampos()) {
+            JOptionPane.showMessageDialog(null, "Valores não inseridos", "Erro", JOptionPane.ERROR_MESSAGE);
         } else {
             GeneroModel genero = new GeneroModel(nome, tipo);
 
@@ -219,7 +219,7 @@ public class GeneroView extends javax.swing.JFrame {
 
     private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
         Object valueId = this.jTableGeneros.getValueAt(getSelectedRow(), 0);
-        
+
         GeneroController generoController = new GeneroController();
         generoController.delete(Integer.parseInt((String) valueId));
         carregarGeneros();
@@ -232,9 +232,9 @@ public class GeneroView extends javax.swing.JFrame {
         String nome = this.jTextFieldNome.getText();
         String tipo = (String) this.jComboBoxTipo.getSelectedItem();
         Object id = Integer.parseInt((String) this.jTableGeneros.getValueAt(getSelectedRow(), 0));
-        
-        if(validaCampos()) {
-            JOptionPane.showMessageDialog(null, "Valores não inseridos","Erro",JOptionPane.ERROR_MESSAGE);
+
+        if (validaCampos()) {
+            JOptionPane.showMessageDialog(null, "Valores não inseridos", "Erro", JOptionPane.ERROR_MESSAGE);
         } else {
             GeneroModel genero = new GeneroModel((int) id, nome, tipo);
 
@@ -252,9 +252,9 @@ public class GeneroView extends javax.swing.JFrame {
         jButtonAtualizar.setEnabled(true);
         Object valueNome = this.jTableGeneros.getValueAt(getSelectedRow(), 1);
         Object valueTipo = this.jTableGeneros.getValueAt(getSelectedRow(), 2);
-        
-        int selectComboBoxTipo = "Jogo".equals((String)valueTipo) ? 2 : 1;
-        
+
+        int selectComboBoxTipo = "Jogo".equals((String) valueTipo) ? 2 : 1;
+
         this.jTextFieldNome.setText((String) valueNome);
         this.jComboBoxTipo.setSelectedIndex(selectComboBoxTipo);
     }//GEN-LAST:event_jTableGenerosMouseClicked
@@ -262,61 +262,25 @@ public class GeneroView extends javax.swing.JFrame {
     private void jButtonLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimparActionPerformed
         limparCampos();
     }//GEN-LAST:event_jButtonLimparActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GeneroView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GeneroView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GeneroView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GeneroView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GeneroView().setVisible(true);
-            }
-        });
-    }
-    
     public void carregarGeneros() {
         GeneroController generoController = new GeneroController();
         ArrayList<GeneroModel> lista = generoController.readAll();
-        this.jTableGeneros.setModel( new GenerosTableModel(lista) );
+        this.jTableGeneros.setModel(new GenerosTableModel(lista));
     }
-    
+
     public void limparCampos() {
         this.jTextFieldNome.setText("");
         this.jComboBoxTipo.setSelectedIndex(0);
     }
-    
+
     public int getSelectedRow() {
         return this.jTableGeneros.getSelectedRow();
     }
-    
+
     public boolean validaCampos() {
         String nome = this.jTextFieldNome.getText();
         String tipo = (String) this.jComboBoxTipo.getSelectedItem();
-        
+
         return nome.isEmpty() || tipo.isEmpty();
     }
 

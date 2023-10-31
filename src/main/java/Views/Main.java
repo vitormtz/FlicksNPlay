@@ -6,7 +6,7 @@ import Controllers.UsuarioController;
 import Models.UsuarioModel;
 import java.util.ArrayList;
 
-public class LoginView {
+public class Main {
 
     public static void main(String[] args) {
         ConectionController conectionController = ConectionController.getInstance();
@@ -16,7 +16,7 @@ public class LoginView {
 
         AuthenticatorController auth = new AuthenticatorController(users);
 
-        if (auth.showDialog(true)) {  
+        if (auth.showDialog(true)) {
             conectionController.setUser(auth.getLoggedUser());
             DashboardView dashboardView = new DashboardView(auth.getCargoUser());
             dashboardView.setVisible(true);

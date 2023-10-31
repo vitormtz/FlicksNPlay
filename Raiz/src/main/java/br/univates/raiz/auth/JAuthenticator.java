@@ -47,7 +47,7 @@ public class JAuthenticator extends javax.swing.JDialog
         btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Autenticação");
+        setTitle("FlicksNPlay - Login");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.setName("Login"); // NOI18N
@@ -56,7 +56,7 @@ public class JAuthenticator extends javax.swing.JDialog
 
         jLabel1.setText("Senha:");
 
-        jLabel2.setText("Usuário:");
+        jLabel2.setText("Nome:");
 
         campoLogName.setText("João Silva");
 

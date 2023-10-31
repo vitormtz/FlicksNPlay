@@ -24,7 +24,7 @@ public class AuthenticatorController {
                 repeat = false;
                 showDialog();
                 if (!tela.isCanceled() && !isRight()) {
-                    JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos", "Autenticação", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos", "FlicksNPlay - Erro", JOptionPane.ERROR_MESSAGE);
                     repeat = true;
                 }
             }
@@ -67,7 +67,7 @@ public class AuthenticatorController {
     public UsuarioModel getLoggedUser() {
         return loggedUser;
     }
-    
+
     public boolean getCargoUser() {
         return Boolean.valueOf(this.loggedUser.isNvAcess());
     }

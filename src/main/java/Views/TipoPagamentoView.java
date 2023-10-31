@@ -21,7 +21,7 @@ public class TipoPagamentoView extends javax.swing.JFrame {
      */
     public TipoPagamentoView() {
         initComponents();
-        
+
         carregarTiposPagamentos();
         jButtonExcluir.setEnabled(false);
         jButtonAtualizar.setEnabled(false);
@@ -178,9 +178,9 @@ public class TipoPagamentoView extends javax.swing.JFrame {
 
     private void jButtonConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmarActionPerformed
         String nome = this.jTextFieldNome.getText();
-        
-        if(validaCampos()) {
-            JOptionPane.showMessageDialog(null, "Valores não inseridos","Erro",JOptionPane.ERROR_MESSAGE);
+
+        if (validaCampos()) {
+            JOptionPane.showMessageDialog(null, "Valores não inseridos", "Erro", JOptionPane.ERROR_MESSAGE);
         } else {
             TipoPagamentoModel tipoPagamento = new TipoPagamentoModel(nome);
 
@@ -195,7 +195,7 @@ public class TipoPagamentoView extends javax.swing.JFrame {
 
     private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
         Object valueId = this.jTableTipoPagamento.getValueAt(getSelectedRow(), 0);
-        
+
         TipoPagamentoController tipoPagamentoController = new TipoPagamentoController();
         tipoPagamentoController.delete(Integer.parseInt((String) valueId));
         carregarTiposPagamentos();
@@ -207,9 +207,9 @@ public class TipoPagamentoView extends javax.swing.JFrame {
     private void jButtonAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAtualizarActionPerformed
         String nome = this.jTextFieldNome.getText();
         Object id = Integer.parseInt((String) this.jTableTipoPagamento.getValueAt(getSelectedRow(), 0));
-        
-        if(validaCampos()) {
-            JOptionPane.showMessageDialog(null, "Valores não inseridos","Erro",JOptionPane.ERROR_MESSAGE);
+
+        if (validaCampos()) {
+            JOptionPane.showMessageDialog(null, "Valores não inseridos", "Erro", JOptionPane.ERROR_MESSAGE);
         } else {
             TipoPagamentoModel tipoPagamento = new TipoPagamentoModel((int) id, nome);
 
@@ -226,62 +226,26 @@ public class TipoPagamentoView extends javax.swing.JFrame {
         jButtonExcluir.setEnabled(true);
         jButtonAtualizar.setEnabled(true);
         Object valueNome = this.jTableTipoPagamento.getValueAt(getSelectedRow(), 1);
-        
+
         this.jTextFieldNome.setText((String) valueNome);
     }//GEN-LAST:event_jTableTipoPagamentoMouseClicked
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TipoPagamentoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TipoPagamentoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TipoPagamentoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TipoPagamentoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TipoPagamentoView().setVisible(true);
-            }
-        });
-    }
-    
     public void carregarTiposPagamentos() {
         TipoPagamentoController tipoPagamentoController = new TipoPagamentoController();
         ArrayList<TipoPagamentoModel> lista = tipoPagamentoController.readAll();
-        this.jTableTipoPagamento.setModel( new TiposPagamentosTableModel(lista) );
+        this.jTableTipoPagamento.setModel(new TiposPagamentosTableModel(lista));
     }
-    
+
     public void limparCampos() {
         this.jTextFieldNome.setText("");
     }
-    
+
     public int getSelectedRow() {
         return this.jTableTipoPagamento.getSelectedRow();
     }
-    
+
     public boolean validaCampos() {
         String nome = this.jTextFieldNome.getText();
-        
+
         return nome.isEmpty();
     }
 

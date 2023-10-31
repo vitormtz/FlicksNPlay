@@ -17,17 +17,8 @@ public class DashboardView extends javax.swing.JFrame {
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
         if (!cargo) {
-            jMenuFilmesJogos.setVisible(false);
-            jMenuPagamentos.setVisible(false);
             jMenuRelatorios.setVisible(false);
-            jMenuCadastro.setVisible(false);
-            jMenuAlugar.setVisible(true);
-        }else {
-            jMenuFilmesJogos.setVisible(true);
-            jMenuPagamentos.setVisible(true);
-            jMenuRelatorios.setVisible(true);
-            jMenuCadastro.setVisible(true);
-            jMenuAlugar.setVisible(false);
+            jMenuCadastros.setVisible(false);
         }
     }
 
@@ -41,24 +32,24 @@ public class DashboardView extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenuFilmesJogos = new javax.swing.JMenu();
+        jMenuConsultas = new javax.swing.JMenu();
         jMenuItemGeneros = new javax.swing.JMenuItem();
         jMenuItemJogos = new javax.swing.JMenuItem();
         jMenuItemFilmes = new javax.swing.JMenuItem();
         jMenuPagamentos = new javax.swing.JMenu();
         jMenuItemTiposPagamentos = new javax.swing.JMenuItem();
         jMenuRelatorios = new javax.swing.JMenu();
-        jMenuItemTiposPagamentos2 = new javax.swing.JMenuItem();
-        jMenuCadastro = new javax.swing.JMenu();
-        jMenuItemTiposPagamentos3 = new javax.swing.JMenuItem();
-        jMenuAlugar = new javax.swing.JMenu();
-        jMenuItemTiposPagamentos1 = new javax.swing.JMenuItem();
+        jMenuItemRelatoriosMensais = new javax.swing.JMenuItem();
+        jMenuCadastros = new javax.swing.JMenu();
+        jMenuItemCadastrarUsuário = new javax.swing.JMenuItem();
+        jMenuItemCadastrarFilme = new javax.swing.JMenuItem();
+        jMenuItemCadastrarJogo = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setExtendedState(2222);
         setResizable(false);
 
-        jMenuFilmesJogos.setText("Filmes/Jogos");
+        jMenuConsultas.setText("Consultas");
 
         jMenuItemGeneros.setText("Generos");
         jMenuItemGeneros.addActionListener(new java.awt.event.ActionListener() {
@@ -66,15 +57,15 @@ public class DashboardView extends javax.swing.JFrame {
                 jMenuItemGenerosActionPerformed(evt);
             }
         });
-        jMenuFilmesJogos.add(jMenuItemGeneros);
+        jMenuConsultas.add(jMenuItemGeneros);
 
         jMenuItemJogos.setText("Jogos");
-        jMenuFilmesJogos.add(jMenuItemJogos);
+        jMenuConsultas.add(jMenuItemJogos);
 
         jMenuItemFilmes.setText("Filmes");
-        jMenuFilmesJogos.add(jMenuItemFilmes);
+        jMenuConsultas.add(jMenuItemFilmes);
 
-        jMenuBar1.add(jMenuFilmesJogos);
+        jMenuBar1.add(jMenuConsultas);
 
         jMenuPagamentos.setText("Pagamentos");
 
@@ -90,39 +81,43 @@ public class DashboardView extends javax.swing.JFrame {
 
         jMenuRelatorios.setText("Relatórios");
 
-        jMenuItemTiposPagamentos2.setText("Tipos de Pagamentos");
-        jMenuItemTiposPagamentos2.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemRelatoriosMensais.setText("Relatórios Mensais");
+        jMenuItemRelatoriosMensais.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemTiposPagamentos2ActionPerformed(evt);
+                jMenuItemRelatoriosMensaisActionPerformed(evt);
             }
         });
-        jMenuRelatorios.add(jMenuItemTiposPagamentos2);
+        jMenuRelatorios.add(jMenuItemRelatoriosMensais);
 
         jMenuBar1.add(jMenuRelatorios);
 
-        jMenuCadastro.setText("Cadastro");
+        jMenuCadastros.setText("Cadastros");
 
-        jMenuItemTiposPagamentos3.setText("Tipos de Pagamentos");
-        jMenuItemTiposPagamentos3.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemCadastrarUsuário.setText("Cadastrar Usuário");
+        jMenuItemCadastrarUsuário.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemTiposPagamentos3ActionPerformed(evt);
+                jMenuItemCadastrarUsuárioActionPerformed(evt);
             }
         });
-        jMenuCadastro.add(jMenuItemTiposPagamentos3);
+        jMenuCadastros.add(jMenuItemCadastrarUsuário);
 
-        jMenuBar1.add(jMenuCadastro);
-
-        jMenuAlugar.setText("Alugar");
-
-        jMenuItemTiposPagamentos1.setText("Tipos de Pagamentos");
-        jMenuItemTiposPagamentos1.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemCadastrarFilme.setText("Cadastrar Filme");
+        jMenuItemCadastrarFilme.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemTiposPagamentos1ActionPerformed(evt);
+                jMenuItemCadastrarFilmeActionPerformed(evt);
             }
         });
-        jMenuAlugar.add(jMenuItemTiposPagamentos1);
+        jMenuCadastros.add(jMenuItemCadastrarFilme);
 
-        jMenuBar1.add(jMenuAlugar);
+        jMenuItemCadastrarJogo.setText("Cadastrar Filme");
+        jMenuItemCadastrarJogo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemCadastrarJogoActionPerformed(evt);
+            }
+        });
+        jMenuCadastros.add(jMenuItemCadastrarJogo);
+
+        jMenuBar1.add(jMenuCadastros);
 
         setJMenuBar(jMenuBar1);
 
@@ -130,11 +125,11 @@ public class DashboardView extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 1280, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 276, Short.MAX_VALUE)
+            .addGap(0, 697, Short.MAX_VALUE)
         );
 
         pack();
@@ -151,30 +146,35 @@ public class DashboardView extends javax.swing.JFrame {
         tipoPagamentoView.setVisible(true);
     }//GEN-LAST:event_jMenuItemTiposPagamentosActionPerformed
 
-    private void jMenuItemTiposPagamentos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemTiposPagamentos1ActionPerformed
+    private void jMenuItemRelatoriosMensaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRelatoriosMensaisActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItemTiposPagamentos1ActionPerformed
+    }//GEN-LAST:event_jMenuItemRelatoriosMensaisActionPerformed
 
-    private void jMenuItemTiposPagamentos2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemTiposPagamentos2ActionPerformed
+    private void jMenuItemCadastrarUsuárioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCadastrarUsuárioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItemTiposPagamentos2ActionPerformed
+    }//GEN-LAST:event_jMenuItemCadastrarUsuárioActionPerformed
 
-    private void jMenuItemTiposPagamentos3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemTiposPagamentos3ActionPerformed
+    private void jMenuItemCadastrarFilmeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCadastrarFilmeActionPerformed
+        CadastroFilmeView cadastroFilmeView = new CadastroFilmeView();
+        cadastroFilmeView.setVisible(true);
+    }//GEN-LAST:event_jMenuItemCadastrarFilmeActionPerformed
+
+    private void jMenuItemCadastrarJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCadastrarJogoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItemTiposPagamentos3ActionPerformed
+    }//GEN-LAST:event_jMenuItemCadastrarJogoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenuAlugar;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenu jMenuCadastro;
-    private javax.swing.JMenu jMenuFilmesJogos;
+    private javax.swing.JMenu jMenuCadastros;
+    private javax.swing.JMenu jMenuConsultas;
+    private javax.swing.JMenuItem jMenuItemCadastrarFilme;
+    private javax.swing.JMenuItem jMenuItemCadastrarJogo;
+    private javax.swing.JMenuItem jMenuItemCadastrarUsuário;
     private javax.swing.JMenuItem jMenuItemFilmes;
     private javax.swing.JMenuItem jMenuItemGeneros;
     private javax.swing.JMenuItem jMenuItemJogos;
+    private javax.swing.JMenuItem jMenuItemRelatoriosMensais;
     private javax.swing.JMenuItem jMenuItemTiposPagamentos;
-    private javax.swing.JMenuItem jMenuItemTiposPagamentos1;
-    private javax.swing.JMenuItem jMenuItemTiposPagamentos2;
-    private javax.swing.JMenuItem jMenuItemTiposPagamentos3;
     private javax.swing.JMenu jMenuPagamentos;
     private javax.swing.JMenu jMenuRelatorios;
     // End of variables declaration//GEN-END:variables
