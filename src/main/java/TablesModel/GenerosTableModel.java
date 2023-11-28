@@ -22,13 +22,13 @@ public class GenerosTableModel implements TableModel {
     @Override
     public int getColumnCount()
     {
-        return 3;
+        return 2;
     }
     
     @Override
     public String getColumnName(int columnIndex)
     {
-        String[] colName = { "ID", "Nome", "Tipo" };
+        String[] colName = { "ID", "Nome"};
         return colName[columnIndex];
     }
 
@@ -50,8 +50,7 @@ public class GenerosTableModel implements TableModel {
         GeneroModel genero = vetor.get(rowIndex);
         
         String[] aux = { genero.getId()+"",
-                         genero.getNome(),
-                         genero.getTipoCompleto()+"" };
+                         genero.getNome()};
 
         return aux[columnIndex];
     }

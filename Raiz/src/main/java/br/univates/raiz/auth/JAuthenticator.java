@@ -8,26 +8,23 @@ package br.univates.raiz.auth;
  *
  * @author mouriac
  */
-public class JAuthenticator extends javax.swing.JDialog
-{
+public class JAuthenticator extends javax.swing.JDialog {
+
     private String logName;
     private String senha;
-    private boolean canceled;
-    
+    private boolean verificador;
+
     /**
      * Creates new form JAuthenticator
      */
-    public JAuthenticator(java.awt.Frame parent, boolean modal)
-    {
+    public JAuthenticator(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.logName = "";
         this.senha = "";
-        this.canceled = false;
+        this.verificador = false;
         this.setLocationRelativeTo(null);
     }
-    
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -44,18 +41,20 @@ public class JAuthenticator extends javax.swing.JDialog
         jLabel2 = new javax.swing.JLabel();
         campoLogName = new br.univates.raiz.JTextFieldCustomized();
         btnLogin = new javax.swing.JButton();
-        btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("FlicksNPlay - Login");
+        setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.setName("Login"); // NOI18N
 
         campoPassword.setText("senha123");
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setText("Senha:");
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Nome:");
 
         campoLogName.setText("João Silva");
@@ -71,11 +70,11 @@ public class JAuthenticator extends javax.swing.JDialog
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(49, 49, 49)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(campoPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(campoLogName, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(16, 16, 16))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(campoLogName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(campoPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -98,26 +97,15 @@ public class JAuthenticator extends javax.swing.JDialog
             }
         });
 
-        btnCancelar.setText("Cancelar");
-        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -126,56 +114,44 @@ public class JAuthenticator extends javax.swing.JDialog
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnLogin)
-                    .addComponent(btnCancelar))
+                .addComponent(btnLogin)
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-        
+
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnLoginActionPerformed
     {//GEN-HEADEREND:event_btnLoginActionPerformed
         logName = this.campoLogName.getText();
-        senha = new String( this.campoPassword.getPassword() );
-        
+        senha = new String(this.campoPassword.getPassword());
+        verificador = true;
+
         dispose();
     }//GEN-LAST:event_btnLoginActionPerformed
 
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCancelarActionPerformed
-    {//GEN-HEADEREND:event_btnCancelarActionPerformed
-        this.canceled = true;
-        dispose();
-    }//GEN-LAST:event_btnCancelarActionPerformed
-
-    public String getLogName()
-    {
+    public String getLogName() {
         return logName;
     }
 
-    public String getSenha()
-    {
+    public String getSenha() {
         return senha;
     }
 
-    public boolean isCanceled()
-    {
-        return canceled;
+    public boolean isVerificador() {
+        return verificador;
     }
 
-    
-    
-    
-    
+    public void setVerificador(boolean verificador) {
+        this.verificador = verificador;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnLogin;
-    private br.univates.raiz.JTextFieldCustomized campoLogName;
-    private javax.swing.JPasswordField campoPassword;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
+    javax.swing.JButton btnLogin;
+    br.univates.raiz.JTextFieldCustomized campoLogName;
+    javax.swing.JPasswordField campoPassword;
+    javax.swing.JLabel jLabel1;
+    javax.swing.JLabel jLabel2;
+    javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

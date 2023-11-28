@@ -21,11 +21,14 @@ public class AuthenticatorController {
         if (withRepetition) {
             boolean repeat = true;
             while (repeat) {
-                repeat = false;
                 showDialog();
-                if (!tela.isCanceled() && !isRight()) {
+                if (!isRight() && tela.isVerificador()) {
                     JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos", "FlicksNPlay - Erro", JOptionPane.ERROR_MESSAGE);
-                    repeat = true;
+                    tela.setVerificador(false);
+                } else if (isRight()) {
+                    repeat = false;
+                } else {
+                    System.exit(0);
                 }
             }
         } else {
@@ -40,8 +43,7 @@ public class AuthenticatorController {
 
     public boolean isRight() {
         boolean ok = false;
-        if (!tela.isCanceled()
-                && !tela.getLogName().isEmpty()
+        if (!tela.getLogName().isEmpty()
                 && !tela.getSenha().isEmpty()) {
             for (UsuarioModel user : users) {
                 if (user.getNome().equals(tela.getLogName())) {

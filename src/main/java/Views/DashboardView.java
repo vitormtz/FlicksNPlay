@@ -15,7 +15,7 @@ public class DashboardView extends javax.swing.JFrame {
      */
     public DashboardView(boolean cargo) {
         initComponents();
-        setExtendedState(MAXIMIZED_BOTH);
+        this.setExtendedState(MAXIMIZED_BOTH);
         if (!cargo) {
             jMenuRelatorios.setVisible(false);
             jMenuCadastros.setVisible(false);
@@ -34,20 +34,18 @@ public class DashboardView extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuConsultas = new javax.swing.JMenu();
         jMenuItemGeneros = new javax.swing.JMenuItem();
-        jMenuItemJogos = new javax.swing.JMenuItem();
-        jMenuItemFilmes = new javax.swing.JMenuItem();
         jMenuPagamentos = new javax.swing.JMenu();
         jMenuItemTiposPagamentos = new javax.swing.JMenuItem();
-        jMenuRelatorios = new javax.swing.JMenu();
-        jMenuItemRelatoriosMensais = new javax.swing.JMenuItem();
         jMenuCadastros = new javax.swing.JMenu();
-        jMenuItemCadastrarUsuário = new javax.swing.JMenuItem();
+        jMenuItemCadastrarUsuario = new javax.swing.JMenuItem();
         jMenuItemCadastrarFilme = new javax.swing.JMenuItem();
         jMenuItemCadastrarJogo = new javax.swing.JMenuItem();
+        jMenuRelatorios = new javax.swing.JMenu();
+        jMenuItemRelatoriosMensais = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setExtendedState(2222);
-        setResizable(false);
+        setTitle("FlicksNPlay - Dashboard");
+        setMaximumSize(null);
 
         jMenuConsultas.setText("Consultas");
 
@@ -58,12 +56,6 @@ public class DashboardView extends javax.swing.JFrame {
             }
         });
         jMenuConsultas.add(jMenuItemGeneros);
-
-        jMenuItemJogos.setText("Jogos");
-        jMenuConsultas.add(jMenuItemJogos);
-
-        jMenuItemFilmes.setText("Filmes");
-        jMenuConsultas.add(jMenuItemFilmes);
 
         jMenuBar1.add(jMenuConsultas);
 
@@ -79,6 +71,34 @@ public class DashboardView extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenuPagamentos);
 
+        jMenuCadastros.setText("Cadastros");
+
+        jMenuItemCadastrarUsuario.setText("Cadastrar Usuário");
+        jMenuItemCadastrarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemCadastrarUsuarioActionPerformed(evt);
+            }
+        });
+        jMenuCadastros.add(jMenuItemCadastrarUsuario);
+
+        jMenuItemCadastrarFilme.setText("Cadastrar Filme");
+        jMenuItemCadastrarFilme.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemCadastrarFilmeActionPerformed(evt);
+            }
+        });
+        jMenuCadastros.add(jMenuItemCadastrarFilme);
+
+        jMenuItemCadastrarJogo.setText("Cadastrar Jogo");
+        jMenuItemCadastrarJogo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemCadastrarJogoActionPerformed(evt);
+            }
+        });
+        jMenuCadastros.add(jMenuItemCadastrarJogo);
+
+        jMenuBar1.add(jMenuCadastros);
+
         jMenuRelatorios.setText("Relatórios");
 
         jMenuItemRelatoriosMensais.setText("Relatórios Mensais");
@@ -91,34 +111,6 @@ public class DashboardView extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenuRelatorios);
 
-        jMenuCadastros.setText("Cadastros");
-
-        jMenuItemCadastrarUsuário.setText("Cadastrar Usuário");
-        jMenuItemCadastrarUsuário.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemCadastrarUsuárioActionPerformed(evt);
-            }
-        });
-        jMenuCadastros.add(jMenuItemCadastrarUsuário);
-
-        jMenuItemCadastrarFilme.setText("Cadastrar Filme");
-        jMenuItemCadastrarFilme.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemCadastrarFilmeActionPerformed(evt);
-            }
-        });
-        jMenuCadastros.add(jMenuItemCadastrarFilme);
-
-        jMenuItemCadastrarJogo.setText("Cadastrar Filme");
-        jMenuItemCadastrarJogo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemCadastrarJogoActionPerformed(evt);
-            }
-        });
-        jMenuCadastros.add(jMenuItemCadastrarJogo);
-
-        jMenuBar1.add(jMenuCadastros);
-
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -129,7 +121,7 @@ public class DashboardView extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 697, Short.MAX_VALUE)
+            .addGap(0, 699, Short.MAX_VALUE)
         );
 
         pack();
@@ -150,9 +142,9 @@ public class DashboardView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItemRelatoriosMensaisActionPerformed
 
-    private void jMenuItemCadastrarUsuárioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCadastrarUsuárioActionPerformed
+    private void jMenuItemCadastrarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCadastrarUsuarioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItemCadastrarUsuárioActionPerformed
+    }//GEN-LAST:event_jMenuItemCadastrarUsuarioActionPerformed
 
     private void jMenuItemCadastrarFilmeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCadastrarFilmeActionPerformed
         CadastroFilmeView cadastroFilmeView = new CadastroFilmeView();
@@ -169,10 +161,8 @@ public class DashboardView extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuConsultas;
     private javax.swing.JMenuItem jMenuItemCadastrarFilme;
     private javax.swing.JMenuItem jMenuItemCadastrarJogo;
-    private javax.swing.JMenuItem jMenuItemCadastrarUsuário;
-    private javax.swing.JMenuItem jMenuItemFilmes;
+    private javax.swing.JMenuItem jMenuItemCadastrarUsuario;
     private javax.swing.JMenuItem jMenuItemGeneros;
-    private javax.swing.JMenuItem jMenuItemJogos;
     private javax.swing.JMenuItem jMenuItemRelatoriosMensais;
     private javax.swing.JMenuItem jMenuItemTiposPagamentos;
     private javax.swing.JMenu jMenuPagamentos;

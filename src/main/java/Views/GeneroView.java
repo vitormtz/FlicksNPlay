@@ -39,17 +39,14 @@ public class GeneroView extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableGeneros = new javax.swing.JTable();
         jButtonConfirmar = new javax.swing.JButton();
-        jButtonFechar = new javax.swing.JButton();
         jLabelNome = new javax.swing.JLabel();
-        jLabelTitle = new javax.swing.JLabel();
-        jLabelTipo = new javax.swing.JLabel();
         jButtonExcluir = new javax.swing.JButton();
         jButtonAtualizar = new javax.swing.JButton();
         jTextFieldNome = new javax.swing.JTextField();
-        jComboBoxTipo = new javax.swing.JComboBox();
-        jButtonLimpar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("FlicksNPlay - Cadastro De Generos");
+        setResizable(false);
 
         jTableGeneros.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -69,26 +66,15 @@ public class GeneroView extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTableGeneros);
 
-        jButtonConfirmar.setText("Confirmar");
+        jButtonConfirmar.setText("Cadastrar");
         jButtonConfirmar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonConfirmarActionPerformed(evt);
             }
         });
 
-        jButtonFechar.setText("Fechar");
-        jButtonFechar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonFecharActionPerformed(evt);
-            }
-        });
-
+        jLabelNome.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabelNome.setText("Nome:");
-
-        jLabelTitle.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
-        jLabelTitle.setText("GENEROS");
-
-        jLabelTipo.setText("Tipo:");
 
         jButtonExcluir.setText("Excluir");
         jButtonExcluir.addActionListener(new java.awt.event.ActionListener() {
@@ -104,24 +90,6 @@ public class GeneroView extends javax.swing.JFrame {
             }
         });
 
-        jComboBoxTipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBoxTipo.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                jComboBoxTipoAncestorAdded(evt);
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-        });
-
-        jButtonLimpar.setText("Limpar");
-        jButtonLimpar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonLimparActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -131,82 +99,46 @@ public class GeneroView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelTitle)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabelTipo)
-                                    .addComponent(jLabelNome))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jComboBoxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jLabelNome)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jButtonLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonConfirmar))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jButtonAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButtonExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonConfirmar)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabelTitle)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelNome)
                     .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelTipo)
-                    .addComponent(jComboBoxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonAtualizar)
-                    .addComponent(jButtonExcluir))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(83, 83, 83)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonConfirmar)
-                    .addComponent(jButtonFechar)
-                    .addComponent(jButtonLimpar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButtonAtualizar)
+                    .addComponent(jButtonExcluir)
+                    .addComponent(jButtonConfirmar))
+                .addGap(18, 18, 18))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFecharActionPerformed
-        dispose();
-    }//GEN-LAST:event_jButtonFecharActionPerformed
-
-    private void jComboBoxTipoAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jComboBoxTipoAncestorAdded
-        jComboBoxTipo.removeAllItems();
-        jComboBoxTipo.addItem("");
-        jComboBoxTipo.addItem("Filme");
-        jComboBoxTipo.addItem("Jogo");
-    }//GEN-LAST:event_jComboBoxTipoAncestorAdded
-
     private void jButtonConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmarActionPerformed
         String nome = this.jTextFieldNome.getText();
-        String tipo = (String) this.jComboBoxTipo.getSelectedItem();
 
         if (validaCampos()) {
             JOptionPane.showMessageDialog(null, "Valores não inseridos", "Erro", JOptionPane.ERROR_MESSAGE);
         } else {
-            GeneroModel genero = new GeneroModel(nome, tipo);
+            GeneroModel genero = new GeneroModel(nome);
 
             GeneroController generoController = new GeneroController();
             generoController.create(genero);
@@ -230,13 +162,12 @@ public class GeneroView extends javax.swing.JFrame {
 
     private void jButtonAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAtualizarActionPerformed
         String nome = this.jTextFieldNome.getText();
-        String tipo = (String) this.jComboBoxTipo.getSelectedItem();
         Object id = Integer.parseInt((String) this.jTableGeneros.getValueAt(getSelectedRow(), 0));
 
         if (validaCampos()) {
             JOptionPane.showMessageDialog(null, "Valores não inseridos", "Erro", JOptionPane.ERROR_MESSAGE);
         } else {
-            GeneroModel genero = new GeneroModel((int) id, nome, tipo);
+            GeneroModel genero = new GeneroModel((int) id, nome);
 
             GeneroController generoController = new GeneroController();
             generoController.update(genero);
@@ -251,17 +182,9 @@ public class GeneroView extends javax.swing.JFrame {
         jButtonExcluir.setEnabled(true);
         jButtonAtualizar.setEnabled(true);
         Object valueNome = this.jTableGeneros.getValueAt(getSelectedRow(), 1);
-        Object valueTipo = this.jTableGeneros.getValueAt(getSelectedRow(), 2);
-
-        int selectComboBoxTipo = "Jogo".equals((String) valueTipo) ? 2 : 1;
 
         this.jTextFieldNome.setText((String) valueNome);
-        this.jComboBoxTipo.setSelectedIndex(selectComboBoxTipo);
     }//GEN-LAST:event_jTableGenerosMouseClicked
-
-    private void jButtonLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimparActionPerformed
-        limparCampos();
-    }//GEN-LAST:event_jButtonLimparActionPerformed
     public void carregarGeneros() {
         GeneroController generoController = new GeneroController();
         ArrayList<GeneroModel> lista = generoController.readAll();
@@ -270,7 +193,6 @@ public class GeneroView extends javax.swing.JFrame {
 
     public void limparCampos() {
         this.jTextFieldNome.setText("");
-        this.jComboBoxTipo.setSelectedIndex(0);
     }
 
     public int getSelectedRow() {
@@ -279,21 +201,15 @@ public class GeneroView extends javax.swing.JFrame {
 
     public boolean validaCampos() {
         String nome = this.jTextFieldNome.getText();
-        String tipo = (String) this.jComboBoxTipo.getSelectedItem();
 
-        return nome.isEmpty() || tipo.isEmpty();
+        return nome.isEmpty();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAtualizar;
     private javax.swing.JButton jButtonConfirmar;
     private javax.swing.JButton jButtonExcluir;
-    private javax.swing.JButton jButtonFechar;
-    private javax.swing.JButton jButtonLimpar;
-    private javax.swing.JComboBox jComboBoxTipo;
     private javax.swing.JLabel jLabelNome;
-    private javax.swing.JLabel jLabelTipo;
-    private javax.swing.JLabel jLabelTitle;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableGeneros;
     private javax.swing.JTextField jTextFieldNome;
