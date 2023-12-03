@@ -41,18 +41,18 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemCadastrarUsuario">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Cadastrar Usu&#xe1;rio"/>
+                <Property name="text" type="java.lang.String" value="Cadastrar Usu&#xe1;rios"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemCadastrarUsuarioActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemCadastrarFilme">
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemCadastrarFilmeEJogos">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Cadastrar Filme"/>
+                <Property name="text" type="java.lang.String" value="Cadastrar Filmes e Jogos"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemCadastrarFilmeActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemCadastrarFilmeEJogosActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

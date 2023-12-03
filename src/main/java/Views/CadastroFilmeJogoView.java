@@ -4,6 +4,7 @@
  */
 package Views;
 
+import Support.ItemCombo;
 import Controllers.FilmeController;
 import Controllers.GeneroController;
 import Controllers.JogoController;
@@ -20,12 +21,12 @@ import javax.swing.text.AbstractDocument;
  *
  * @author vitor
  */
-public class CadastroFilmeView extends javax.swing.JFrame {
+public class CadastroFilmeJogoView extends javax.swing.JFrame {
 
     /**
      * Creates new form CadastroFilmeView
      */
-    public CadastroFilmeView() {
+    public CadastroFilmeJogoView() {
         initComponents();
         carregarFilmesJogos();
         this.jButtonExcluir.setEnabled(false);
@@ -64,7 +65,7 @@ public class CadastroFilmeView extends javax.swing.JFrame {
         jComboBoxTipo = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("FlicksNPlay - Cadastro De Filmes");
+        setTitle("FlicksNPlay - Cadastro De Filmes E Jogos");
         setResizable(false);
 
         jLabelNome.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -254,7 +255,7 @@ public class CadastroFilmeView extends javax.swing.JFrame {
                             .addComponent(jComboBoxDisponivel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonCadastrar)

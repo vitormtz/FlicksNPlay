@@ -38,7 +38,7 @@ public class DashboardView extends javax.swing.JFrame {
         jMenuItemTiposPagamentos = new javax.swing.JMenuItem();
         jMenuCadastros = new javax.swing.JMenu();
         jMenuItemCadastrarUsuario = new javax.swing.JMenuItem();
-        jMenuItemCadastrarFilme = new javax.swing.JMenuItem();
+        jMenuItemCadastrarFilmeEJogos = new javax.swing.JMenuItem();
         jMenuRelatorios = new javax.swing.JMenu();
         jMenuItemRelatoriosMensais = new javax.swing.JMenuItem();
 
@@ -72,7 +72,7 @@ public class DashboardView extends javax.swing.JFrame {
 
         jMenuCadastros.setText("Cadastros");
 
-        jMenuItemCadastrarUsuario.setText("Cadastrar Usuário");
+        jMenuItemCadastrarUsuario.setText("Cadastrar Usuários");
         jMenuItemCadastrarUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemCadastrarUsuarioActionPerformed(evt);
@@ -80,13 +80,13 @@ public class DashboardView extends javax.swing.JFrame {
         });
         jMenuCadastros.add(jMenuItemCadastrarUsuario);
 
-        jMenuItemCadastrarFilme.setText("Cadastrar Filme");
-        jMenuItemCadastrarFilme.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemCadastrarFilmeEJogos.setText("Cadastrar Filmes e Jogos");
+        jMenuItemCadastrarFilmeEJogos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemCadastrarFilmeActionPerformed(evt);
+                jMenuItemCadastrarFilmeEJogosActionPerformed(evt);
             }
         });
-        jMenuCadastros.add(jMenuItemCadastrarFilme);
+        jMenuCadastros.add(jMenuItemCadastrarFilmeEJogos);
 
         jMenuBar1.add(jMenuCadastros);
 
@@ -134,19 +134,20 @@ public class DashboardView extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemRelatoriosMensaisActionPerformed
 
     private void jMenuItemCadastrarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCadastrarUsuarioActionPerformed
-        // TODO add your handling code here:
+        CadastroUsuarioView cadastroUsuariosView = new CadastroUsuarioView();
+        cadastroUsuariosView.setVisible(true);
     }//GEN-LAST:event_jMenuItemCadastrarUsuarioActionPerformed
 
-    private void jMenuItemCadastrarFilmeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCadastrarFilmeActionPerformed
-        CadastroFilmeView cadastroFilmeView = new CadastroFilmeView();
-        cadastroFilmeView.setVisible(true);
-    }//GEN-LAST:event_jMenuItemCadastrarFilmeActionPerformed
+    private void jMenuItemCadastrarFilmeEJogosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCadastrarFilmeEJogosActionPerformed
+        CadastroFilmeJogoView cadastroFilmeJogoView = new CadastroFilmeJogoView();
+        cadastroFilmeJogoView.setVisible(true);
+    }//GEN-LAST:event_jMenuItemCadastrarFilmeEJogosActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuCadastros;
     private javax.swing.JMenu jMenuConsultas;
-    private javax.swing.JMenuItem jMenuItemCadastrarFilme;
+    private javax.swing.JMenuItem jMenuItemCadastrarFilmeEJogos;
     private javax.swing.JMenuItem jMenuItemCadastrarUsuario;
     private javax.swing.JMenuItem jMenuItemGeneros;
     private javax.swing.JMenuItem jMenuItemRelatoriosMensais;
