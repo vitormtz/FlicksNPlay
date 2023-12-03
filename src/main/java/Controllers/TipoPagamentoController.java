@@ -1,9 +1,9 @@
 package Controllers;
 
 import Models.TipoPagamentoModel;
+import Support.Adapter;
 import Support.DataBaseConnectionManager;
 import Support.DataBaseException;
-import br.univates.raiz.persistence.Adapter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;

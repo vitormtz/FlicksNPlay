@@ -5,10 +5,10 @@
 package Controllers;
 
 import Models.FilmeModel;
+import Support.Adapter;
 import Support.DataBaseConnectionManager;
 import Support.DataBaseException;
-import br.univates.raiz.persistence.Adapter;
-import br.univates.raiz.persistence.NotFoundException;
+import Support.NotFoundException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;

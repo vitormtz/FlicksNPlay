@@ -1,7 +1,7 @@
 package Controllers;
 
 import Models.UsuarioModel;
-import br.univates.raiz.auth.JAuthenticator;
+import Support.JAuthenticator;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
