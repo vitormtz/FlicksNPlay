@@ -5,8 +5,8 @@
 package Controllers;
 
 import Models.JogoModel;
-import br.univates.raiz.db.DataBaseConnectionManager;
-import br.univates.raiz.db.DataBaseException;
+import Support.DataBaseConnectionManager;
+import Support.DataBaseException;
 import br.univates.raiz.persistence.Adapter;
 import br.univates.raiz.persistence.NotFoundException;
 import java.util.ArrayList;

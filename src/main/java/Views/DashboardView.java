@@ -39,7 +39,6 @@ public class DashboardView extends javax.swing.JFrame {
         jMenuCadastros = new javax.swing.JMenu();
         jMenuItemCadastrarUsuario = new javax.swing.JMenuItem();
         jMenuItemCadastrarFilme = new javax.swing.JMenuItem();
-        jMenuItemCadastrarJogo = new javax.swing.JMenuItem();
         jMenuRelatorios = new javax.swing.JMenu();
         jMenuItemRelatoriosMensais = new javax.swing.JMenuItem();
 
@@ -88,14 +87,6 @@ public class DashboardView extends javax.swing.JFrame {
             }
         });
         jMenuCadastros.add(jMenuItemCadastrarFilme);
-
-        jMenuItemCadastrarJogo.setText("Cadastrar Jogo");
-        jMenuItemCadastrarJogo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemCadastrarJogoActionPerformed(evt);
-            }
-        });
-        jMenuCadastros.add(jMenuItemCadastrarJogo);
 
         jMenuBar1.add(jMenuCadastros);
 
@@ -151,16 +142,11 @@ public class DashboardView extends javax.swing.JFrame {
         cadastroFilmeView.setVisible(true);
     }//GEN-LAST:event_jMenuItemCadastrarFilmeActionPerformed
 
-    private void jMenuItemCadastrarJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCadastrarJogoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItemCadastrarJogoActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuCadastros;
     private javax.swing.JMenu jMenuConsultas;
     private javax.swing.JMenuItem jMenuItemCadastrarFilme;
-    private javax.swing.JMenuItem jMenuItemCadastrarJogo;
     private javax.swing.JMenuItem jMenuItemCadastrarUsuario;
     private javax.swing.JMenuItem jMenuItemGeneros;
     private javax.swing.JMenuItem jMenuItemRelatoriosMensais;

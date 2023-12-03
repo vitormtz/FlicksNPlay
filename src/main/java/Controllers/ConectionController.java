@@ -1,8 +1,8 @@
 package Controllers;
 
 import Models.UsuarioModel;
-import br.univates.raiz.db.DataBaseConnectionManager;
-import br.univates.raiz.db.DataBaseException;
+import Support.DataBaseConnectionManager;
+import Support.DataBaseException;
 
 public class ConectionController {
     private String nomeSys;

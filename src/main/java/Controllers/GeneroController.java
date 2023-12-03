@@ -1,10 +1,9 @@
 package Controllers;
 
 import Models.GeneroModel;
-import br.univates.raiz.db.DataBaseConnectionManager;
-import br.univates.raiz.db.DataBaseException;
+import Support.DataBaseConnectionManager;
+import Support.DataBaseException;
 import br.univates.raiz.persistence.Adapter;
-import br.univates.raiz.persistence.NotFoundException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
