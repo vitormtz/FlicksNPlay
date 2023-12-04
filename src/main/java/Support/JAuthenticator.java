@@ -4,6 +4,9 @@
  */
 package Support;
 
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+
 /**
  *
  * @author mouriac
@@ -24,6 +27,13 @@ public class JAuthenticator extends javax.swing.JDialog {
         this.senha = "";
         this.verificador = false;
         this.setLocationRelativeTo(null);
+
+        try {
+            UIManager.setLookAndFeel("com.formdev.flatlaf.FlatIntelliJLaf");
+            SwingUtilities.updateComponentTreeUI(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
