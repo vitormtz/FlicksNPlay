@@ -8,6 +8,7 @@ import Support.CEPFormattedTextField;
 import Support.CPFFormattedTextField;
 import Support.DataNascimentoFormattedTextField;
 import Support.NumerosTextField;
+import Support.ViaCEP;
 
 /**
  *
@@ -188,6 +189,12 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
 
         jTextFieldEstado.setEditable(false);
         jTextFieldEstado.setRequestFocusEnabled(false);
+
+        jFormattedTextFieldCep.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jFormattedTextFieldCepKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelEnderecoLayout = new javax.swing.GroupLayout(jPanelEndereco);
         jPanelEndereco.setLayout(jPanelEnderecoLayout);
@@ -399,6 +406,21 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
         this.jComboBoxCargo.addItem("Gerente");
         this.jComboBoxCargo.addItem("Balconista");
     }//GEN-LAST:event_jComboBoxCargoAncestorAdded
+
+    private void jFormattedTextFieldCepKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jFormattedTextFieldCepKeyReleased
+        String regexCEP = "\\d{5}-\\d{3}";
+        if (this.jFormattedTextFieldCep.getText().matches(regexCEP)) {
+            try {
+                ViaCEP viaCep = new ViaCEP();
+                viaCep.buscar(this.jFormattedTextFieldCep.getText());
+                this.jTextFieldRua.setText(viaCep.getLogradouro());
+                this.jTextFieldBairro.setText(viaCep.getBairro());
+                this.jTextFieldEstado.setText(viaCep.getUf());
+                this.jTextFieldCidade.setText(viaCep.getLocalidade());
+            } catch (Exception e) {
+            }
+        }
+    }//GEN-LAST:event_jFormattedTextFieldCepKeyReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroupUsuario;

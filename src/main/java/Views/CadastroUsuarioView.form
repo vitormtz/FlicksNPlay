@@ -428,6 +428,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="jFormattedTextFieldCep">
+          <Events>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jFormattedTextFieldCepKeyReleased"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new CEPFormattedTextField()"/>
           </AuxValues>
