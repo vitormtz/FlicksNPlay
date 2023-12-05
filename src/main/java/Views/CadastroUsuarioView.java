@@ -4,6 +4,11 @@
  */
 package Views;
 
+import Support.CEPFormattedTextField;
+import Support.CPFFormattedTextField;
+import Support.DataNascimentoFormattedTextField;
+import Support.NumerosTextField;
+
 /**
  *
  * @author vitor
@@ -29,7 +34,7 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
         buttonGroupUsuario = new javax.swing.ButtonGroup();
         jPanelUsuario = new javax.swing.JPanel();
         jLabelDataNascimento = new javax.swing.JLabel();
-        jFormattedTextFieldDataNascimento = new javax.swing.JFormattedTextField();
+        jFormattedTextFieldDataNascimento = new DataNascimentoFormattedTextField();
         jLabelSenha = new javax.swing.JLabel();
         jPasswordFieldSenha = new javax.swing.JPasswordField();
         jLabelCargo = new javax.swing.JLabel();
@@ -37,33 +42,33 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
         jComboBoxCargo = new javax.swing.JComboBox<>();
         jTextFieldNome = new javax.swing.JTextField();
         jLabelEmail = new javax.swing.JLabel();
-        jFormattedTextFieldEmail = new javax.swing.JFormattedTextField();
         jLabelCpf = new javax.swing.JLabel();
-        jFormattedTextFieldCpf = new javax.swing.JFormattedTextField();
+        jFormattedTextFieldCpf = new CPFFormattedTextField();
+        jTextFieldEmail = new javax.swing.JTextField();
         jPanelEndereco = new javax.swing.JPanel();
         jLabelCep = new javax.swing.JLabel();
-        jTextFieldCep = new javax.swing.JTextField();
         jLabelRua = new javax.swing.JLabel();
         jTextFieldRua = new javax.swing.JTextField();
         jLabelNumero = new javax.swing.JLabel();
-        jTextFieldNumero = new javax.swing.JTextField();
+        jTextFieldNumero = new NumerosTextField();
         jLabelBairro = new javax.swing.JLabel();
         jTextFieldBairro = new javax.swing.JTextField();
         jLabelCidade = new javax.swing.JLabel();
         jTextFieldCidade = new javax.swing.JTextField();
         jLabelEstado = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabelTipoDeCadastro = new javax.swing.JLabel();
-        jRadioButtonCliente = new javax.swing.JRadioButton();
-        jRadioButtonFuncionario = new javax.swing.JRadioButton();
+        jTextFieldEstado = new javax.swing.JTextField();
+        jFormattedTextFieldCep = new CEPFormattedTextField();
         jButtonExcluir = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPaneUsuarios = new javax.swing.JScrollPane();
         jTableUsuarios = new javax.swing.JTable();
         jButtonAtualizar = new javax.swing.JButton();
         jButtonCadastrar = new javax.swing.JButton();
         jLabelBusca = new javax.swing.JLabel();
         jTextFieldBusca = new javax.swing.JTextField();
         jButtonPesquisa = new javax.swing.JButton();
+        jPanelTipoDeCadastro = new javax.swing.JPanel();
+        jRadioButtonCliente = new javax.swing.JRadioButton();
+        jRadioButtonFuncionario = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("FlicksNPlay - Cadastro De Usuários");
@@ -76,16 +81,30 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
 
         jFormattedTextFieldDataNascimento.setPreferredSize(new java.awt.Dimension(180, 22));
 
+        jLabelSenha.setVisible(false);
         jLabelSenha.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabelSenha.setText("Senha:");
 
+        jPasswordFieldSenha.setVisible(false);
+
+        jLabelCargo.setVisible(false);
         jLabelCargo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabelCargo.setText("Cargo:");
 
         jLabelNome.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabelNome.setText("Nome:");
 
+        jComboBoxCargo.setVisible(false);
         jComboBoxCargo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxCargo.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jComboBoxCargoAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
 
         jLabelEmail.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabelEmail.setText("E-mail:");
@@ -105,9 +124,9 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
                     .addComponent(jLabelCpf))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jFormattedTextFieldEmail)
-                    .addComponent(jFormattedTextFieldCpf, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                    .addComponent(jTextFieldNome))
+                    .addComponent(jFormattedTextFieldCpf)
+                    .addComponent(jTextFieldNome)
+                    .addComponent(jTextFieldEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))
                 .addGap(50, 50, 50)
                 .addGroup(jPanelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelDataNascimento)
@@ -132,9 +151,9 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelEmail)
-                    .addComponent(jFormattedTextFieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelSenha)
-                    .addComponent(jPasswordFieldSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPasswordFieldSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelCpf)
@@ -161,8 +180,14 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
         jLabelCidade.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabelCidade.setText("Cidade:");
 
+        jTextFieldCidade.setEditable(false);
+        jTextFieldCidade.setRequestFocusEnabled(false);
+
         jLabelEstado.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabelEstado.setText("Estado:");
+
+        jTextFieldEstado.setEditable(false);
+        jTextFieldEstado.setRequestFocusEnabled(false);
 
         javax.swing.GroupLayout jPanelEnderecoLayout = new javax.swing.GroupLayout(jPanelEndereco);
         jPanelEndereco.setLayout(jPanelEnderecoLayout);
@@ -175,10 +200,10 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
                     .addComponent(jLabelRua)
                     .addComponent(jLabelNumero))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldCep, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldRua, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextFieldNumero)
+                    .addComponent(jTextFieldRua)
+                    .addComponent(jFormattedTextFieldCep, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                 .addGroup(jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanelEnderecoLayout.createSequentialGroup()
@@ -188,7 +213,7 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
                         .addGap(21, 21, 21)
                         .addGroup(jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jTextFieldBairro, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jTextFieldEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanelEnderecoLayout.createSequentialGroup()
                         .addComponent(jLabelCidade)
                         .addGap(18, 18, 18)
@@ -197,8 +222,8 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
         );
         jPanelEnderecoLayout.setVerticalGroup(
             jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelEnderecoLayout.createSequentialGroup()
-                .addContainerGap(16, Short.MAX_VALUE)
+            .addGroup(jPanelEnderecoLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelEnderecoLayout.createSequentialGroup()
                         .addGroup(jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -206,7 +231,7 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
                             .addComponent(jTextFieldBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabelEstado))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -215,7 +240,7 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
                     .addGroup(jPanelEnderecoLayout.createSequentialGroup()
                         .addGroup(jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelCep)
-                            .addComponent(jTextFieldCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jFormattedTextFieldCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextFieldRua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -223,23 +248,12 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelNumero)
-                            .addComponent(jTextFieldNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
+                            .addComponent(jTextFieldNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
-        jLabelTipoDeCadastro.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabelTipoDeCadastro.setText("Tipo de Cadastro:");
-
-        buttonGroupUsuario.add(jRadioButtonCliente);
-        jRadioButtonCliente.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jRadioButtonCliente.setSelected(true);
-        jRadioButtonCliente.setText("Cliente");
-
-        buttonGroupUsuario.add(jRadioButtonFuncionario);
-        jRadioButtonFuncionario.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jRadioButtonFuncionario.setText("Funcionário");
-
         jButtonExcluir.setText("Excluir");
+        jButtonExcluir.setEnabled(false);
 
         jTableUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -252,15 +266,59 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTableUsuarios);
+        jScrollPaneUsuarios.setViewportView(jTableUsuarios);
 
         jButtonAtualizar.setText("Atualizar");
+        jButtonAtualizar.setEnabled(false);
 
         jButtonCadastrar.setText("Cadastrar");
 
+        jLabelBusca.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabelBusca.setText("Buscar:");
 
         jButtonPesquisa.setText("Pesquisar");
+
+        jPanelTipoDeCadastro.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tipo de Cadastro", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+
+        buttonGroupUsuario.add(jRadioButtonCliente);
+        jRadioButtonCliente.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jRadioButtonCliente.setSelected(true);
+        jRadioButtonCliente.setText("Cliente");
+        jRadioButtonCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonClienteActionPerformed(evt);
+            }
+        });
+
+        buttonGroupUsuario.add(jRadioButtonFuncionario);
+        jRadioButtonFuncionario.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jRadioButtonFuncionario.setText("Funcionário");
+        jRadioButtonFuncionario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonFuncionarioActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelTipoDeCadastroLayout = new javax.swing.GroupLayout(jPanelTipoDeCadastro);
+        jPanelTipoDeCadastro.setLayout(jPanelTipoDeCadastroLayout);
+        jPanelTipoDeCadastroLayout.setHorizontalGroup(
+            jPanelTipoDeCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTipoDeCadastroLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jRadioButtonCliente)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jRadioButtonFuncionario)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanelTipoDeCadastroLayout.setVerticalGroup(
+            jPanelTipoDeCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTipoDeCadastroLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelTipoDeCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButtonCliente)
+                    .addComponent(jRadioButtonFuncionario))
+                .addContainerGap(9, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -269,7 +327,7 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPaneUsuarios)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jButtonExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -277,45 +335,37 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonCadastrar))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jRadioButtonCliente)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jRadioButtonFuncionario))
-                            .addComponent(jLabelTipoDeCadastro)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jPanelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jPanelEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabelBusca)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextFieldBusca)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButtonPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                        .addComponent(jPanelEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 18, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanelTipoDeCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(jLabelTipoDeCadastro)
+                .addComponent(jPanelTipoDeCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButtonCliente)
-                    .addComponent(jRadioButtonFuncionario))
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanelEndereco, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanelUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelBusca)
                     .addComponent(jButtonPesquisa)
                     .addComponent(jTextFieldBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPaneUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonExcluir)
@@ -328,6 +378,28 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jRadioButtonClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonClienteActionPerformed
+        this.jLabelSenha.setVisible(false);
+        this.jPasswordFieldSenha.setVisible(false);
+        this.jLabelCargo.setVisible(false);
+        this.jComboBoxCargo.setVisible(false);
+
+    }//GEN-LAST:event_jRadioButtonClienteActionPerformed
+
+    private void jRadioButtonFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonFuncionarioActionPerformed
+        this.jLabelSenha.setVisible(true);
+        this.jPasswordFieldSenha.setVisible(true);
+        this.jLabelCargo.setVisible(true);
+        this.jComboBoxCargo.setVisible(true);
+    }//GEN-LAST:event_jRadioButtonFuncionarioActionPerformed
+
+    private void jComboBoxCargoAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jComboBoxCargoAncestorAdded
+        this.jComboBoxCargo.removeAllItems();
+        this.jComboBoxCargo.addItem("");
+        this.jComboBoxCargo.addItem("Gerente");
+        this.jComboBoxCargo.addItem("Balconista");
+    }//GEN-LAST:event_jComboBoxCargoAncestorAdded
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroupUsuario;
     private javax.swing.JButton jButtonAtualizar;
@@ -335,9 +407,9 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
     private javax.swing.JButton jButtonExcluir;
     private javax.swing.JButton jButtonPesquisa;
     private javax.swing.JComboBox<String> jComboBoxCargo;
+    private javax.swing.JFormattedTextField jFormattedTextFieldCep;
     private javax.swing.JFormattedTextField jFormattedTextFieldCpf;
     private javax.swing.JFormattedTextField jFormattedTextFieldDataNascimento;
-    private javax.swing.JFormattedTextField jFormattedTextFieldEmail;
     private javax.swing.JLabel jLabelBairro;
     private javax.swing.JLabel jLabelBusca;
     private javax.swing.JLabel jLabelCargo;
@@ -351,19 +423,19 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelNumero;
     private javax.swing.JLabel jLabelRua;
     private javax.swing.JLabel jLabelSenha;
-    private javax.swing.JLabel jLabelTipoDeCadastro;
     private javax.swing.JPanel jPanelEndereco;
+    private javax.swing.JPanel jPanelTipoDeCadastro;
     private javax.swing.JPanel jPanelUsuario;
     private javax.swing.JPasswordField jPasswordFieldSenha;
     private javax.swing.JRadioButton jRadioButtonCliente;
     private javax.swing.JRadioButton jRadioButtonFuncionario;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPaneUsuarios;
     private javax.swing.JTable jTableUsuarios;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextFieldBairro;
     private javax.swing.JTextField jTextFieldBusca;
-    private javax.swing.JTextField jTextFieldCep;
     private javax.swing.JTextField jTextFieldCidade;
+    private javax.swing.JTextField jTextFieldEmail;
+    private javax.swing.JTextField jTextFieldEstado;
     private javax.swing.JTextField jTextFieldNome;
     private javax.swing.JTextField jTextFieldNumero;
     private javax.swing.JTextField jTextFieldRua;

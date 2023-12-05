@@ -43,7 +43,7 @@ public class DashboardView extends javax.swing.JFrame {
         jMenuItemRelatoriosMensais = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("FlicksNPlay - Dashboard");
+        setTitle("FlicksNPlay");
         setMaximumSize(null);
 
         jMenuConsultas.setText("Consultas");

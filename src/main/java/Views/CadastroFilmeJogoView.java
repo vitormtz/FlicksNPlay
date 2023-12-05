@@ -29,8 +29,6 @@ public class CadastroFilmeJogoView extends javax.swing.JFrame {
     public CadastroFilmeJogoView() {
         initComponents();
         carregarFilmesJogos();
-        this.jButtonExcluir.setEnabled(false);
-        this.jButtonAtualizar.setEnabled(false);
         ((AbstractDocument) this.jTextFieldPreco.getDocument()).setDocumentFilter(new PriceDocumentFilter());
     }
 
@@ -74,6 +72,7 @@ public class CadastroFilmeJogoView extends javax.swing.JFrame {
         jLabelGenero.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabelGenero.setText("Gênero:");
 
+        jButtonExcluir.setEnabled(false);
         jButtonExcluir.setText("Excluir");
         jButtonExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -81,6 +80,7 @@ public class CadastroFilmeJogoView extends javax.swing.JFrame {
             }
         });
 
+        jButtonAtualizar.setEnabled(false);
         jButtonAtualizar.setText("Atualizar");
         jButtonAtualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
