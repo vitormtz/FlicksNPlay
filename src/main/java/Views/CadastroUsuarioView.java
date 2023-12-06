@@ -4,6 +4,10 @@
  */
 package Views;
 
+import Controllers.EnderecoController;
+import Controllers.UsuarioController;
+import Models.EnderecoModel;
+import Models.UsuarioModel;
 import Support.CEPFormattedTextField;
 import Support.CPFFormattedTextField;
 import Support.DataNascimentoFormattedTextField;
@@ -11,6 +15,8 @@ import Support.NumerosTextField;
 import static Support.ValidacaoDataNascimento.validarDataNascimento;
 import Support.ViaCEP;
 import static Support.ValidacaoCPF.validarCPF;
+import TablesModel.UsuariosTableModel;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
@@ -26,6 +32,7 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
      */
     public CadastroUsuarioView() {
         initComponents();
+        carregarUsuarios();
     }
 
     /**
@@ -487,6 +494,15 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
         return 0;
     }
 
+    public void carregarUsuarios() {
+        UsuarioController usuarioController = new UsuarioController();
+        ArrayList<UsuarioModel> listaUsuario = usuarioController.readAll();
+
+        EnderecoController enderecoController = new EnderecoController();
+        ArrayList<EnderecoModel> listaEndereco = enderecoController.readAll();
+
+        this.jTableUsuarios.setModel(new UsuariosTableModel(listaUsuario, listaEndereco));
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroupUsuario;
     private javax.swing.JButton jButtonAtualizar;

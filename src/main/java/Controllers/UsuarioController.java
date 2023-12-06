@@ -55,7 +55,7 @@ public class UsuarioController extends Adapter<UsuarioModel, Integer> {
         try {
             dbcm = ConectionController.getInstance().getDB();
 
-            String sql = "SELECT * FROM usuarios;";
+            String sql = "SELECT * FROM usuarios ORDER BY id_endereco;";
 
             ResultSet rs = dbcm.runQuerySQL(sql);
 

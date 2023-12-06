@@ -33,7 +33,7 @@ public class FilmesTableModel implements TableModel {
 
     @Override
     public String getColumnName(int columnIndex) {
-        String[] colName = {"Id", "Nome", "Tipo", "Gênero", "Descrição", "Classificação Indicativa", "Disponivel", "Valor da Locação"};
+        String[] colName = {"ID", "Nome", "Tipo", "Gênero", "Descrição", "Classificação Indicativa", "Disponivel", "Valor da Locação"};
         return colName[columnIndex];
     }
 
