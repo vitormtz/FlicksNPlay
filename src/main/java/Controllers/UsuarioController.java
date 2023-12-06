@@ -30,16 +30,15 @@ public class UsuarioController extends Adapter<UsuarioModel, Integer> {
                 rs.next();
                 // não precisa while por que eu sei que só tem um resultado
                 int id = rs.getInt("id_usuario");
-                int cidade = rs.getInt("id_cidade");
+                int endereco = rs.getInt("id_endereco");
                 String nome = rs.getString("nome");
-                String endereco = rs.getString("endereco");
                 String email = rs.getString("email");
                 String cpf = rs.getString("cpf");
                 String dtNasc = rs.getString("dt_nasc");
                 String senha = rs.getString("senha");
                 boolean nvAcess = rs.getBoolean("nivel_acesso");
                 String cargo = rs.getString("cargo");
-                usuario = new UsuarioModel(id, cidade, nome, endereco, email, cpf, dtNasc, senha, nvAcess, cargo);
+                usuario = new UsuarioModel(id, endereco, nome, email, cpf, dtNasc, senha, nvAcess, cargo);
             }
         } catch (DataBaseException | SQLException ex) {
             System.out.println("Algo de errado aconteceu");
@@ -65,16 +64,15 @@ public class UsuarioController extends Adapter<UsuarioModel, Integer> {
                 rs.next();
                 while (!rs.isAfterLast()) {
                     int id = rs.getInt("id_usuario");
-                    int cidade = rs.getInt("id_cidade");
+                    int endereco = rs.getInt("id_endereco");
                     String nome = rs.getString("nome");
-                    String endereco = rs.getString("endereco");
                     String email = rs.getString("email");
                     String cpf = rs.getString("cpf");
                     String dtNasc = rs.getString("dt_nasc");
                     String senha = rs.getString("senha");
                     boolean nvAcess = rs.getBoolean("nivel_acesso");
                     String cargo = rs.getString("cargo");
-                    UsuarioModel usuario = new UsuarioModel(id, cidade, nome, endereco, email, cpf, dtNasc, senha, nvAcess, cargo);
+                    UsuarioModel usuario = new UsuarioModel(id, endereco, nome, email, cpf, dtNasc, senha, nvAcess, cargo);
                     usuarios.add(usuario);
 
                     rs.next();

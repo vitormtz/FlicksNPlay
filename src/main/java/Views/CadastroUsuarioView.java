@@ -8,7 +8,12 @@ import Support.CEPFormattedTextField;
 import Support.CPFFormattedTextField;
 import Support.DataNascimentoFormattedTextField;
 import Support.NumerosTextField;
+import static Support.ValidacaoDataNascimento.validarDataNascimento;
 import Support.ViaCEP;
+import static Support.ValidacaoCPF.validarCPF;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -249,7 +254,7 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
                             .addComponent(jLabelCep)
                             .addComponent(jFormattedTextFieldCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextFieldRua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabelRua))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -279,6 +284,11 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
         jButtonAtualizar.setEnabled(false);
 
         jButtonCadastrar.setText("Cadastrar");
+        jButtonCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCadastrarActionPerformed(evt);
+            }
+        });
 
         jLabelBusca.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabelBusca.setText("Buscar:");
@@ -390,6 +400,7 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
         this.jPasswordFieldSenha.setVisible(false);
         this.jLabelCargo.setVisible(false);
         this.jComboBoxCargo.setVisible(false);
+        this.jPasswordFieldSenha.setText("");
 
     }//GEN-LAST:event_jRadioButtonClienteActionPerformed
 
@@ -421,6 +432,60 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jFormattedTextFieldCepKeyReleased
+
+    private void jButtonCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCadastrarActionPerformed
+        switch (validaCampos()) {
+            case 1:
+                JOptionPane.showMessageDialog(null, "Valores não inseridos", "Erro", JOptionPane.ERROR_MESSAGE);
+                break;
+            case 2:
+                JOptionPane.showMessageDialog(null, "E-mail inválido", "Erro", JOptionPane.ERROR_MESSAGE);
+                break;
+            case 3:
+                JOptionPane.showMessageDialog(null, "CPF inválido", "Erro", JOptionPane.ERROR_MESSAGE);
+                break;
+            case 4:
+                JOptionPane.showMessageDialog(null, "Data de nascimento inválida", "Erro", JOptionPane.ERROR_MESSAGE);
+                break;
+            default:
+                System.out.println("Opção Válida");
+                break;
+        }
+    }//GEN-LAST:event_jButtonCadastrarActionPerformed
+
+    public int validaCampos() {
+        String nome = jTextFieldNome.getText();
+        String email = jTextFieldEmail.getText();
+        String cpf = jFormattedTextFieldCpf.getText().replaceAll("[.\\-\\s]", "");
+        String nascimento = jFormattedTextFieldDataNascimento.getText();
+        String cep = jFormattedTextFieldCep.getText().replaceAll("[_-]", "");
+        String rua = jTextFieldRua.getText();
+        String numero = jTextFieldNumero.getText();
+        String bairro = jTextFieldBairro.getText();
+        String estado = jTextFieldEstado.getText();
+        String cidade = jTextFieldCidade.getText();
+
+        String regex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(email);
+
+        if (nome.isEmpty() || email.isEmpty() || cpf.length() < 11
+                || nascimento.replaceAll("[_/-]", "").length() < 8 || cep.length() < 8
+                || rua.isEmpty() || numero.isEmpty() || bairro.isEmpty()
+                || estado.isEmpty() || cidade.isEmpty()) {
+            return 1;
+        } else if (jRadioButtonFuncionario.isSelected() && (jPasswordFieldSenha.toString().isEmpty()
+                || String.valueOf(jComboBoxCargo.getSelectedItem()).isEmpty())) {
+            return 1;
+        } else if (!matcher.matches()) {
+            return 2;
+        } else if (!validarCPF(cpf)) {
+            return 3;
+        } else if (!validarDataNascimento(nascimento)) {
+            return 4;
+        }
+        return 0;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroupUsuario;

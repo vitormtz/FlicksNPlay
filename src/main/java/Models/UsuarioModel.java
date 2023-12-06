@@ -2,9 +2,8 @@ package Models;
 
 public class UsuarioModel {
     private int id;
-    private int cidade;
+    private int endereco;
     private String nome;
-    private String endereco;
     private String email;
     private String cpf;
     private String dtNasc;
@@ -13,11 +12,10 @@ public class UsuarioModel {
     private String cargo;
     
 
-    public UsuarioModel(int id, int cidade, String nome, String endereco, String email, String cpf, String dtNasc, String senha, boolean nvAcess, String cargo) {
+    public UsuarioModel(int id, int endereco, String nome, String email, String cpf, String dtNasc, String senha, boolean nvAcess, String cargo) {
         this.id = id;
-        this.cidade = cidade;
-        this.nome = nome;
         this.endereco = endereco;
+        this.nome = nome;
         this.email = email;
         this.cpf = cpf;
         this.dtNasc = dtNasc;
@@ -26,10 +24,9 @@ public class UsuarioModel {
         this.cargo = cargo;
     }
 
-    public UsuarioModel(int cidade, String nome, String endereco, String email, String cpf, String dtNasc, String senha, boolean nvAcess, String cargo) {
-        this.cidade = cidade;
-        this.nome = nome;
+    public UsuarioModel(int endereco, String nome, String email, String cpf, String dtNasc, String senha, boolean nvAcess, String cargo) {
         this.endereco = endereco;
+        this.nome = nome;
         this.email = email;
         this.cpf = cpf;
         this.dtNasc = dtNasc;
@@ -62,12 +59,12 @@ public class UsuarioModel {
         this.id = id;
     }
 
-    public int getCidade() {
-        return cidade;
+    public int getEndereco() {
+        return endereco;
     }
 
-    public void setCidade(int cidade) {
-        this.cidade = cidade;
+    public void setEndereco(int endereco) {
+        this.endereco = endereco;
     }
 
     public String getNome() {
@@ -76,14 +73,6 @@ public class UsuarioModel {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public String getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
     }
 
     public String getEmail() {
