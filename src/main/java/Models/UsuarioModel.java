@@ -1,6 +1,7 @@
 package Models;
 
 public class UsuarioModel {
+
     private int id;
     private int endereco;
     private String nome;
@@ -10,7 +11,6 @@ public class UsuarioModel {
     private String senha;
     private boolean nvAcess;
     private String cargo;
-    
 
     public UsuarioModel(int id, int endereco, String nome, String email, String cpf, String dtNasc, String senha, boolean nvAcess, String cargo) {
         this.id = id;
@@ -106,7 +106,7 @@ public class UsuarioModel {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-    
+
     @Override
     public String toString() {
         return this.getNome();

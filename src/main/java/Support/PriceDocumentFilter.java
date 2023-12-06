@@ -14,6 +14,7 @@ import javax.swing.text.DocumentFilter;
  * @author vitor
  */
 public class PriceDocumentFilter extends DocumentFilter {
+
     @Override
     public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr)
             throws BadLocationException {
@@ -47,4 +48,3 @@ public class PriceDocumentFilter extends DocumentFilter {
         return text.matches("^\\d+(\\.\\d{0,2})?$");
     }
 }
-

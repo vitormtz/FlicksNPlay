@@ -9,12 +9,10 @@ package Support;
  *
  * @author mouriac
  */
-public class InvalidKeyException extends Exception
-{
+public class InvalidKeyException extends Exception {
 
-    public InvalidKeyException()
-    {
+    public InvalidKeyException() {
         super("Valor incorreto para chave primária");
     }
-    
+
 }

@@ -9,12 +9,10 @@ package Support;
  *
  * @author mouri
  */
-public class DataBaseException extends Exception
-{
+public class DataBaseException extends Exception {
 
-    public DataBaseException(String message) 
-    {
+    public DataBaseException(String message) {
         super(message);
     }
-    
+
 }

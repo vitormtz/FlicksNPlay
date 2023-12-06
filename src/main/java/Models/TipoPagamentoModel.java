@@ -1,6 +1,7 @@
 package Models;
 
 public class TipoPagamentoModel {
+
     private int id;
     private String nome;
 
