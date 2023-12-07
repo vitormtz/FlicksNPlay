@@ -27,11 +27,9 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
     /**
      * Creates new form CadastroUsuarioView
      */
-    private ArrayList idEndereco;
-
     public CadastroUsuarioView() {
         initComponents();
-        carregarUsuarios();
+        carregarUsuarios("");
     }
 
     /**
@@ -300,6 +298,11 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
         jLabelBusca.setText("Buscar:");
 
         jButtonPesquisa.setText("Pesquisar");
+        jButtonPesquisa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPesquisaActionPerformed(evt);
+            }
+        });
 
         jPanelTipoDeCadastro.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tipo de Cadastro", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
@@ -459,6 +462,10 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonCadastrarActionPerformed
 
+    private void jButtonPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisaActionPerformed
+        carregarUsuarios(this.jTextFieldBusca.getText().toLowerCase());
+    }//GEN-LAST:event_jButtonPesquisaActionPerformed
+
     public int validaCampos() {
         String nome = jTextFieldNome.getText();
         String email = jTextFieldEmail.getText();
@@ -493,11 +500,19 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
         return 0;
     }
 
-    public void carregarUsuarios() {
-        UsuarioController usuarioController = new UsuarioController();
-        ArrayList listaUsuario = usuarioController.readAllWithEndereco();
+    public void carregarUsuarios(String buscar) {
+        if (!buscar.isEmpty()) {
 
-        this.jTableUsuarios.setModel(new UsuariosTableModel(listaUsuario));
+            UsuarioController usuarioController = new UsuarioController();
+            ArrayList listaUsuario = usuarioController.readName(buscar);
+
+            this.jTableUsuarios.setModel(new UsuariosTableModel(listaUsuario));
+        } else {
+            UsuarioController usuarioController = new UsuarioController();
+            ArrayList listaUsuario = usuarioController.readAllWithEndereco();
+
+            this.jTableUsuarios.setModel(new UsuariosTableModel(listaUsuario));
+        }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroupUsuario;

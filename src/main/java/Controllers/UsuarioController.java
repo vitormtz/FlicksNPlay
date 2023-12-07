@@ -128,6 +128,50 @@ public class UsuarioController extends Adapter<UsuarioModel, Integer> {
         return usuarios;
     }
 
+    public ArrayList readName(String nome) {
+        ArrayList<ArrayList<String>> usuarios = new ArrayList<>();
+
+        DataBaseConnectionManager dbcm;
+        try {
+            dbcm = ConectionController.getInstance().getDB();
+
+            String sql = "SELECT id_usuario, nome, email, cpf, dt_nasc, cargo, rua, numero, bairro, cep, cidade, estado\n"
+                    + "FROM usuarios u INNER JOIN enderecos e ON u.id_endereco=e.id_endereco\n"
+                    + "WHERE LOWER(nome) LIKE '%" + nome + "%';";
+
+            ResultSet rs = dbcm.runQuerySQL(sql);
+
+            if (rs.isBeforeFirst()) // acho alguma coisa?
+            {
+                rs.next();
+                while (!rs.isAfterLast()) {
+                    ArrayList<String> usuario = new ArrayList<>();
+
+                    usuario.add(rs.getString("id_usuario"));
+                    usuario.add(rs.getString("nome"));
+                    usuario.add(rs.getString("email"));
+                    usuario.add(rs.getString("cpf"));
+                    usuario.add(rs.getString("dt_nasc"));
+                    usuario.add(rs.getString("cargo"));
+                    usuario.add(rs.getString("rua"));
+                    usuario.add(rs.getString("numero"));
+                    usuario.add(rs.getString("bairro"));
+                    usuario.add(rs.getString("cep"));
+                    usuario.add(rs.getString("cidade"));
+                    usuario.add(rs.getString("estado"));
+
+                    usuarios.add(usuario);
+
+                    rs.next();
+                }
+            }
+
+        } catch (DataBaseException | SQLException ex) {
+            System.out.println("Algo de errado aconteceu");
+        }
+        return usuarios;
+    }
+
     @Override
     public void update(UsuarioModel usuario) {
     }
