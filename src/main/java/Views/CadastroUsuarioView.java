@@ -4,10 +4,7 @@
  */
 package Views;
 
-import Controllers.EnderecoController;
 import Controllers.UsuarioController;
-import Models.EnderecoModel;
-import Models.UsuarioModel;
 import Support.CEPFormattedTextField;
 import Support.CPFFormattedTextField;
 import Support.DataNascimentoFormattedTextField;
@@ -30,6 +27,8 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
     /**
      * Creates new form CadastroUsuarioView
      */
+    private ArrayList idEndereco;
+
     public CadastroUsuarioView() {
         initComponents();
         carregarUsuarios();
@@ -496,12 +495,9 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
 
     public void carregarUsuarios() {
         UsuarioController usuarioController = new UsuarioController();
-        ArrayList<UsuarioModel> listaUsuario = usuarioController.readAll();
+        ArrayList listaUsuario = usuarioController.readAllWithEndereco();
 
-        EnderecoController enderecoController = new EnderecoController();
-        ArrayList<EnderecoModel> listaEndereco = enderecoController.readAll();
-
-        this.jTableUsuarios.setModel(new UsuariosTableModel(listaUsuario, listaEndereco));
+        this.jTableUsuarios.setModel(new UsuariosTableModel(listaUsuario));
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroupUsuario;

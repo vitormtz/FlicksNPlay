@@ -4,8 +4,6 @@
  */
 package TablesModel;
 
-import Models.EnderecoModel;
-import Models.UsuarioModel;
 import java.util.ArrayList;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
@@ -16,21 +14,15 @@ import javax.swing.table.TableModel;
  */
 public class UsuariosTableModel implements TableModel {
 
-    private ArrayList<UsuarioModel> vetorUsuario;
-    private ArrayList<EnderecoModel> vetorEndereco;
+    private ArrayList<ArrayList<String>> vetor;
 
-    public UsuariosTableModel(ArrayList<UsuarioModel> vetor) {
-        this.vetorUsuario = vetor;
-    }
-
-    public UsuariosTableModel(ArrayList<UsuarioModel> vetorUsuario, ArrayList<EnderecoModel> vetorEndereco) {
-        this.vetorUsuario = vetorUsuario;
-        this.vetorEndereco = vetorEndereco;
+    public UsuariosTableModel(ArrayList<ArrayList<String>> vetor) {
+        this.vetor = vetor;
     }
 
     @Override
     public int getRowCount() {
-        return vetorUsuario.size();
+        return vetor.size();
     }
 
     @Override
@@ -56,24 +48,9 @@ public class UsuariosTableModel implements TableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        UsuarioModel usuario = vetorUsuario.get(rowIndex);
-        EnderecoModel endereco = vetorEndereco.get(rowIndex);
+        ArrayList<String> usuario = vetor.get(rowIndex);
 
-        String[] aux = {
-            usuario.getId() + "",
-            usuario.getNome() + "",
-            usuario.getEmail() + "",
-            usuario.getCpf() + "",
-            usuario.getDtNasc() + "",
-            usuario.getCargo() + "",
-            endereco.getRua() + "",
-            endereco.getNumero() + "",
-            endereco.getBairro() + "",
-            endereco.getCep() + "",
-            endereco.getCidade() + "",
-            endereco.getEstado() + "",
-            
-            endereco.getId() + ""};
+        String[] aux = usuario.toArray(new String[0]);
 
         return aux[columnIndex];
     }
