@@ -4,9 +4,12 @@ import Models.UsuarioModel;
 import Support.Adapter;
 import Support.DataBaseConnectionManager;
 import Support.DataBaseException;
+import Support.NotFoundException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class UsuarioController extends Adapter<UsuarioModel, Integer> {
@@ -78,6 +81,30 @@ public class UsuarioController extends Adapter<UsuarioModel, Integer> {
         } catch (DataBaseException ex) {
             JOptionPane.showMessageDialog(null, "Não foi possível atualizar o Usuário, tente de novo", "Erro", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    public int deleteReturnId(Integer idUsuario) {
+        DataBaseConnectionManager dbcm;
+        int resultadoQuery = 0;
+        try {
+            dbcm = ConectionController.getInstance().getDB();
+
+            String sql = "DELETE FROM usuarios WHERE id_usuario = " + idUsuario + " RETURNING id_endereco;";
+
+            ResultSet rs = dbcm.runQuerySQL(sql);
+
+            if (rs.isBeforeFirst()) // acho alguma coisa?
+            {
+                rs.next();
+                resultadoQuery = Integer.parseInt(rs.getString(1));
+            }
+            JOptionPane.showMessageDialog(null, "Usuário excluído com sucesso", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        } catch (DataBaseException ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possível excluir o Usuário, tente de novo", "Erro", JOptionPane.ERROR_MESSAGE);
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return resultadoQuery;
     }
 
     @Override
@@ -239,6 +266,7 @@ public class UsuarioController extends Adapter<UsuarioModel, Integer> {
     }
 
     @Override
-    public void delete(Integer idUsuario) {
+    public void delete(Integer primaryKey) throws NotFoundException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

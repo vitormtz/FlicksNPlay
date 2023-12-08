@@ -261,12 +261,11 @@ public class CadastroFilmeJogoView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
-        Object valueId = this.jTableFilmesJogos.getValueAt(getSelectedRow(), 0);
         Object valueTipo = this.jTableFilmesJogos.getValueAt(getSelectedRow(), 2);
 
         if ("Filme".equals((String) valueTipo)) {
             FilmeController filmeController = new FilmeController();
-            filmeController.delete(Integer.valueOf((String) valueId));
+            filmeController.delete(this.id);
 
             carregarFilmesJogos();
             limparCampos();
@@ -275,7 +274,7 @@ public class CadastroFilmeJogoView extends javax.swing.JFrame {
             this.jButtonAtualizar.setEnabled(false);
         } else {
             JogoController jogoController = new JogoController();
-            jogoController.delete(Integer.valueOf((String) valueId));
+            jogoController.delete(this.id);
 
             carregarFilmesJogos();
             limparCampos();

@@ -73,6 +73,21 @@ public class EnderecoController extends Adapter<EnderecoModel, Integer> {
     }
 
     @Override
+    public void delete(Integer idEndereco) {
+        DataBaseConnectionManager dbcm;
+        try {
+            dbcm = ConectionController.getInstance().getDB();
+
+            String sql = "DELETE FROM enderecos WHERE id_endereco = ?;";
+
+            dbcm.runPreparedSQL(sql, idEndereco);
+
+        } catch (DataBaseException ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possível excluir o Endereço, tente de novo", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    @Override
     public EnderecoModel read(Integer primaryKey) throws NotFoundException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
@@ -110,11 +125,6 @@ public class EnderecoController extends Adapter<EnderecoModel, Integer> {
             System.out.println("Algo de errado aconteceu");
         }
         return enderecos;
-    }
-
-    @Override
-    public void delete(Integer primaryKey) throws NotFoundException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override

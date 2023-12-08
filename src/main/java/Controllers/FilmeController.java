@@ -87,9 +87,9 @@ public class FilmeController extends Adapter<FilmeModel, Integer> {
 
             dbcm.runPreparedSQL(sql, primaryKey);
 
-            JOptionPane.showMessageDialog(null, "filme excluído com sucesso", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Filme excluído com sucesso", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
         } catch (DataBaseException ex) {
-            JOptionPane.showMessageDialog(null, "Não foi possível excluir o genero, tente de novo", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Não foi possível excluir o Filme, tente de novo", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 

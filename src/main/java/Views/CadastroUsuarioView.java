@@ -277,6 +277,11 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
 
         jButtonExcluir.setText("Excluir");
         jButtonExcluir.setEnabled(false);
+        jButtonExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExcluirActionPerformed(evt);
+            }
+        });
 
         jTableUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -627,6 +632,21 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
                 break;
         }
     }//GEN-LAST:event_jButtonAtualizarActionPerformed
+
+    private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
+        UsuarioController usuarioController = new UsuarioController();
+        EnderecoController enderecoController = new EnderecoController();
+        enderecoController.delete(usuarioController.deleteReturnId(this.id));
+
+        carregarUsuarios("");
+        limparCampos();
+        this.jButtonCadastrar.setEnabled(true);
+        this.jRadioButtonCliente.setEnabled(true);
+        this.jRadioButtonFuncionario.setEnabled(true);
+        this.jButtonExcluir.setEnabled(false);
+        this.jButtonAtualizar.setEnabled(false);
+
+    }//GEN-LAST:event_jButtonExcluirActionPerformed
 
     public int validaCampos() {
         String nome = this.jTextFieldNome.getText();
