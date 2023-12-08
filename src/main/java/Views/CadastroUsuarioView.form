@@ -229,10 +229,8 @@
               </StringArray>
             </Property>
           </Properties>
-          <Events>
-            <EventHandler event="ancestorAdded" listener="javax.swing.event.AncestorListener" parameters="javax.swing.event.AncestorEvent" handler="jComboBoxCargoAncestorAdded"/>
-          </Events>
           <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jComboBoxCargo.removeAllItems();&#xa;jComboBoxCargo.addItem(&quot;&quot;);&#xa;jComboBoxCargo.addItem(&quot;Gerente&quot;);&#xa;jComboBoxCargo.addItem(&quot;Balconista&quot;);"/>
             <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jComboBoxCargo.setVisible(false);"/>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
@@ -488,6 +486,9 @@
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTableUsuariosMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

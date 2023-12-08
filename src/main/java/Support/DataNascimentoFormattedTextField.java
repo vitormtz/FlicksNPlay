@@ -5,6 +5,8 @@
 package Support;
 
 import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JFormattedTextField;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
@@ -30,5 +32,19 @@ public class DataNascimentoFormattedTextField extends JFormattedTextField {
         }
 
         return new DefaultFormatterFactory(maskFormatter);
+    }
+
+    public static String DateFormatExample(String dataString) {
+        // Formato para a data de entrada
+        DateTimeFormatter formatoEntrada = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        // Converte a String para um objeto LocalDate
+        LocalDate data = LocalDate.parse(dataString, formatoEntrada);
+
+        // Formato para a data de saída
+        DateTimeFormatter formatoSaida = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        // Converte a data para uma String no formato desejado
+        return data.format(formatoSaida);
     }
 }

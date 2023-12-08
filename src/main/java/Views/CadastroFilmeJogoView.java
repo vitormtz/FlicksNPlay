@@ -26,6 +26,8 @@ public class CadastroFilmeJogoView extends javax.swing.JFrame {
     /**
      * Creates new form CadastroFilmeView
      */
+    private int id;
+
     public CadastroFilmeJogoView() {
         initComponents();
         carregarFilmesJogos();
@@ -278,16 +280,18 @@ public class CadastroFilmeJogoView extends javax.swing.JFrame {
 
             carregarFilmesJogos();
             limparCampos();
-            jButtonExcluir.setEnabled(false);
-            jButtonAtualizar.setEnabled(false);
+            this.jButtonCadastrar.setEnabled(true);
+            this.jButtonExcluir.setEnabled(false);
+            this.jButtonAtualizar.setEnabled(false);
         } else {
             JogoController jogoController = new JogoController();
             jogoController.delete(Integer.valueOf((String) valueId));
 
             carregarFilmesJogos();
             limparCampos();
-            jButtonExcluir.setEnabled(false);
-            jButtonAtualizar.setEnabled(false);
+            this.jButtonCadastrar.setEnabled(true);
+            this.jButtonExcluir.setEnabled(false);
+            this.jButtonAtualizar.setEnabled(false);
         }
     }//GEN-LAST:event_jButtonExcluirActionPerformed
 
@@ -298,7 +302,6 @@ public class CadastroFilmeJogoView extends javax.swing.JFrame {
         String tipo = this.jComboBoxTipo.getSelectedItem().equals("Filme") ? "F" : "J";
         boolean disponivel = this.jComboBoxDisponivel.getSelectedItem().equals("Sim") ? true : false;
         String descricao = this.jTextPaneDescricao.getText();
-        int id = Integer.parseInt((String) this.jTableFilmesJogos.getValueAt(getSelectedRow(), 0));
 
         if (validaCampos()) {
             JOptionPane.showMessageDialog(null, "Valores não inseridos", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -306,26 +309,28 @@ public class CadastroFilmeJogoView extends javax.swing.JFrame {
             ItemCombo comboGenero = (ItemCombo) this.jComboBoxGenero.getSelectedItem();
             int genero = comboGenero.getId();
 
-            FilmeModel filmes = new FilmeModel(id, genero, nome, descricao, classificacao, disponivel, preco, tipo.charAt(0));
+            FilmeModel filmes = new FilmeModel(this.id, genero, nome, descricao, classificacao, disponivel, preco, tipo.charAt(0));
             FilmeController filmeController = new FilmeController();
             filmeController.update(filmes);
 
             carregarFilmesJogos();
             limparCampos();
-            jButtonExcluir.setEnabled(false);
-            jButtonAtualizar.setEnabled(false);
+            this.jButtonCadastrar.setEnabled(true);
+            this.jButtonExcluir.setEnabled(false);
+            this.jButtonAtualizar.setEnabled(false);
         } else if (tipo.equals("J")) {
             ItemCombo comboGenero = (ItemCombo) this.jComboBoxGenero.getSelectedItem();
             int genero = comboGenero.getId();
 
-            JogoModel jogos = new JogoModel(id, genero, nome, descricao, classificacao, disponivel, preco, tipo.charAt(0));
+            JogoModel jogos = new JogoModel(this.id, genero, nome, descricao, classificacao, disponivel, preco, tipo.charAt(0));
             JogoController JogoController = new JogoController();
             JogoController.update(jogos);
 
             carregarFilmesJogos();
             limparCampos();
-            jButtonExcluir.setEnabled(false);
-            jButtonAtualizar.setEnabled(false);
+            this.jButtonCadastrar.setEnabled(true);
+            this.jButtonExcluir.setEnabled(false);
+            this.jButtonAtualizar.setEnabled(false);
         }
     }//GEN-LAST:event_jButtonAtualizarActionPerformed
 
@@ -340,8 +345,11 @@ public class CadastroFilmeJogoView extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBoxClasIndicativaAncestorAdded
 
     private void jTableFilmesJogosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableFilmesJogosMouseClicked
-        jButtonExcluir.setEnabled(true);
-        jButtonAtualizar.setEnabled(true);
+        this.jButtonExcluir.setEnabled(true);
+        this.jButtonAtualizar.setEnabled(true);
+        this.jButtonCadastrar.setEnabled(false);
+
+        this.id = Integer.parseInt((String) this.jTableFilmesJogos.getValueAt(getSelectedRow(), 0));
         Object valueNome = this.jTableFilmesJogos.getValueAt(getSelectedRow(), 1);
         Object valueTipo = this.jTableFilmesJogos.getValueAt(getSelectedRow(), 2);
         Object valueGenero = this.jTableFilmesJogos.getValueAt(getSelectedRow(), 3);
@@ -352,16 +360,16 @@ public class CadastroFilmeJogoView extends javax.swing.JFrame {
 
         this.jTextFieldNome.setText((String) valueNome);
         this.jComboBoxTipo.setSelectedIndex("Filme".equals((String) valueTipo) ? 1 : 2);
-        for (int i = 0; i < jComboBoxGenero.getItemCount(); i++) {
+        for (int i = 0; i < this.jComboBoxGenero.getItemCount(); i++) {
             this.jComboBoxGenero.setSelectedIndex(i);
-            if (String.valueOf(jComboBoxGenero.getSelectedItem()).equals(String.valueOf(valueGenero))) {
+            if (String.valueOf(this.jComboBoxGenero.getSelectedItem()).equals(String.valueOf(valueGenero))) {
                 break;
             }
         }
         this.jTextPaneDescricao.setText((String) valueDescricao);
-        for (int i = 0; i < jComboBoxClasIndicativa.getItemCount(); i++) {
+        for (int i = 0; i < this.jComboBoxClasIndicativa.getItemCount(); i++) {
             this.jComboBoxClasIndicativa.setSelectedIndex(i);
-            if (String.valueOf(jComboBoxClasIndicativa.getSelectedItem()).equals(String.valueOf(valueClassificacao))) {
+            if (String.valueOf(this.jComboBoxClasIndicativa.getSelectedItem()).equals(String.valueOf(valueClassificacao))) {
                 break;
             }
         }

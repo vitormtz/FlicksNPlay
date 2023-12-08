@@ -8,6 +8,7 @@ import Controllers.UsuarioController;
 import Support.CEPFormattedTextField;
 import Support.CPFFormattedTextField;
 import Support.DataNascimentoFormattedTextField;
+import static Support.DataNascimentoFormattedTextField.DateFormatExample;
 import Support.NumerosTextField;
 import static Support.ValidacaoDataNascimento.validarDataNascimento;
 import Support.ViaCEP;
@@ -27,6 +28,8 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
     /**
      * Creates new form CadastroUsuarioView
      */
+    private int id;
+
     public CadastroUsuarioView() {
         initComponents();
         carregarUsuarios("");
@@ -106,15 +109,10 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
 
         jComboBoxCargo.setVisible(false);
         jComboBoxCargo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBoxCargo.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                jComboBoxCargoAncestorAdded(evt);
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-        });
+        jComboBoxCargo.removeAllItems();
+        jComboBoxCargo.addItem("");
+        jComboBoxCargo.addItem("Gerente");
+        jComboBoxCargo.addItem("Balconista");
 
         jLabelEmail.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabelEmail.setText("E-mail:");
@@ -282,6 +280,11 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTableUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableUsuariosMouseClicked(evt);
+            }
+        });
         jScrollPaneUsuarios.setViewportView(jTableUsuarios);
 
         jButtonAtualizar.setText("Atualizar");
@@ -410,7 +413,6 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
         this.jLabelCargo.setVisible(false);
         this.jComboBoxCargo.setVisible(false);
         this.jPasswordFieldSenha.setText("");
-
     }//GEN-LAST:event_jRadioButtonClienteActionPerformed
 
     private void jRadioButtonFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonFuncionarioActionPerformed
@@ -419,13 +421,6 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
         this.jLabelCargo.setVisible(true);
         this.jComboBoxCargo.setVisible(true);
     }//GEN-LAST:event_jRadioButtonFuncionarioActionPerformed
-
-    private void jComboBoxCargoAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jComboBoxCargoAncestorAdded
-        this.jComboBoxCargo.removeAllItems();
-        this.jComboBoxCargo.addItem("");
-        this.jComboBoxCargo.addItem("Gerente");
-        this.jComboBoxCargo.addItem("Balconista");
-    }//GEN-LAST:event_jComboBoxCargoAncestorAdded
 
     private void jFormattedTextFieldCepKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jFormattedTextFieldCepKeyReleased
         String regexCEP = "\\d{5}-\\d{3}";
@@ -466,17 +461,69 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
         carregarUsuarios(this.jTextFieldBusca.getText().toLowerCase());
     }//GEN-LAST:event_jButtonPesquisaActionPerformed
 
+    private void jTableUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableUsuariosMouseClicked
+        this.jButtonExcluir.setEnabled(true);
+        this.jButtonAtualizar.setEnabled(true);
+        this.jRadioButtonFuncionario.setEnabled(false);
+        this.jRadioButtonCliente.setEnabled(false);
+        this.jButtonCadastrar.setEnabled(false);
+
+        this.id = Integer.parseInt((String) this.jTableUsuarios.getValueAt(getSelectedRow(), 0));
+        Object valueNome = this.jTableUsuarios.getValueAt(getSelectedRow(), 1);
+        Object valueEmail = this.jTableUsuarios.getValueAt(getSelectedRow(), 2);
+        Object valueCpf = this.jTableUsuarios.getValueAt(getSelectedRow(), 3);
+        Object valueDtNasc = this.jTableUsuarios.getValueAt(getSelectedRow(), 4);
+        Object valueCargo = this.jTableUsuarios.getValueAt(getSelectedRow(), 5);
+        Object valueRua = this.jTableUsuarios.getValueAt(getSelectedRow(), 6);
+        Object valueNumero = this.jTableUsuarios.getValueAt(getSelectedRow(), 7);
+        Object valueBairro = this.jTableUsuarios.getValueAt(getSelectedRow(), 8);
+        Object valueCEP = this.jTableUsuarios.getValueAt(getSelectedRow(), 9);
+        Object valueCidade = this.jTableUsuarios.getValueAt(getSelectedRow(), 10);
+        Object valueEstado = this.jTableUsuarios.getValueAt(getSelectedRow(), 11);
+
+        if (valueCargo == null) {
+            this.jRadioButtonCliente.setSelected(true);
+            this.jRadioButtonFuncionario.setEnabled(false);
+            this.jRadioButtonCliente.setEnabled(false);
+            this.jLabelSenha.setVisible(false);
+            this.jPasswordFieldSenha.setVisible(false);
+            this.jLabelCargo.setVisible(false);
+            this.jComboBoxCargo.setVisible(false);
+            this.jPasswordFieldSenha.setText("");
+        } else {
+            this.jRadioButtonFuncionario.setSelected(true);
+            this.jRadioButtonFuncionario.setEnabled(false);
+            this.jRadioButtonCliente.setEnabled(false);
+            this.jLabelSenha.setVisible(true);
+            this.jPasswordFieldSenha.setVisible(true);
+            this.jLabelCargo.setVisible(true);
+            this.jComboBoxCargo.setVisible(true);
+        }
+
+        this.jTextFieldNome.setText(String.valueOf(valueNome));
+        this.jTextFieldEmail.setText(String.valueOf(valueEmail));
+        this.jFormattedTextFieldCpf.setText(String.valueOf(valueCpf));
+        this.jFormattedTextFieldDataNascimento.setText(DateFormatExample(String.valueOf(valueDtNasc)));
+        this.jComboBoxCargo.setSelectedIndex("gerente".equals((String) valueCargo) ? 1 : 2);
+        this.jFormattedTextFieldCep.setText(String.valueOf(valueCEP));
+        this.jTextFieldRua.setText(String.valueOf(valueRua));
+        this.jTextFieldNumero.setText(String.valueOf(valueNumero));
+        this.jTextFieldBairro.setText(String.valueOf(valueBairro));
+        this.jTextFieldEstado.setText(String.valueOf(valueEstado));
+        this.jTextFieldCidade.setText(String.valueOf(valueCidade));
+    }//GEN-LAST:event_jTableUsuariosMouseClicked
+
     public int validaCampos() {
-        String nome = jTextFieldNome.getText();
-        String email = jTextFieldEmail.getText();
-        String cpf = jFormattedTextFieldCpf.getText().replaceAll("[.\\-\\s]", "");
-        String nascimento = jFormattedTextFieldDataNascimento.getText();
-        String cep = jFormattedTextFieldCep.getText().replaceAll("[_-]", "");
-        String rua = jTextFieldRua.getText();
-        String numero = jTextFieldNumero.getText();
-        String bairro = jTextFieldBairro.getText();
-        String estado = jTextFieldEstado.getText();
-        String cidade = jTextFieldCidade.getText();
+        String nome = this.jTextFieldNome.getText();
+        String email = this.jTextFieldEmail.getText();
+        String cpf = this.jFormattedTextFieldCpf.getText().replaceAll("[.\\-\\s]", "");
+        String nascimento = this.jFormattedTextFieldDataNascimento.getText();
+        String cep = this.jFormattedTextFieldCep.getText().replaceAll("[_-]", "");
+        String rua = this.jTextFieldRua.getText();
+        String numero = this.jTextFieldNumero.getText();
+        String bairro = this.jTextFieldBairro.getText();
+        String estado = this.jTextFieldEstado.getText();
+        String cidade = this.jTextFieldCidade.getText();
 
         String regex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
         Pattern pattern = Pattern.compile(regex);
@@ -487,8 +534,8 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
                 || rua.isEmpty() || numero.isEmpty() || bairro.isEmpty()
                 || estado.isEmpty() || cidade.isEmpty()) {
             return 1;
-        } else if (jRadioButtonFuncionario.isSelected() && (jPasswordFieldSenha.toString().isEmpty()
-                || String.valueOf(jComboBoxCargo.getSelectedItem()).isEmpty())) {
+        } else if (this.jRadioButtonFuncionario.isSelected() && (this.jPasswordFieldSenha.toString().isEmpty()
+                || String.valueOf(this.jComboBoxCargo.getSelectedItem()).isEmpty())) {
             return 1;
         } else if (!matcher.matches()) {
             return 2;
@@ -513,6 +560,10 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
 
             this.jTableUsuarios.setModel(new UsuariosTableModel(listaUsuario));
         }
+    }
+
+    public int getSelectedRow() {
+        return this.jTableUsuarios.getSelectedRow();
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroupUsuario;
