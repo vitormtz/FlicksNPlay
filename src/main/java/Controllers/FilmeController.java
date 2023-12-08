@@ -8,8 +8,6 @@ import Models.FilmeModel;
 import Support.Adapter;
 import Support.DataBaseConnectionManager;
 import Support.DataBaseException;
-import Support.InvalidKeyException;
-import Support.KeyViolationException;
 import Support.NotFoundException;
 import java.sql.ResultSet;
 import java.sql.SQLException;

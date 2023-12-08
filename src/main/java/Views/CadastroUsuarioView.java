@@ -14,6 +14,7 @@ import Support.DataNascimentoFormattedTextField;
 import static Support.DataNascimentoFormattedTextField.DateFormatExample;
 import Support.InvalidKeyException;
 import Support.KeyViolationException;
+import Support.NotFoundException;
 import Support.NumerosTextField;
 import static Support.ValidacaoDataNascimento.validarDataNascimento;
 import Support.ViaCEP;
@@ -36,7 +37,7 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
     /**
      * Creates new form CadastroUsuarioView
      */
-    private int id;
+    private int id = 0;
 
     public CadastroUsuarioView() {
         initComponents();
@@ -297,6 +298,11 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
 
         jButtonAtualizar.setText("Atualizar");
         jButtonAtualizar.setEnabled(false);
+        jButtonAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAtualizarActionPerformed(evt);
+            }
+        });
 
         jButtonCadastrar.setText("Cadastrar");
         jButtonCadastrar.addActionListener(new java.awt.event.ActionListener() {
@@ -437,8 +443,10 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
             try {
                 ViaCEP viaCep = new ViaCEP();
                 viaCep.buscar(this.jFormattedTextFieldCep.getText());
-                this.jTextFieldRua.setText(viaCep.getLogradouro());
-                this.jTextFieldBairro.setText(viaCep.getBairro());
+                if (!viaCep.getLogradouro().isEmpty() && !viaCep.getBairro().isEmpty()) {
+                    this.jTextFieldRua.setText(viaCep.getLogradouro());
+                    this.jTextFieldBairro.setText(viaCep.getBairro());
+                }
                 this.jTextFieldEstado.setText(viaCep.getUf());
                 this.jTextFieldCidade.setText(viaCep.getLocalidade());
             } catch (Exception e) {
@@ -478,28 +486,27 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
 
                 EnderecoModel endereco = new EnderecoModel(rua, numero, bairro, cep, cidade, estado);
                 EnderecoController enderecoController = new EnderecoController();
-                 {
-                    try {
-                        idEndereco = enderecoController.createReturnId(endereco);
-                        UsuarioModel usuario;
 
-                        if (this.jRadioButtonCliente.isSelected()) {
-                            usuario = new UsuarioModel(idEndereco, nome, email, cpf, DtNasc);
-                        } else {
-                            usuario = new UsuarioModel(idEndereco, nome, email, cpf, DtNasc, senha, nvAcess, cargo);
-                        }
-                        UsuarioController usuarioController = new UsuarioController();
-                        usuarioController.create(usuario);
+                try {
+                    idEndereco = enderecoController.createReturnId(endereco);
+                    UsuarioModel usuario;
 
-                        carregarUsuarios("");
-                        limparCampos();
-                    } catch (KeyViolationException ex) {
-                        Logger.getLogger(CadastroUsuarioView.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (InvalidKeyException ex) {
-                        Logger.getLogger(CadastroUsuarioView.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (SQLException ex) {
-                        Logger.getLogger(CadastroUsuarioView.class.getName()).log(Level.SEVERE, null, ex);
+                    if (this.jRadioButtonCliente.isSelected()) {
+                        usuario = new UsuarioModel(this.id, idEndereco, nome, email, cpf, DtNasc);
+                    } else {
+                        usuario = new UsuarioModel(this.id, idEndereco, nome, email, cpf, DtNasc, senha, nvAcess, cargo);
                     }
+                    UsuarioController usuarioController = new UsuarioController();
+                    usuarioController.create(usuario);
+
+                    carregarUsuarios("");
+                    limparCampos();
+                } catch (KeyViolationException ex) {
+                    Logger.getLogger(CadastroUsuarioView.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (InvalidKeyException ex) {
+                    Logger.getLogger(CadastroUsuarioView.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(CadastroUsuarioView.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 break;
         }
@@ -515,6 +522,7 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
         this.jRadioButtonFuncionario.setEnabled(false);
         this.jRadioButtonCliente.setEnabled(false);
         this.jButtonCadastrar.setEnabled(false);
+        this.jPasswordFieldSenha.setText("");
 
         this.id = Integer.parseInt((String) this.jTableUsuarios.getValueAt(getSelectedRow(), 0));
         Object valueNome = this.jTableUsuarios.getValueAt(getSelectedRow(), 1);
@@ -561,6 +569,65 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
         this.jTextFieldCidade.setText(String.valueOf(valueCidade));
     }//GEN-LAST:event_jTableUsuariosMouseClicked
 
+    private void jButtonAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAtualizarActionPerformed
+        switch (validaCampos()) {
+            case 1:
+                JOptionPane.showMessageDialog(null, "Valores não inseridos", "Erro", JOptionPane.ERROR_MESSAGE);
+                break;
+            case 2:
+                JOptionPane.showMessageDialog(null, "E-mail inválido", "Erro", JOptionPane.ERROR_MESSAGE);
+                break;
+            case 3:
+                JOptionPane.showMessageDialog(null, "CPF inválido", "Erro", JOptionPane.ERROR_MESSAGE);
+                break;
+            case 4:
+                JOptionPane.showMessageDialog(null, "Data de nascimento inválida", "Erro", JOptionPane.ERROR_MESSAGE);
+                break;
+            default:
+                String nome = this.jTextFieldNome.getText();
+                String email = this.jTextFieldEmail.getText();
+                String cpf = this.jFormattedTextFieldCpf.getText().replaceAll("[.\\-\\s]", "");
+                String DtNasc = this.jFormattedTextFieldDataNascimento.getText();
+                String senha = String.valueOf(this.jPasswordFieldSenha.getPassword());
+                boolean nvAcess = (this.jComboBoxCargo.getSelectedItem().equals("Gerente") ? true : false);
+                String cargo = this.jComboBoxCargo.getSelectedItem().equals("Gerente") ? "gerente" : "balconista";
+                int cep = Integer.parseInt(this.jFormattedTextFieldCep.getText().replaceAll("[_-]", ""));
+                String rua = this.jTextFieldRua.getText();
+                int numero = Integer.parseInt(this.jTextFieldNumero.getText());
+                String bairro = this.jTextFieldBairro.getText();
+                String estado = this.jTextFieldEstado.getText();
+                String cidade = this.jTextFieldCidade.getText();
+                int idEndereco = 0;
+
+                EnderecoModel endereco = new EnderecoModel(this.id, rua, numero, bairro, cep, cidade, estado);
+                EnderecoController enderecoController = new EnderecoController();
+
+                try {
+                    enderecoController.update(endereco);
+                    UsuarioModel usuario;
+
+                    if (this.jRadioButtonCliente.isSelected()) {
+                        usuario = new UsuarioModel(this.id, idEndereco, nome, email, cpf, DtNasc);
+                    } else {
+                        usuario = new UsuarioModel(this.id, idEndereco, nome, email, cpf, DtNasc, senha, nvAcess, cargo);
+                    }
+                    UsuarioController usuarioController = new UsuarioController();
+                    usuarioController.update(usuario);
+                } catch (NotFoundException ex) {
+                    Logger.getLogger(CadastroUsuarioView.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                carregarUsuarios("");
+                limparCampos();
+                this.jButtonCadastrar.setEnabled(true);
+                this.jRadioButtonCliente.setEnabled(true);
+                this.jRadioButtonFuncionario.setEnabled(true);
+                this.jButtonExcluir.setEnabled(false);
+                this.jButtonAtualizar.setEnabled(false);
+                break;
+        }
+    }//GEN-LAST:event_jButtonAtualizarActionPerformed
+
     public int validaCampos() {
         String nome = this.jTextFieldNome.getText();
         String email = this.jTextFieldEmail.getText();
@@ -582,7 +649,7 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
                 || rua.isEmpty() || numero.isEmpty() || bairro.isEmpty()
                 || estado.isEmpty() || cidade.isEmpty()) {
             return 1;
-        } else if (this.jRadioButtonFuncionario.isSelected() && (this.jPasswordFieldSenha.toString().isEmpty()
+        } else if (this.jRadioButtonFuncionario.isSelected() && (this.jPasswordFieldSenha.getPassword().length == 0
                 || String.valueOf(this.jComboBoxCargo.getSelectedItem()).isEmpty())) {
             return 1;
         } else if (!matcher.matches()) {

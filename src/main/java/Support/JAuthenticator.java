@@ -59,7 +59,7 @@ public class JAuthenticator extends javax.swing.JDialog {
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.setName("Login"); // NOI18N
 
-        campoPassword.setText("senha123");
+        campoPassword.setText("teste123");
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setText("Senha:");
@@ -67,7 +67,7 @@ public class JAuthenticator extends javax.swing.JDialog {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Nome:");
 
-        campoLogName.setText("João Silva");
+        campoLogName.setText("Vitor M. Brackmann");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

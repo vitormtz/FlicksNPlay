@@ -48,6 +48,39 @@ public class UsuarioController extends Adapter<UsuarioModel, Integer> {
     }
 
     @Override
+    public void update(UsuarioModel usuario) {
+        DataBaseConnectionManager dbcm;
+        try {
+            dbcm = ConectionController.getInstance().getDB();
+            String sql;
+
+            if (usuario.getCargo() == null) {
+                sql = "UPDATE usuarios SET nome = ?, email = ?, cpf = ?, dt_nasc = ? WHERE id_usuario = ?;";
+                dbcm.runPreparedSQL(sql,
+                        usuario.getNome(),
+                        usuario.getEmail(),
+                        usuario.getCpf(),
+                        usuario.getDtNasc(),
+                        usuario.getId());
+            } else {
+                sql = "UPDATE usuarios SET nome = ?, email = ?, cpf = ?, dt_nasc = ?, senha = ?, nivel_acesso = ?, cargo = ? WHERE id_usuario = ?;";
+                dbcm.runPreparedSQL(sql,
+                        usuario.getNome(),
+                        usuario.getEmail(),
+                        usuario.getCpf(),
+                        usuario.getDtNasc(),
+                        usuario.getSenha(),
+                        usuario.isNvAcess(),
+                        usuario.getCargo(),
+                        usuario.getId());
+            }
+            JOptionPane.showMessageDialog(null, "Usuário atualizado com sucesso", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        } catch (DataBaseException ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possível atualizar o Usuário, tente de novo", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    @Override
     public UsuarioModel read(Integer id_usuario) {
         UsuarioModel usuario = null;
         DataBaseConnectionManager dbcm;
@@ -203,10 +236,6 @@ public class UsuarioController extends Adapter<UsuarioModel, Integer> {
             System.out.println("Algo de errado aconteceu");
         }
         return usuarios;
-    }
-
-    @Override
-    public void update(UsuarioModel usuario) {
     }
 
     @Override

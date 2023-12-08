@@ -53,6 +53,26 @@ public class EnderecoController extends Adapter<EnderecoModel, Integer> {
     }
 
     @Override
+    public void update(EnderecoModel endereco) throws NotFoundException {
+        DataBaseConnectionManager dbcm;
+        try {
+            dbcm = ConectionController.getInstance().getDB();
+            String sql = "UPDATE enderecos SET rua = ?, numero = ?, bairro = ?, cep = ?, cidade = ?, estado = ? WHERE id_endereco IN (SELECT id_endereco FROM usuarios WHERE id_usuario = ?);";
+            dbcm.runPreparedSQL(sql,
+                    endereco.getRua(),
+                    endereco.getNumero(),
+                    endereco.getBairro(),
+                    endereco.getCep(),
+                    endereco.getCidade(),
+                    endereco.getEstado(),
+                    endereco.getId());
+
+        } catch (DataBaseException ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possível atualizar o Endereço, tente de novo", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    @Override
     public EnderecoModel read(Integer primaryKey) throws NotFoundException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
@@ -90,11 +110,6 @@ public class EnderecoController extends Adapter<EnderecoModel, Integer> {
             System.out.println("Algo de errado aconteceu");
         }
         return enderecos;
-    }
-
-    @Override
-    public void update(EnderecoModel objeto) throws NotFoundException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override

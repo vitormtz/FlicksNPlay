@@ -100,7 +100,7 @@
       <SubComponents>
         <Component class="javax.swing.JPasswordField" name="campoPassword">
           <Properties>
-            <Property name="text" type="java.lang.String" value="senha123"/>
+            <Property name="text" type="java.lang.String" value="teste123"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
@@ -121,7 +121,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="campoLogName">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Jo&#xe3;o Silva"/>
+            <Property name="text" type="java.lang.String" value="Vitor M. Brackmann"/>
           </Properties>
         </Component>
       </SubComponents>
