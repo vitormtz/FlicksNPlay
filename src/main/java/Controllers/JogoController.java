@@ -8,7 +8,10 @@ import Models.JogoModel;
 import Support.Adapter;
 import Support.DataBaseConnectionManager;
 import Support.DataBaseException;
+import Support.InvalidKeyException;
+import Support.KeyViolationException;
 import Support.NotFoundException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 

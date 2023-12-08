@@ -145,16 +145,6 @@ public class CadastroFilmeJogoView extends javax.swing.JFrame {
             }
         });
 
-        jTextFieldPreco.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                jTextFieldPrecoAncestorAdded(evt);
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-        });
-
         jLabelNomeValLocacao.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabelNomeValLocacao.setText("Preço:");
 
@@ -437,10 +427,6 @@ public class CadastroFilmeJogoView extends javax.swing.JFrame {
         this.jComboBoxTipo.addItem("Filme");
         this.jComboBoxTipo.addItem("Jogo");
     }//GEN-LAST:event_jComboBoxTipoAncestorAdded
-
-    private void jTextFieldPrecoAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTextFieldPrecoAncestorAdded
-        this.jTextFieldPreco.setText("0");
-    }//GEN-LAST:event_jTextFieldPrecoAncestorAdded
     public void carregarFilmesJogos() {
         FilmeController FilmeController = new FilmeController();
         ArrayList<FilmeModel> lista = FilmeController.readFilmeJogo();
@@ -449,7 +435,7 @@ public class CadastroFilmeJogoView extends javax.swing.JFrame {
 
     public void limparCampos() {
         this.jTextFieldNome.setText("");
-        this.jTextFieldPreco.setText("0");
+        this.jTextFieldPreco.setText("");
         this.jComboBoxClasIndicativa.setSelectedIndex(0);
         this.jComboBoxTipo.setSelectedIndex(0);
         this.jComboBoxGenero.setSelectedIndex(0);

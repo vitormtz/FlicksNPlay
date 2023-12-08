@@ -28,6 +28,15 @@ public class EnderecoModel {
         this.estado = estado;
     }
 
+    public EnderecoModel(String rua, int numero, String bairro, int cep, String cidade, String estado) {
+        this.rua = rua;
+        this.numero = numero;
+        this.bairro = bairro;
+        this.cep = cep;
+        this.cidade = cidade;
+        this.estado = estado;
+    }
+
     public int getId() {
         return id;
     }

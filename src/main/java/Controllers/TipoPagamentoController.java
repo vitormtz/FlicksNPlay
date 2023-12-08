@@ -4,6 +4,8 @@ import Models.TipoPagamentoModel;
 import Support.Adapter;
 import Support.DataBaseConnectionManager;
 import Support.DataBaseException;
+import Support.InvalidKeyException;
+import Support.KeyViolationException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;

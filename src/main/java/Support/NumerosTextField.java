@@ -25,14 +25,15 @@ public class NumerosTextField extends JTextField {
         ((AbstractDocument) getDocument()).setDocumentFilter(new DocumentFilter() {
             @Override
             public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
-                if (string.matches("\\d+")) {
+                if (string.matches("\\d*")) {  // Permite dígitos e string vazia
                     super.insertString(fb, offset, string, attr);
                 }
             }
 
             @Override
-            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
-                if (text.matches("\\d+")) {
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs)
+                    throws BadLocationException {
+                if (text.matches("\\d*")) {  // Permite dígitos e string vazia
                     super.replace(fb, offset, length, text, attrs);
                 }
             }

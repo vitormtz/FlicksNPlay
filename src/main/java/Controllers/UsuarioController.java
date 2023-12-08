@@ -7,11 +7,44 @@ import Support.DataBaseException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class UsuarioController extends Adapter<UsuarioModel, Integer> {
 
     @Override
     public void create(UsuarioModel usuario) {
+        DataBaseConnectionManager dbcm;
+        try {
+            dbcm = ConectionController.getInstance().getDB();
+            String sql;
+
+            if (usuario.getCargo() == null) {
+                sql = "INSERT INTO usuarios VALUES ("
+                        + "(SELECT COALESCE(MAX(id_usuario), 0) + 1 FROM usuarios), "
+                        + "" + usuario.getEndereco() + ", "
+                        + "'" + usuario.getNome() + "', "
+                        + "'" + usuario.getEmail() + "', "
+                        + "'" + usuario.getCpf() + "', "
+                        + "'" + usuario.getDtNasc() + "')";
+            } else {
+                sql = "INSERT INTO usuarios VALUES ("
+                        + "(SELECT COALESCE(MAX(id_usuario), 0) + 1 FROM usuarios), "
+                        + "" + usuario.getEndereco() + ", "
+                        + "'" + usuario.getNome() + "', "
+                        + "'" + usuario.getEmail() + "', "
+                        + "'" + usuario.getCpf() + "', "
+                        + "'" + usuario.getDtNasc() + "', "
+                        + "'" + usuario.getSenha() + "', "
+                        + "" + usuario.isNvAcess() + ", "
+                        + "'" + usuario.getCargo() + "')";
+            }
+
+            dbcm.runPreparedSQL(sql);
+
+            JOptionPane.showMessageDialog(null, "Usuário inserido com sucesso", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        } catch (DataBaseException ex) {
+            JOptionPane.showMessageDialog(null, "Usuário não inserido, tente de novo", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     @Override

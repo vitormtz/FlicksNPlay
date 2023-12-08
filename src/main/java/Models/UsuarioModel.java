@@ -35,6 +35,14 @@ public class UsuarioModel {
         this.cargo = cargo;
     }
 
+    public UsuarioModel(int endereco, String nome, String email, String cpf, String dtNasc) {
+        this.endereco = endereco;
+        this.nome = nome;
+        this.email = email;
+        this.cpf = cpf;
+        this.dtNasc = dtNasc;
+    }
+
     public String getCargo() {
         return cargo;
     }

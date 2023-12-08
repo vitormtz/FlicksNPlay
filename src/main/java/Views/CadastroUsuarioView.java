@@ -4,17 +4,25 @@
  */
 package Views;
 
+import Controllers.EnderecoController;
 import Controllers.UsuarioController;
+import Models.EnderecoModel;
+import Models.UsuarioModel;
 import Support.CEPFormattedTextField;
 import Support.CPFFormattedTextField;
 import Support.DataNascimentoFormattedTextField;
 import static Support.DataNascimentoFormattedTextField.DateFormatExample;
+import Support.InvalidKeyException;
+import Support.KeyViolationException;
 import Support.NumerosTextField;
 import static Support.ValidacaoDataNascimento.validarDataNascimento;
 import Support.ViaCEP;
 import static Support.ValidacaoCPF.validarCPF;
 import TablesModel.UsuariosTableModel;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
@@ -413,6 +421,7 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
         this.jLabelCargo.setVisible(false);
         this.jComboBoxCargo.setVisible(false);
         this.jPasswordFieldSenha.setText("");
+        this.jComboBoxCargo.setSelectedIndex(0);
     }//GEN-LAST:event_jRadioButtonClienteActionPerformed
 
     private void jRadioButtonFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonFuncionarioActionPerformed
@@ -452,7 +461,46 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Data de nascimento inválida", "Erro", JOptionPane.ERROR_MESSAGE);
                 break;
             default:
-                System.out.println("Opção Válida");
+                String nome = this.jTextFieldNome.getText();
+                String email = this.jTextFieldEmail.getText();
+                String cpf = this.jFormattedTextFieldCpf.getText().replaceAll("[.\\-\\s]", "");
+                String DtNasc = this.jFormattedTextFieldDataNascimento.getText();
+                String senha = String.valueOf(this.jPasswordFieldSenha.getPassword());
+                boolean nvAcess = (this.jComboBoxCargo.getSelectedItem().equals("Gerente") ? true : false);
+                String cargo = this.jComboBoxCargo.getSelectedItem().equals("Gerente") ? "gerente" : "balconista";
+                int cep = Integer.parseInt(this.jFormattedTextFieldCep.getText().replaceAll("[_-]", ""));
+                String rua = this.jTextFieldRua.getText();
+                int numero = Integer.parseInt(this.jTextFieldNumero.getText());
+                String bairro = this.jTextFieldBairro.getText();
+                String estado = this.jTextFieldEstado.getText();
+                String cidade = this.jTextFieldCidade.getText();
+                int idEndereco = 0;
+
+                EnderecoModel endereco = new EnderecoModel(rua, numero, bairro, cep, cidade, estado);
+                EnderecoController enderecoController = new EnderecoController();
+                 {
+                    try {
+                        idEndereco = enderecoController.createReturnId(endereco);
+                        UsuarioModel usuario;
+
+                        if (this.jRadioButtonCliente.isSelected()) {
+                            usuario = new UsuarioModel(idEndereco, nome, email, cpf, DtNasc);
+                        } else {
+                            usuario = new UsuarioModel(idEndereco, nome, email, cpf, DtNasc, senha, nvAcess, cargo);
+                        }
+                        UsuarioController usuarioController = new UsuarioController();
+                        usuarioController.create(usuario);
+
+                        carregarUsuarios("");
+                        limparCampos();
+                    } catch (KeyViolationException ex) {
+                        Logger.getLogger(CadastroUsuarioView.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (InvalidKeyException ex) {
+                        Logger.getLogger(CadastroUsuarioView.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(CadastroUsuarioView.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
                 break;
         }
     }//GEN-LAST:event_jButtonCadastrarActionPerformed
@@ -560,6 +608,27 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
 
             this.jTableUsuarios.setModel(new UsuariosTableModel(listaUsuario));
         }
+    }
+
+    public void limparCampos() {
+        this.id = 0;
+        this.jRadioButtonCliente.setSelected(true);
+        this.jTextFieldNome.setText("");
+        this.jTextFieldEmail.setText("");
+        this.jFormattedTextFieldCpf.setText("");
+        this.jFormattedTextFieldDataNascimento.setText("");
+        this.jLabelSenha.setVisible(false);
+        this.jPasswordFieldSenha.setText("");
+        this.jPasswordFieldSenha.setVisible(false);
+        this.jLabelCargo.setVisible(false);
+        this.jComboBoxCargo.setSelectedIndex(0);
+        this.jComboBoxCargo.setVisible(false);
+        this.jFormattedTextFieldCep.setText("");
+        this.jTextFieldRua.setText("");
+        this.jTextFieldNumero.setText("");
+        this.jTextFieldBairro.setText("");
+        this.jTextFieldEstado.setText("");
+        this.jTextFieldCidade.setText("");
     }
 
     public int getSelectedRow() {

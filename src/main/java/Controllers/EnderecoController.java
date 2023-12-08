@@ -14,6 +14,7 @@ import Support.NotFoundException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,9 +22,34 @@ import java.util.ArrayList;
  */
 public class EnderecoController extends Adapter<EnderecoModel, Integer> {
 
-    @Override
-    public void create(EnderecoModel objeto) throws KeyViolationException, InvalidKeyException, SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public int createReturnId(EnderecoModel endereco) throws KeyViolationException, InvalidKeyException, SQLException {
+        DataBaseConnectionManager dbcm;
+        int resultadoQuery = 0;
+        try {
+            dbcm = ConectionController.getInstance().getDB();
+
+            String sql = "INSERT INTO enderecos VALUES ("
+                    + "(SELECT COALESCE(MAX(id_endereco), 0) + 1 FROM enderecos), "
+                    + "'" + endereco.getRua() + "', "
+                    + "" + endereco.getNumero() + ", "
+                    + "'" + endereco.getBairro() + "', "
+                    + "'" + endereco.getCep() + "', "
+                    + "'" + endereco.getCidade() + "', "
+                    + "'" + endereco.getEstado() + "') "
+                    + "RETURNING id_endereco";
+
+            ResultSet rs = dbcm.runQuerySQL(sql);
+
+            if (rs.isBeforeFirst()) // acho alguma coisa?
+            {
+                rs.next();
+                resultadoQuery = Integer.parseInt(rs.getString(1));
+            }
+
+        } catch (DataBaseException ex) {
+            JOptionPane.showMessageDialog(null, "Endereço não inserido, tente de novo", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+        return resultadoQuery;
     }
 
     @Override
@@ -76,4 +102,8 @@ public class EnderecoController extends Adapter<EnderecoModel, Integer> {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    @Override
+    public void create(EnderecoModel endereco) throws KeyViolationException, InvalidKeyException, SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
