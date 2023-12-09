@@ -198,12 +198,14 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
         jLabelCidade.setText("Cidade:");
 
         jTextFieldCidade.setEditable(false);
+        jTextFieldCidade.setEnabled(false);
         jTextFieldCidade.setRequestFocusEnabled(false);
 
         jLabelEstado.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabelEstado.setText("Estado:");
 
         jTextFieldEstado.setEditable(false);
+        jTextFieldEstado.setEnabled(false);
         jTextFieldEstado.setRequestFocusEnabled(false);
 
         jFormattedTextFieldCep.addKeyListener(new java.awt.event.KeyAdapter() {
