@@ -41,7 +41,7 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
 
     public CadastroUsuarioView() {
         initComponents();
-        carregarUsuarios("");
+        this.carregarUsuarios("");
     }
 
     /**
@@ -684,11 +684,11 @@ public class CadastroUsuarioView extends javax.swing.JFrame {
         return 0;
     }
 
-    public void carregarUsuarios(String buscar) {
-        if (!buscar.isEmpty()) {
+    public void carregarUsuarios(String busca) {
+        if (!busca.isEmpty()) {
 
             UsuarioController usuarioController = new UsuarioController();
-            ArrayList listaUsuario = usuarioController.readName(buscar);
+            ArrayList listaUsuario = usuarioController.readName(busca);
 
             this.jTableUsuarios.setModel(new UsuariosTableModel(listaUsuario));
         } else {

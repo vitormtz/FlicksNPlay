@@ -30,7 +30,7 @@ public class CadastroFilmeJogoView extends javax.swing.JFrame {
 
     public CadastroFilmeJogoView() {
         initComponents();
-        carregarFilmesJogos();
+        this.carregarFilmesJogos();
         ((AbstractDocument) this.jTextFieldPreco.getDocument()).setDocumentFilter(new PriceDocumentFilter());
     }
 

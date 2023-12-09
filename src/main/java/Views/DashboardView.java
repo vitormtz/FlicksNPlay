@@ -4,6 +4,12 @@
  */
 package Views;
 
+import Controllers.UsuarioController;
+import Models.UsuarioModel;
+import Support.CPFFormattedTextField;
+import TablesModel.ClienteTableModel;
+import java.util.ArrayList;
+
 /**
  *
  * @author augusto.zeni
@@ -13,13 +19,16 @@ public class DashboardView extends javax.swing.JFrame {
     /**
      * Creates new form DashboardView
      */
+    private int idUsuario = 0;
+
     public DashboardView(boolean cargo) {
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
         if (!cargo) {
-            jMenuRelatorios.setVisible(false);
-            jMenuCadastros.setVisible(false);
+            this.jMenuRelatorios.setVisible(false);
+            this.jMenuCadastros.setVisible(false);
         }
+        this.carregarUsuarios("");
     }
 
     /**
@@ -36,7 +45,6 @@ public class DashboardView extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabelCliente = new javax.swing.JLabel();
         jTextFieldCliente = new javax.swing.JTextField();
-        jTextFieldCpf = new javax.swing.JTextField();
         jLabelCpf = new javax.swing.JLabel();
         jLabelBuscaCliente = new javax.swing.JLabel();
         jTextFieldBuscaCliente = new javax.swing.JTextField();
@@ -45,7 +53,8 @@ public class DashboardView extends javax.swing.JFrame {
         jTableCliente = new javax.swing.JTable();
         jLabelEmail = new javax.swing.JLabel();
         jTextFieldEmail = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        jButtonAdicionarCliente = new javax.swing.JButton();
+        jFormattedTextFieldCpf = new CPFFormattedTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTableLocacaoFilmesJogos = new javax.swing.JTable();
@@ -58,6 +67,7 @@ public class DashboardView extends javax.swing.JFrame {
         jButtonAdicionarFilmeJogo = new javax.swing.JButton();
         jLabelValorTotal = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
+        jButtonLocacao = new javax.swing.JButton();
         jPanelPagamento = new javax.swing.JPanel();
         jMenuBarOpcoes = new javax.swing.JMenuBar();
         jMenuConsultas = new javax.swing.JMenu();
@@ -83,9 +93,6 @@ public class DashboardView extends javax.swing.JFrame {
         jTextFieldCliente.setEditable(false);
         jTextFieldCliente.setEnabled(false);
 
-        jTextFieldCpf.setEditable(false);
-        jTextFieldCpf.setEnabled(false);
-
         jLabelCpf.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabelCpf.setText("CPF:");
 
@@ -93,6 +100,11 @@ public class DashboardView extends javax.swing.JFrame {
         jLabelBuscaCliente.setText("Buscar:");
 
         jButtonPesquisaCliente.setText("Pesquisar");
+        jButtonPesquisaCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPesquisaClienteActionPerformed(evt);
+            }
+        });
 
         jTableCliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -105,6 +117,11 @@ public class DashboardView extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTableCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableClienteMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableCliente);
 
         jLabelEmail.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -113,8 +130,16 @@ public class DashboardView extends javax.swing.JFrame {
         jTextFieldEmail.setEditable(false);
         jTextFieldEmail.setEnabled(false);
 
-        jButton1.setText("Adicionar");
-        jButton1.setEnabled(false);
+        jButtonAdicionarCliente.setText("Adicionar");
+        jButtonAdicionarCliente.setEnabled(false);
+        jButtonAdicionarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAdicionarClienteActionPerformed(evt);
+            }
+        });
+
+        jFormattedTextFieldCpf.setEditable(false);
+        jFormattedTextFieldCpf.setEnabled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -135,11 +160,11 @@ public class DashboardView extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabelCpf)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextFieldCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jFormattedTextFieldCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton1)
+                            .addComponent(jButtonAdicionarCliente)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabelBuscaCliente)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -155,13 +180,13 @@ public class DashboardView extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelCliente)
                     .addComponent(jTextFieldCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelCpf))
+                    .addComponent(jLabelCpf)
+                    .addComponent(jFormattedTextFieldCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelEmail))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 93, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonPesquisaCliente)
                     .addComponent(jTextFieldBuscaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -169,8 +194,8 @@ public class DashboardView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addGap(15, 15, 15))
+                .addComponent(jButtonAdicionarCliente)
+                .addContainerGap())
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Filmes e Jogos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
@@ -264,8 +289,10 @@ public class DashboardView extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonAdicionarFilmeJogo)
-                .addGap(15, 15, 15))
+                .addContainerGap())
         );
+
+        jButtonLocacao.setText("Fazer Locação");
 
         javax.swing.GroupLayout jPanelLocacaoLayout = new javax.swing.GroupLayout(jPanelLocacao);
         jPanelLocacao.setLayout(jPanelLocacaoLayout);
@@ -275,20 +302,21 @@ public class DashboardView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanelLocacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonLocacao, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
         jPanelLocacaoLayout.setVerticalGroup(
             jPanelLocacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelLocacaoLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
                 .addGroup(jPanelLocacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelLocacaoLayout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanelLocacaoLayout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButtonLocacao)
+                .addGap(12, 12, 12))
         );
 
         jTabbedPane.addTab("Locação", jPanelLocacao);
@@ -301,7 +329,7 @@ public class DashboardView extends javax.swing.JFrame {
         );
         jPanelPagamentoLayout.setVerticalGroup(
             jPanelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 632, Short.MAX_VALUE)
+            .addGap(0, 712, Short.MAX_VALUE)
         );
 
         jTabbedPane.addTab("Pagamento", jPanelPagamento);
@@ -353,11 +381,6 @@ public class DashboardView extends javax.swing.JFrame {
         jMenuRelatorios.setText("Relatórios");
 
         jMenuItemRelatoriosMensais.setText("Relatórios Mensais");
-        jMenuItemRelatoriosMensais.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemRelatoriosMensaisActionPerformed(evt);
-            }
-        });
         jMenuRelatorios.add(jMenuItemRelatoriosMensais);
 
         jMenuBarOpcoes.add(jMenuRelatorios);
@@ -369,16 +392,16 @@ public class DashboardView extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 1213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
-                .addComponent(jTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 667, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 747, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -395,10 +418,6 @@ public class DashboardView extends javax.swing.JFrame {
         tipoPagamentoView.setVisible(true);
     }//GEN-LAST:event_jMenuItemTiposPagamentosActionPerformed
 
-    private void jMenuItemRelatoriosMensaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRelatoriosMensaisActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItemRelatoriosMensaisActionPerformed
-
     private void jMenuItemCadastrarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCadastrarUsuarioActionPerformed
         CadastroUsuarioView cadastroUsuariosView = new CadastroUsuarioView();
         cadastroUsuariosView.setVisible(true);
@@ -409,12 +428,50 @@ public class DashboardView extends javax.swing.JFrame {
         cadastroFilmeJogoView.setVisible(true);
     }//GEN-LAST:event_jMenuItemCadastrarFilmeEJogosActionPerformed
 
+    private void jButtonPesquisaClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisaClienteActionPerformed
+        carregarUsuarios(this.jTextFieldBuscaCliente.getText().toLowerCase());
+    }//GEN-LAST:event_jButtonPesquisaClienteActionPerformed
+
+    private void jTableClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableClienteMouseClicked
+        jButtonAdicionarCliente.setEnabled(true);
+    }//GEN-LAST:event_jTableClienteMouseClicked
+
+    private void jButtonAdicionarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarClienteActionPerformed
+        this.idUsuario = Integer.parseInt((String) this.jTableCliente.getValueAt(getSelectedRowCliente(), 0));
+        Object valueNome = this.jTableCliente.getValueAt(getSelectedRowCliente(), 1);
+        Object valueEmail = this.jTableCliente.getValueAt(getSelectedRowCliente(), 2);
+        Object valueCpf = this.jTableCliente.getValueAt(getSelectedRowCliente(), 3);
+
+        this.jTextFieldCliente.setText(String.valueOf(valueNome));
+        this.jTextFieldEmail.setText(String.valueOf(valueEmail));
+        this.jFormattedTextFieldCpf.setText(String.valueOf(valueCpf));
+
+        jButtonAdicionarCliente.setEnabled(false);
+    }//GEN-LAST:event_jButtonAdicionarClienteActionPerformed
+
+    public void carregarUsuarios(String busca) {
+        if (!busca.isEmpty()) {
+            UsuarioController usuarioController = new UsuarioController();
+            ArrayList<UsuarioModel> listaUsuario = usuarioController.readClienteNome(busca);
+            this.jTableCliente.setModel(new ClienteTableModel(listaUsuario));
+        } else {
+            UsuarioController usuarioController = new UsuarioController();
+            ArrayList<UsuarioModel> listaUsuario = usuarioController.readCliente();
+            this.jTableCliente.setModel(new ClienteTableModel(listaUsuario));
+        }
+    }
+
+    public int getSelectedRowCliente() {
+        return this.jTableCliente.getSelectedRow();
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonAdicionarCliente;
     private javax.swing.JButton jButtonAdicionarFilmeJogo;
+    private javax.swing.JButton jButtonLocacao;
     private javax.swing.JButton jButtonPesquisaCliente;
     private javax.swing.JButton jButtonPesquisaFilmeJogo;
     private javax.swing.JButton jButtonRemover;
+    private javax.swing.JFormattedTextField jFormattedTextFieldCpf;
     private javax.swing.JLabel jLabelBuscaCliente;
     private javax.swing.JLabel jLabelBuscaFilmeJogo;
     private javax.swing.JLabel jLabelCliente;
@@ -446,7 +503,6 @@ public class DashboardView extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldBuscaCliente;
     private javax.swing.JTextField jTextFieldBuscaFilmeJogo;
     private javax.swing.JTextField jTextFieldCliente;
-    private javax.swing.JTextField jTextFieldCpf;
     private javax.swing.JTextField jTextFieldEmail;
     // End of variables declaration//GEN-END:variables
 }

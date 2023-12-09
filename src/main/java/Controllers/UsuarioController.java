@@ -107,6 +107,74 @@ public class UsuarioController extends Adapter<UsuarioModel, Integer> {
         return resultadoQuery;
     }
 
+    public ArrayList<UsuarioModel> readCliente() {
+        ArrayList<UsuarioModel> usuarios = new ArrayList();
+        DataBaseConnectionManager dbcm;
+        try {
+            dbcm = ConectionController.getInstance().getDB();
+
+            String sql = "SELECT id_usuario, id_endereco, nome, email, cpf, dt_nasc FROM usuarios WHERE cargo IS NULL";
+
+            ResultSet rs = dbcm.runPreparedQuerySQL(sql);
+
+            if (rs.isBeforeFirst()) // acho alguma coisa?
+            {
+                rs.next();
+                while (!rs.isAfterLast()) {
+                    int id = rs.getInt("id_usuario");
+                    int endereco = rs.getInt("id_endereco");
+                    String nome = rs.getString("nome");
+                    String email = rs.getString("email");
+                    String cpf = rs.getString("cpf");
+                    String dtNasc = rs.getString("dt_nasc");
+
+                    UsuarioModel usuario = new UsuarioModel(id, endereco, nome, email, cpf, dtNasc);
+                    usuarios.add(usuario);
+
+                    rs.next();
+                }
+            }
+        } catch (DataBaseException | SQLException ex) {
+            System.out.println("Algo de errado aconteceu");
+        }
+        return usuarios;
+    }
+
+    public ArrayList<UsuarioModel> readClienteNome(String busca) {
+        ArrayList<UsuarioModel> usuarios = new ArrayList();
+        DataBaseConnectionManager dbcm;
+        try {
+            dbcm = ConectionController.getInstance().getDB();
+
+            String sql = "SELECT id_usuario, id_endereco, nome, email, cpf, dt_nasc "
+                    + "FROM usuarios "
+                    + "WHERE cargo IS NULL AND LOWER(nome) LIKE '%" + busca + "%'";
+
+            ResultSet rs = dbcm.runPreparedQuerySQL(sql);
+
+            if (rs.isBeforeFirst()) // acho alguma coisa?
+            {
+                rs.next();
+                while (!rs.isAfterLast()) {
+                    int id = rs.getInt("id_usuario");
+                    int endereco = rs.getInt("id_endereco");
+                    String nome = rs.getString("nome");
+                    String email = rs.getString("email");
+                    String cpf = rs.getString("cpf");
+                    String dtNasc = rs.getString("dt_nasc");
+
+                    UsuarioModel usuario = new UsuarioModel(id, endereco, nome, email, cpf, dtNasc);
+                    usuarios.add(usuario);
+
+                    rs.next();
+                }
+            }
+        } catch (DataBaseException | SQLException ex) {
+            System.out.println("Algo de errado aconteceu");
+        }
+        return usuarios;
+    }
+
     @Override
     public UsuarioModel read(Integer id_usuario) {
         UsuarioModel usuario = null;
@@ -136,7 +204,6 @@ public class UsuarioController extends Adapter<UsuarioModel, Integer> {
         } catch (DataBaseException | SQLException ex) {
             System.out.println("Algo de errado aconteceu");
         }
-
         return usuario;
     }
 
