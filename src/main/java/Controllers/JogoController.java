@@ -8,10 +8,7 @@ import Models.JogoModel;
 import Support.Adapter;
 import Support.DataBaseConnectionManager;
 import Support.DataBaseException;
-import Support.InvalidKeyException;
-import Support.KeyViolationException;
 import Support.NotFoundException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -26,14 +23,6 @@ public class JogoController extends Adapter<JogoModel, Integer> {
         DataBaseConnectionManager dbcm;
         try {
             dbcm = ConectionController.getInstance().getDB();
-
-            System.out.println("Genero: " + jogo.getGenero2());
-            System.out.println("Nome: " + jogo.getNome());
-            System.out.println("Descrição: " + jogo.getDescricao());
-            System.out.println("Classificação " + jogo.getClassificacao_indicativa());
-            System.out.println("Disponivel " + jogo.isDisponivel());
-            System.out.println("Valor Locação " + jogo.getVl_locacao());
-            System.out.println("Tipo " + jogo.getTipo());
 
             String sql = "INSERT INTO jogos VALUES ("
                     + "(SELECT COALESCE(MAX(id_jogo), 0) + 1 FROM jogos), "

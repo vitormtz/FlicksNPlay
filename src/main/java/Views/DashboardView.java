@@ -45,9 +45,6 @@ public class DashboardView extends javax.swing.JFrame {
             this.jMenuRelatorios.setVisible(false);
             this.jMenuCadastros.setVisible(false);
         }
-        this.lista.isCellEditable(-1, -1);
-        this.carregarUsuarios("");
-        this.carregarFilmesJogos("");
         this.carregarLocacaoFilmesJogos("");
     }
 
@@ -102,6 +99,13 @@ public class DashboardView extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("FlicksNPlay");
+        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+                formWindowGainedFocus(evt);
+            }
+            public void windowLostFocus(java.awt.event.WindowEvent evt) {
+            }
+        });
 
         jTabbedPane.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -486,7 +490,8 @@ public class DashboardView extends javax.swing.JFrame {
         this.jTextFieldEmail.setText(String.valueOf(valueEmail));
         this.jFormattedTextFieldCpf.setText(String.valueOf(valueCpf));
 
-        jButtonAdicionarCliente.setEnabled(false);
+        this.jButtonAdicionarCliente.setEnabled(false);
+        this.jTableCliente.clearSelection();
     }//GEN-LAST:event_jButtonAdicionarClienteActionPerformed
 
     private void jButtonPesquisaFilmeJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisaFilmeJogoActionPerformed
@@ -548,9 +553,15 @@ public class DashboardView extends javax.swing.JFrame {
                     }
                 }
                 JOptionPane.showMessageDialog(null, "Locação realizada com sucesso", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                this.limparCampos();
                 break;
         }
     }//GEN-LAST:event_jButtonLocacaoActionPerformed
+
+    private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
+        this.carregarUsuarios("");
+        this.carregarFilmesJogos("");
+    }//GEN-LAST:event_formWindowGainedFocus
 
     public void carregarUsuarios(String busca) {
         if (!busca.isEmpty()) {
@@ -618,6 +629,25 @@ public class DashboardView extends javax.swing.JFrame {
             return 2;
         }
         return 0;
+    }
+
+    public void limparCampos() {
+        this.idUsuario = 0;
+        this.jTextFieldCliente.setText("");
+        this.jTextFieldEmail.setText("");
+        this.jFormattedTextFieldCpf.setText("");
+        this.jTextFieldValorDiaria.setText("");
+        this.jButtonAdicionarCliente.setEnabled(false);
+        this.jButtonRemover.setEnabled(false);
+        this.jButtonAdicionarFilmeJogo.setEnabled(false);
+        this.jTableCliente.clearSelection();
+        this.jTableFilmesJogos.clearSelection();
+
+        int row = this.jTableLocacaoFilmesJogos.getRowCount();
+        for (int i = 0; i < row; i++) {
+            this.lista.removeRow(0);
+            this.jTableLocacaoFilmesJogos.setModel(this.lista);
+        }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdicionarCliente;

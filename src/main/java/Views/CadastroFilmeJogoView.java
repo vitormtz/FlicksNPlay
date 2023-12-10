@@ -434,7 +434,7 @@ public class CadastroFilmeJogoView extends javax.swing.JFrame {
 
     public void limparCampos() {
         this.jTextFieldNome.setText("");
-        this.jTextFieldPreco.setText("");
+        this.jTextFieldPreco.setText("0");
         this.jComboBoxClasIndicativa.setSelectedIndex(0);
         this.jComboBoxTipo.setSelectedIndex(0);
         this.jComboBoxGenero.setSelectedIndex(0);

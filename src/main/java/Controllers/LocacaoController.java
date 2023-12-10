@@ -45,8 +45,6 @@ public class LocacaoController extends Adapter<LocacaoModel, Integer> {
                         + "'" + LocalDate.now() + "', "
                         + "" + locacao.getDt_fim() + ")";
             }
-
-            System.out.println("SQL: " + sql);
             dbcm.runPreparedSQL(sql);
 
         } catch (DataBaseException ex) {
