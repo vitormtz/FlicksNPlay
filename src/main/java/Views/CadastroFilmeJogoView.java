@@ -428,7 +428,7 @@ public class CadastroFilmeJogoView extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBoxTipoAncestorAdded
     public void carregarFilmesJogos() {
         FilmeController FilmeController = new FilmeController();
-        ArrayList<FilmeModel> lista = FilmeController.readFilmeJogo();
+        ArrayList<FilmeModel> lista = FilmeController.readFilmeJogo(true);
         this.jTableFilmesJogos.setModel(new FilmesTableModel(lista));
     }
 

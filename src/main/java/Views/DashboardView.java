@@ -4,11 +4,20 @@
  */
 package Views;
 
+import Controllers.FilmeController;
+import Controllers.LocacaoController;
 import Controllers.UsuarioController;
+import Models.FilmeModel;
+import Models.LocacaoModel;
 import Models.UsuarioModel;
 import Support.CPFFormattedTextField;
 import TablesModel.ClienteTableModel;
+import TablesModel.FilmesTableModel;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -20,6 +29,14 @@ public class DashboardView extends javax.swing.JFrame {
      * Creates new form DashboardView
      */
     private int idUsuario = 0;
+    DefaultTableModel lista = new DefaultTableModel(
+            new Object[][]{},
+            new Object[]{"ID", "Nome", "Tipo", "Valor da Locação"}) {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    };
 
     public DashboardView(boolean cargo) {
         initComponents();
@@ -28,7 +45,10 @@ public class DashboardView extends javax.swing.JFrame {
             this.jMenuRelatorios.setVisible(false);
             this.jMenuCadastros.setVisible(false);
         }
+        this.lista.isCellEditable(-1, -1);
         this.carregarUsuarios("");
+        this.carregarFilmesJogos("");
+        this.carregarLocacaoFilmesJogos("");
     }
 
     /**
@@ -65,8 +85,8 @@ public class DashboardView extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableFilmesJogos = new javax.swing.JTable();
         jButtonAdicionarFilmeJogo = new javax.swing.JButton();
-        jLabelValorTotal = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jLabelValorDiaria = new javax.swing.JLabel();
+        jTextFieldValorDiaria = new javax.swing.JTextField();
         jButtonLocacao = new javax.swing.JButton();
         jPanelPagamento = new javax.swing.JPanel();
         jMenuBarOpcoes = new javax.swing.JMenuBar();
@@ -200,26 +220,31 @@ public class DashboardView extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Filmes e Jogos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
-        jTableLocacaoFilmesJogos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+        jTableLocacaoFilmesJogos.setEnabled(false);
+        jTableLocacaoFilmesJogos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableLocacaoFilmesJogosMouseClicked(evt);
             }
-        ));
+        });
         jScrollPane3.setViewportView(jTableLocacaoFilmesJogos);
 
         jButtonRemover.setText("Remover");
         jButtonRemover.setEnabled(false);
+        jButtonRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRemoverActionPerformed(evt);
+            }
+        });
 
         jLabelBuscaFilmeJogo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabelBuscaFilmeJogo.setText("Buscar:");
 
         jButtonPesquisaFilmeJogo.setText("Pesquisar");
+        jButtonPesquisaFilmeJogo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPesquisaFilmeJogoActionPerformed(evt);
+            }
+        });
 
         jTableFilmesJogos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -232,16 +257,26 @@ public class DashboardView extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTableFilmesJogos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableFilmesJogosMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTableFilmesJogos);
 
         jButtonAdicionarFilmeJogo.setText("Adicionar");
         jButtonAdicionarFilmeJogo.setEnabled(false);
+        jButtonAdicionarFilmeJogo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAdicionarFilmeJogoActionPerformed(evt);
+            }
+        });
 
-        jLabelValorTotal.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabelValorTotal.setText("Valor Total:");
+        jLabelValorDiaria.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabelValorDiaria.setText("Valor da Diaria:");
 
-        jTextField1.setEditable(false);
-        jTextField1.setEnabled(false);
+        jTextFieldValorDiaria.setEditable(false);
+        jTextFieldValorDiaria.setEnabled(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -253,9 +288,9 @@ public class DashboardView extends javax.swing.JFrame {
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabelValorTotal)
+                        .addComponent(jLabelValorDiaria)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextFieldValorDiaria, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButtonRemover))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -278,8 +313,8 @@ public class DashboardView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonRemover)
-                    .addComponent(jLabelValorTotal)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabelValorDiaria)
+                    .addComponent(jTextFieldValorDiaria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelBuscaFilmeJogo)
@@ -293,6 +328,11 @@ public class DashboardView extends javax.swing.JFrame {
         );
 
         jButtonLocacao.setText("Fazer Locação");
+        jButtonLocacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLocacaoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelLocacaoLayout = new javax.swing.GroupLayout(jPanelLocacao);
         jPanelLocacao.setLayout(jPanelLocacaoLayout);
@@ -449,6 +489,69 @@ public class DashboardView extends javax.swing.JFrame {
         jButtonAdicionarCliente.setEnabled(false);
     }//GEN-LAST:event_jButtonAdicionarClienteActionPerformed
 
+    private void jButtonPesquisaFilmeJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisaFilmeJogoActionPerformed
+        carregarFilmesJogos(this.jTextFieldBuscaFilmeJogo.getText().toLowerCase());
+    }//GEN-LAST:event_jButtonPesquisaFilmeJogoActionPerformed
+
+    private void jTableFilmesJogosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableFilmesJogosMouseClicked
+        this.jButtonAdicionarFilmeJogo.setEnabled(true);
+    }//GEN-LAST:event_jTableFilmesJogosMouseClicked
+
+    private void jButtonAdicionarFilmeJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarFilmeJogoActionPerformed
+        Object[] rowData = {this.jTableFilmesJogos.getValueAt(getSelectedRowFilmeJogo(), 0),
+            this.jTableFilmesJogos.getValueAt(getSelectedRowFilmeJogo(), 1),
+            this.jTableFilmesJogos.getValueAt(getSelectedRowFilmeJogo(), 2),
+            this.jTableFilmesJogos.getValueAt(getSelectedRowFilmeJogo(), 3)};
+
+        this.lista.addRow(rowData);
+        this.jTableLocacaoFilmesJogos.setModel(this.lista);
+        this.jTextFieldValorDiaria.setText(String.format("%.2f", getValorTotalLocacao()));
+        this.jTableLocacaoFilmesJogos.setEnabled(true);
+    }//GEN-LAST:event_jButtonAdicionarFilmeJogoActionPerformed
+
+    private void jTableLocacaoFilmesJogosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableLocacaoFilmesJogosMouseClicked
+        this.jButtonRemover.setEnabled(true);
+    }//GEN-LAST:event_jTableLocacaoFilmesJogosMouseClicked
+
+    private void jButtonRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverActionPerformed
+        int row = jTableLocacaoFilmesJogos.getSelectedRow();
+        double valorTotal = getValorTotalLocacao();
+        this.jTextFieldValorDiaria.setText(String.format("%.2f", valorTotal - Double.parseDouble((String) this.jTableLocacaoFilmesJogos.getValueAt(row, 3))));
+
+        this.lista.removeRow(row);
+        this.jTableLocacaoFilmesJogos.setModel(this.lista);
+        this.jTableLocacaoFilmesJogos.setEnabled(true);
+    }//GEN-LAST:event_jButtonRemoverActionPerformed
+
+    private void jButtonLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLocacaoActionPerformed
+        switch (validaCampos()) {
+            case 1:
+                JOptionPane.showMessageDialog(null, "Selecione um cliente", "Erro", JOptionPane.ERROR_MESSAGE);
+                break;
+            case 2:
+                JOptionPane.showMessageDialog(null, "Adicione algum filme ou jogo à locação", "Erro", JOptionPane.ERROR_MESSAGE);
+                break;
+            default:
+                for (int i = 0; i < this.jTableLocacaoFilmesJogos.getRowCount(); i++) {
+                    int idFilmeJogo = Integer.parseInt((String) this.jTableLocacaoFilmesJogos.getValueAt(i, 0));
+                    String tipo = (String) this.jTableLocacaoFilmesJogos.getValueAt(i, 2);
+                    double valorLocacao = Double.parseDouble((String) this.jTableLocacaoFilmesJogos.getValueAt(i, 3));
+
+                    if (tipo.equals("Jogo")) {
+                        LocacaoModel locacao = new LocacaoModel(this.idUsuario, valorLocacao, idFilmeJogo);
+                        LocacaoController locacaoController = new LocacaoController();
+                        locacaoController.create(locacao);
+                    } else {
+                        LocacaoModel locacao = new LocacaoModel(this.idUsuario, idFilmeJogo, valorLocacao);
+                        LocacaoController locacaoController = new LocacaoController();
+                        locacaoController.create(locacao);
+                    }
+                }
+                JOptionPane.showMessageDialog(null, "Locação realizada com sucesso", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                break;
+        }
+    }//GEN-LAST:event_jButtonLocacaoActionPerformed
+
     public void carregarUsuarios(String busca) {
         if (!busca.isEmpty()) {
             UsuarioController usuarioController = new UsuarioController();
@@ -461,8 +564,60 @@ public class DashboardView extends javax.swing.JFrame {
         }
     }
 
+    public void carregarFilmesJogos(String busca) {
+        if (!busca.isEmpty()) {
+            FilmeController FilmeController = new FilmeController();
+            ArrayList<FilmeModel> lista = FilmeController.readFilmeJogoNome(busca);
+            this.jTableFilmesJogos.setModel(new FilmesTableModel(lista));
+        } else {
+            FilmeController FilmeController = new FilmeController();
+            ArrayList<FilmeModel> lista = FilmeController.readFilmeJogo(false);
+            this.jTableFilmesJogos.setModel(new FilmesTableModel(lista));
+        }
+
+        TableColumnModel columnModel = this.jTableFilmesJogos.getColumnModel();
+        TableColumn columnToHide;
+        columnToHide = columnModel.getColumn(3);
+        columnModel.removeColumn(columnToHide);
+        columnToHide = columnModel.getColumn(3);
+        columnModel.removeColumn(columnToHide);
+        columnToHide = columnModel.getColumn(3);
+        columnModel.removeColumn(columnToHide);
+        columnToHide = columnModel.getColumn(3);
+        columnModel.removeColumn(columnToHide);
+    }
+
+    public void carregarLocacaoFilmesJogos(String busca) {
+        this.jTableLocacaoFilmesJogos.setModel(this.lista);
+    }
+
     public int getSelectedRowCliente() {
         return this.jTableCliente.getSelectedRow();
+    }
+
+    public int getSelectedRowFilmeJogo() {
+        return this.jTableFilmesJogos.getSelectedRow();
+    }
+
+    public double getValorTotalLocacao() {
+        double valorTotal = 0;
+        for (int i = 0; i < this.jTableLocacaoFilmesJogos.getRowCount(); i++) {
+            valorTotal += Double.parseDouble((String) this.jTableLocacaoFilmesJogos.getValueAt(i, 3));
+        }
+        return valorTotal;
+    }
+
+    public int validaCampos() {
+        String nome = this.jTextFieldCliente.getText();
+        String email = this.jTextFieldEmail.getText();
+        String cpf = this.jFormattedTextFieldCpf.getText().replaceAll("[.\\-\\s]", "");
+
+        if (nome.isEmpty() || email.isEmpty() || cpf.length() < 11) {
+            return 1;
+        } else if (this.jTableLocacaoFilmesJogos.getRowCount() == 0) {
+            return 2;
+        }
+        return 0;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdicionarCliente;
@@ -477,7 +632,7 @@ public class DashboardView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelCliente;
     private javax.swing.JLabel jLabelCpf;
     private javax.swing.JLabel jLabelEmail;
-    private javax.swing.JLabel jLabelValorTotal;
+    private javax.swing.JLabel jLabelValorDiaria;
     private javax.swing.JMenuBar jMenuBarOpcoes;
     private javax.swing.JMenu jMenuCadastros;
     private javax.swing.JMenu jMenuConsultas;
@@ -499,10 +654,10 @@ public class DashboardView extends javax.swing.JFrame {
     private javax.swing.JTable jTableCliente;
     private javax.swing.JTable jTableFilmesJogos;
     private javax.swing.JTable jTableLocacaoFilmesJogos;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextFieldBuscaCliente;
     private javax.swing.JTextField jTextFieldBuscaFilmeJogo;
     private javax.swing.JTextField jTextFieldCliente;
     private javax.swing.JTextField jTextFieldEmail;
+    private javax.swing.JTextField jTextFieldValorDiaria;
     // End of variables declaration//GEN-END:variables
 }

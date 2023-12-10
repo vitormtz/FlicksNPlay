@@ -93,7 +93,59 @@ public class FilmeController extends Adapter<FilmeModel, Integer> {
         }
     }
 
-    public ArrayList<FilmeModel> readFilmeJogo() {
+    public ArrayList<FilmeModel> readFilmeJogo(boolean isdisponivel) {
+        ArrayList<FilmeModel> filmes = new ArrayList();
+
+        DataBaseConnectionManager dbcm;
+        try {
+            dbcm = ConectionController.getInstance().getDB();
+            String sql;
+
+            if (isdisponivel) {
+                sql = "SELECT id_filme, generos.nome AS genero, filmes.nome, descricao, classificacao_indicativa, disponivel, vl_locacao, filmes.tipo "
+                        + "FROM filmes INNER JOIN generos ON filmes.id_genero = generos.id_genero "
+                        + "UNION ALL "
+                        + "SELECT id_jogo, generos.nome AS genero, jogos.nome, descricao, classificacao_indicativa, disponivel, vl_locacao, jogos.tipo "
+                        + "FROM jogos INNER JOIN generos ON jogos.id_genero = generos.id_genero;";
+            } else {
+                sql = "SELECT id_filme, generos.nome AS genero, filmes.nome, descricao, classificacao_indicativa, disponivel, vl_locacao, filmes.tipo "
+                        + "FROM filmes INNER JOIN generos ON filmes.id_genero = generos.id_genero "
+                        + "WHERE disponivel = true "
+                        + "UNION ALL "
+                        + "SELECT id_jogo, generos.nome AS genero, jogos.nome, descricao, classificacao_indicativa, disponivel, vl_locacao, jogos.tipo "
+                        + "FROM jogos INNER JOIN generos ON jogos.id_genero = generos.id_genero "
+                        + "WHERE disponivel = true;";
+            }
+
+            ResultSet rs = dbcm.runQuerySQL(sql);
+
+            if (rs.isBeforeFirst()) // acho alguma coisa?
+            {
+                rs.next();
+
+                while (!rs.isAfterLast()) {
+                    int id = rs.getInt("id_filme");
+                    String genero = rs.getString("genero");
+                    String nome = rs.getString("nome");
+                    String descricao = rs.getString("descricao");
+                    int classificacao_indicativa = rs.getInt("classificacao_indicativa");
+                    boolean disponivel = rs.getBoolean("disponivel");
+                    double vl_locacao = rs.getDouble("vl_locacao");
+                    char tipo = (char) rs.getString("tipo").charAt(0);
+
+                    FilmeModel filme = new FilmeModel(id, genero, nome, descricao, classificacao_indicativa, disponivel, vl_locacao, tipo);
+                    filmes.add(filme);
+
+                    rs.next();
+                }
+            }
+        } catch (DataBaseException | SQLException ex) {
+            System.out.println("Algo de errado aconteceu");
+        }
+        return filmes;
+    }
+
+    public ArrayList<FilmeModel> readFilmeJogoNome(String busca) {
         ArrayList<FilmeModel> filmes = new ArrayList();
 
         DataBaseConnectionManager dbcm;
@@ -102,9 +154,11 @@ public class FilmeController extends Adapter<FilmeModel, Integer> {
 
             String sql = "SELECT id_filme, generos.nome AS genero, filmes.nome, descricao, classificacao_indicativa, disponivel, vl_locacao, filmes.tipo "
                     + "FROM filmes INNER JOIN generos ON filmes.id_genero = generos.id_genero "
+                    + "WHERE disponivel = true AND LOWER(filmes.nome) LIKE '%" + busca + "%' "
                     + "UNION ALL "
                     + "SELECT id_jogo, generos.nome AS genero, jogos.nome, descricao, classificacao_indicativa, disponivel, vl_locacao, jogos.tipo "
-                    + "FROM jogos INNER JOIN generos ON jogos.id_genero = generos.id_genero;";
+                    + "FROM jogos INNER JOIN generos ON jogos.id_genero = generos.id_genero "
+                    + "WHERE disponivel = true AND LOWER(jogos.nome) LIKE '%" + busca + "%';";
 
             ResultSet rs = dbcm.runQuerySQL(sql);
 
