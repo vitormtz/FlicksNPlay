@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 8.2.0.final using JasperReports Library version 6.20.3-415f9428cffdb6805c6f85bbb29ebaf18813a2ab  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioPopularidadeGeneros" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4064e1a4-dfc1-4ea9-afee-45a3af95d3c7">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.jrdax"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<queryString>
+		<![CDATA[SELECT g.id_genero, g.nome, COUNT(l.id_locacao) AS total_locacoes
+FROM generos g
+LEFT JOIN filmes f ON g.id_genero = f.id_genero
+LEFT JOIN jogos j ON g.id_genero = j.id_genero
+LEFT JOIN locacoes l ON (f.id_filme = l.id_filme OR j.id_jogo = l.id_jogo)
+GROUP BY g.id_genero, g.nome
+ORDER BY total_locacoes DESC]]>
+	</queryString>
+	<field name="id_genero" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id_genero"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_genero"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="generos"/>
+		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nome"/>
+		<property name="com.jaspersoft.studio.field.label" value="nome"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="generos"/>
+		<fieldDescription><![CDATA[nome]]></fieldDescription>
+	</field>
+	<field name="total_locacoes" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="total_locacoes"/>
+		<property name="com.jaspersoft.studio.field.label" value="total_locacoes"/>
+		<fieldDescription><![CDATA[total_locacoes]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="51" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="50" height="50" uuid="1f0db7aa-ea1e-44f2-a24c-973fe418bbef"/>
+				<imageExpression><![CDATA["Imagens/video-camera.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="167" y="15" width="220" height="20" uuid="976e4895-d6b6-44bc-a4df-fa79061dae3a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Sistema de Locadora - FlicksNPlay]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="50" width="554" height="1" uuid="3d49c888-c293-44dd-9cc6-fb334158a7ce"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="19" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="190" height="18" uuid="6926b002-4ce0-4429-8f23-a3a4f417f6f7"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Relatório de Popularidade de Gêneros]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="440" y="0" width="114" height="18" uuid="8c275235-e414-4bd8-8b6d-9869d6c19ab0"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Impresso em: " + new java.text.SimpleDateFormat("dd/MM/yyyy").format(new Date())]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="35">
+			<line>
+				<reportElement x="0" y="0" width="554" height="1" uuid="91565299-4cba-4600-b425-a33ba949a65c"/>
+			</line>
+			<line>
+				<reportElement x="0" y="34" width="554" height="1" uuid="1d90b82a-f78e-4d90-89ed-e6bee4d9cc60"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="8" width="100" height="19" uuid="81a49716-af7f-4bf3-9419-59a10210b192">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4d25529a-2015-4fa2-ad96-5814d121de7f"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[id_genero]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="452" y="8" width="100" height="18" uuid="ded6b581-5261-4911-88b0-5283554f323c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8d1f43d3-2efb-4ccc-a271-d0e0500358a9"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[total_locacoes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="227" y="8" width="100" height="19" uuid="573cb9d0-361a-42ea-a90a-2ebc57072751">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3943d8d8-eb9b-4edc-a6f2-e231f11b2f0b"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[nome]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="35" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="8" width="100" height="19" uuid="df578f7b-60d7-47f8-b57f-38d5a3f1e995">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4d25529a-2015-4fa2-ad96-5814d121de7f"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{id_genero}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="227" y="8" width="100" height="19" uuid="184417a1-6f30-4b9e-bc8c-56984627ec38">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3943d8d8-eb9b-4edc-a6f2-e231f11b2f0b"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="463" y="8" width="91" height="19" uuid="2f246539-eefc-456c-aae9-73d7e9345e01">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8d1f43d3-2efb-4ccc-a271-d0e0500358a9"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{total_locacoes}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="400" y="1" width="152" height="28" uuid="f1021f6a-c884-4735-bd24-83fec1b5c6d6"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="0" width="554" height="1" uuid="5bc52ba2-db59-493c-8ae1-3eb7b175b127"/>
+			</line>
+		</band>
+	</pageFooter>
+</jasperReport>

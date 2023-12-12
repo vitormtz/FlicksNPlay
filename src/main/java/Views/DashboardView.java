@@ -5,6 +5,7 @@
 package Views;
 
 import Controllers.FilmeController;
+import Controllers.GeneroController;
 import Controllers.LocacaoController;
 import Controllers.PagamentoController;
 import Controllers.TipoPagamentoController;
@@ -698,6 +699,11 @@ public class DashboardView extends javax.swing.JFrame {
         jMenuRelatorios.add(jMenuItemRelatorioInadimplencia);
 
         jMenuItem1.setText("Relatório de Popularidade de Gênero");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenuRelatorios.add(jMenuItem1);
 
         jMenuBarOpcoes.add(jMenuRelatorios);
@@ -954,6 +960,31 @@ public class DashboardView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Erro ao gerar relatório: " + e);
         }
     }//GEN-LAST:event_jMenuItemRelatorioInadimplenciaActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        try {
+            JasperReport relatorioCompilado = JasperCompileManager.compileReport("src/main/java/Reports/RelatorioPopularidadeGeneros.jrxml");
+
+            JasperPrint relatorioPreenchido = JasperFillManager.fillReport(relatorioCompilado, null,
+                    new JRBeanCollectionDataSource(new GeneroController().readGenerosPopulares()));
+
+            JDialog tela = new JDialog(this, "Relatório de Popularidade de Gênero", true);
+
+            JRViewer painelRelatorio = new JRViewer(relatorioPreenchido);
+            tela.getContentPane().add(painelRelatorio);
+
+            tela.setSize(1000, 1000);
+
+            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+            int x = (screenSize.width - tela.getWidth()) / 2;
+            int y = (screenSize.height - tela.getHeight()) / 2;
+            tela.setLocation(x, y);
+
+            tela.setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao gerar relatório: " + e);
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     public void carregarUsuariosPagamento(String busca) {
         if (!busca.isEmpty()) {

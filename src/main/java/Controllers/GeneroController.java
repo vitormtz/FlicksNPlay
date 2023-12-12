@@ -124,4 +124,40 @@ public class GeneroController extends Adapter<GeneroModel, Integer> {
             JOptionPane.showMessageDialog(null, "Não foi possível excluir o genero, tente de novo", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
+
+    public ArrayList<GeneroModel> readGenerosPopulares() {
+        ArrayList<GeneroModel> generos = new ArrayList();
+
+        DataBaseConnectionManager dbcm;
+        try {
+            dbcm = ConectionController.getInstance().getDB();
+
+            String sql = "SELECT g.id_genero, g.nome, COUNT(l.id_locacao) AS total_locacoes\n"
+                    + "FROM generos g LEFT JOIN filmes f ON g.id_genero = f.id_genero\n"
+                    + "LEFT JOIN jogos j ON g.id_genero = j.id_genero\n"
+                    + "LEFT JOIN locacoes l ON (f.id_filme = l.id_filme OR j.id_jogo = l.id_jogo)\n"
+                    + "GROUP BY g.id_genero, g.nome\n"
+                    + "ORDER BY total_locacoes DESC;";
+
+            ResultSet rs = dbcm.runQuerySQL(sql);
+
+            if (rs.isBeforeFirst()) // acho alguma coisa?
+            {
+                rs.next();
+                while (!rs.isAfterLast()) {
+                    int id = rs.getInt("id_genero");
+                    String nome = rs.getString("nome");
+                    int total_locacoes = rs.getInt("total_locacoes");
+
+                    GeneroModel genero = new GeneroModel(id, nome, total_locacoes);
+                    generos.add(genero);
+
+                    rs.next();
+                }
+            }
+        } catch (DataBaseException | SQLException ex) {
+            System.out.println("Algo de errado aconteceu");
+        }
+        return generos;
+    }
 }
