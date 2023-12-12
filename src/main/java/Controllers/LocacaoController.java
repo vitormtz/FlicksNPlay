@@ -53,17 +53,31 @@ public class LocacaoController extends Adapter<LocacaoModel, Integer> {
     }
 
     @Override
+    public void update(LocacaoModel locacao) {
+        DataBaseConnectionManager dbcm;
+        try {
+            dbcm = ConectionController.getInstance().getDB();
+
+            String sql = "UPDATE locacoes SET dt_fim = ? WHERE id_usuario = ? AND (id_filme = ? OR id_jogo = ?);";
+
+            dbcm.runPreparedSQL(sql,
+                    String.valueOf(LocalDate.now()),
+                    locacao.getIdUsuario(),
+                    locacao.getIdFilme(),
+                    locacao.getIdJogo());
+
+        } catch (DataBaseException ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possível atualizar o Filme, tente de novo", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    @Override
     public LocacaoModel read(Integer primaryKey) throws NotFoundException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public ArrayList<LocacaoModel> readAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void update(LocacaoModel objeto) throws NotFoundException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

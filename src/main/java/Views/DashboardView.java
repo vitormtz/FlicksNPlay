@@ -6,15 +6,23 @@ package Views;
 
 import Controllers.FilmeController;
 import Controllers.LocacaoController;
+import Controllers.PagamentoController;
+import Controllers.TipoPagamentoController;
 import Controllers.UsuarioController;
 import Models.FilmeModel;
 import Models.LocacaoModel;
+import Models.PagamentoModel;
+import Models.TipoPagamentoModel;
 import Models.UsuarioModel;
 import Support.CPFFormattedTextField;
+import Support.ItemCombo;
 import TablesModel.ClienteTableModel;
 import TablesModel.FilmesTableModel;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
@@ -37,13 +45,14 @@ public class DashboardView extends javax.swing.JFrame {
             return false;
         }
     };
+    ArrayList<FilmeModel> listaPagamento;
 
     public DashboardView(boolean cargo) {
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
         if (!cargo) {
             this.jMenuRelatorios.setVisible(false);
-            this.jMenuCadastros.setVisible(false);
+            this.jMenuItemCadastrarFilmeEJogos.setVisible(false);
         }
         this.carregarLocacaoFilmesJogos("");
     }
@@ -59,7 +68,7 @@ public class DashboardView extends javax.swing.JFrame {
 
         jTabbedPane = new javax.swing.JTabbedPane();
         jPanelLocacao = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
+        jPanelCliente = new javax.swing.JPanel();
         jLabelCliente = new javax.swing.JLabel();
         jTextFieldCliente = new javax.swing.JTextField();
         jLabelCpf = new javax.swing.JLabel();
@@ -72,7 +81,7 @@ public class DashboardView extends javax.swing.JFrame {
         jTextFieldEmail = new javax.swing.JTextField();
         jButtonAdicionarCliente = new javax.swing.JButton();
         jFormattedTextFieldCpf = new CPFFormattedTextField();
-        jPanel2 = new javax.swing.JPanel();
+        jPanelFilmeJogo = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTableLocacaoFilmesJogos = new javax.swing.JTable();
         jButtonRemover = new javax.swing.JButton();
@@ -86,14 +95,34 @@ public class DashboardView extends javax.swing.JFrame {
         jTextFieldValorDiaria = new javax.swing.JTextField();
         jButtonLocacao = new javax.swing.JButton();
         jPanelPagamento = new javax.swing.JPanel();
+        jPanelClientePagamento = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTableClientePagamento = new javax.swing.JTable();
+        jLabelBuscaPagamento = new javax.swing.JLabel();
+        jTextFieldBuscaPagamento = new javax.swing.JTextField();
+        jButtonPesquisaPagamento = new javax.swing.JButton();
+        jButtonAdcionarUsuarioPagamento = new javax.swing.JButton();
+        jLabelClientePagamento = new javax.swing.JLabel();
+        jTextFieldClientePagamento = new javax.swing.JTextField();
+        jTextFieldEmailPagamento = new javax.swing.JTextField();
+        jLabelEmailPagamento = new javax.swing.JLabel();
+        jFormattedTextFieldCpfPagamento = new CPFFormattedTextField();
+        jLabelPagamento = new javax.swing.JLabel();
+        jLabelCpfPagamento = new javax.swing.JLabel();
+        jComboBoxPagamento = new javax.swing.JComboBox();
+        jPanelFilmeJogoPagamento = new javax.swing.JPanel();
+        jLabelValorTotalDiarias = new javax.swing.JLabel();
+        jTextFieldValorTotalDiarias = new javax.swing.JTextField();
+        jButtonRemoverPagamento = new javax.swing.JButton();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jTableFilmesJogosPagamento = new javax.swing.JTable();
+        jButtonRealizarPagamento = new javax.swing.JButton();
         jMenuBarOpcoes = new javax.swing.JMenuBar();
-        jMenuConsultas = new javax.swing.JMenu();
-        jMenuItemGeneros = new javax.swing.JMenuItem();
-        jMenuPagamentos = new javax.swing.JMenu();
-        jMenuItemTiposPagamentos = new javax.swing.JMenuItem();
         jMenuCadastros = new javax.swing.JMenu();
-        jMenuItemCadastrarUsuario = new javax.swing.JMenuItem();
         jMenuItemCadastrarFilmeEJogos = new javax.swing.JMenuItem();
+        jMenuItemCadastrarUsuario = new javax.swing.JMenuItem();
+        jMenuItemGeneros = new javax.swing.JMenuItem();
+        jMenuItemTiposPagamentos = new javax.swing.JMenuItem();
         jMenuRelatorios = new javax.swing.JMenu();
         jMenuItemRelatoriosMensais = new javax.swing.JMenuItem();
 
@@ -109,7 +138,7 @@ public class DashboardView extends javax.swing.JFrame {
 
         jTabbedPane.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cliente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        jPanelCliente.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cliente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         jLabelCliente.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabelCliente.setText("Cliente:");
@@ -165,31 +194,31 @@ public class DashboardView extends javax.swing.JFrame {
         jFormattedTextFieldCpf.setEditable(false);
         jFormattedTextFieldCpf.setEnabled(false);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelClienteLayout = new javax.swing.GroupLayout(jPanelCliente);
+        jPanelCliente.setLayout(jPanelClienteLayout);
+        jPanelClienteLayout.setHorizontalGroup(
+            jPanelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelClienteLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelClienteLayout.createSequentialGroup()
+                        .addGroup(jPanelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelCliente)
                             .addComponent(jLabelEmail))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jTextFieldCliente)
                             .addComponent(jTextFieldEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabelCpf)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jFormattedTextFieldCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanelClienteLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jButtonAdicionarCliente)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanelClienteLayout.createSequentialGroup()
                                 .addComponent(jLabelBuscaCliente)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTextFieldBuscaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -197,21 +226,21 @@ public class DashboardView extends javax.swing.JFrame {
                                 .addComponent(jButtonPesquisaCliente)))))
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        jPanelClienteLayout.setVerticalGroup(
+            jPanelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelClienteLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelCliente)
                     .addComponent(jTextFieldCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelCpf)
                     .addComponent(jFormattedTextFieldCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelEmail))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 93, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonPesquisaCliente)
                     .addComponent(jTextFieldBuscaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelBuscaCliente))
@@ -222,7 +251,7 @@ public class DashboardView extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Filmes e Jogos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        jPanelFilmeJogo.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Filmes e Jogos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         jTableLocacaoFilmesJogos.setEnabled(false);
         jTableLocacaoFilmesJogos.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -282,25 +311,25 @@ public class DashboardView extends javax.swing.JFrame {
         jTextFieldValorDiaria.setEditable(false);
         jTextFieldValorDiaria.setEnabled(false);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelFilmeJogoLayout = new javax.swing.GroupLayout(jPanelFilmeJogo);
+        jPanelFilmeJogo.setLayout(jPanelFilmeJogoLayout);
+        jPanelFilmeJogoLayout.setHorizontalGroup(
+            jPanelFilmeJogoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelFilmeJogoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelFilmeJogoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelFilmeJogoLayout.createSequentialGroup()
                         .addComponent(jLabelValorDiaria)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTextFieldValorDiaria, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButtonRemover))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelFilmeJogoLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanelFilmeJogoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelFilmeJogoLayout.createSequentialGroup()
                                 .addComponent(jLabelBuscaFilmeJogo)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTextFieldBuscaFilmeJogo, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -309,18 +338,18 @@ public class DashboardView extends javax.swing.JFrame {
                             .addComponent(jButtonAdicionarFilmeJogo, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        jPanelFilmeJogoLayout.setVerticalGroup(
+            jPanelFilmeJogoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelFilmeJogoLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelFilmeJogoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonRemover)
                     .addComponent(jLabelValorDiaria)
                     .addComponent(jTextFieldValorDiaria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelFilmeJogoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelBuscaFilmeJogo)
                     .addComponent(jTextFieldBuscaFilmeJogo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonPesquisaFilmeJogo))
@@ -344,10 +373,10 @@ public class DashboardView extends javax.swing.JFrame {
             jPanelLocacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelLocacaoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addGroup(jPanelLocacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanelFilmeJogo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonLocacao, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
@@ -356,8 +385,8 @@ public class DashboardView extends javax.swing.JFrame {
             .addGroup(jPanelLocacaoLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(jPanelLocacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanelCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelFilmeJogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonLocacao)
                 .addGap(12, 12, 12))
@@ -365,44 +394,253 @@ public class DashboardView extends javax.swing.JFrame {
 
         jTabbedPane.addTab("Locação", jPanelLocacao);
 
+        jPanelClientePagamento.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cliente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+
+        jTableClientePagamento.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jTableClientePagamento.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableClientePagamentoMouseClicked(evt);
+            }
+        });
+        jScrollPane4.setViewportView(jTableClientePagamento);
+
+        jLabelBuscaPagamento.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabelBuscaPagamento.setText("Buscar:");
+
+        jButtonPesquisaPagamento.setText("Pesquisar");
+        jButtonPesquisaPagamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPesquisaPagamentoActionPerformed(evt);
+            }
+        });
+
+        jButtonAdcionarUsuarioPagamento.setText("Selecionar");
+        jButtonAdcionarUsuarioPagamento.setEnabled(false);
+        jButtonAdcionarUsuarioPagamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAdcionarUsuarioPagamentoActionPerformed(evt);
+            }
+        });
+
+        jLabelClientePagamento.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabelClientePagamento.setText("Cliente:");
+
+        jTextFieldClientePagamento.setEditable(false);
+        jTextFieldClientePagamento.setEnabled(false);
+
+        jTextFieldEmailPagamento.setEditable(false);
+        jTextFieldEmailPagamento.setEnabled(false);
+
+        jLabelEmailPagamento.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabelEmailPagamento.setText("E-mail:");
+
+        jFormattedTextFieldCpfPagamento.setEditable(false);
+        jFormattedTextFieldCpfPagamento.setEnabled(false);
+
+        jLabelPagamento.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabelPagamento.setText("Pagamento:");
+
+        jLabelCpfPagamento.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabelCpfPagamento.setText("CPF:");
+
+        jComboBoxPagamento.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxPagamento.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jComboBoxPagamentoAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+
+        javax.swing.GroupLayout jPanelClientePagamentoLayout = new javax.swing.GroupLayout(jPanelClientePagamento);
+        jPanelClientePagamento.setLayout(jPanelClientePagamentoLayout);
+        jPanelClientePagamentoLayout.setHorizontalGroup(
+            jPanelClientePagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelClientePagamentoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelClientePagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
+                    .addGroup(jPanelClientePagamentoLayout.createSequentialGroup()
+                        .addComponent(jLabelBuscaPagamento)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldBuscaPagamento)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButtonPesquisaPagamento))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelClientePagamentoLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonAdcionarUsuarioPagamento))
+                    .addGroup(jPanelClientePagamentoLayout.createSequentialGroup()
+                        .addGroup(jPanelClientePagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelClientePagamentoLayout.createSequentialGroup()
+                                .addComponent(jLabelEmailPagamento)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jTextFieldEmailPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanelClientePagamentoLayout.createSequentialGroup()
+                                .addComponent(jLabelClientePagamento)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTextFieldClientePagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanelClientePagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(jPanelClientePagamentoLayout.createSequentialGroup()
+                                .addComponent(jLabelPagamento)
+                                .addGap(12, 12, 12)
+                                .addComponent(jComboBoxPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanelClientePagamentoLayout.createSequentialGroup()
+                                .addComponent(jLabelCpfPagamento)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jFormattedTextFieldCpfPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap())
+        );
+        jPanelClientePagamentoLayout.setVerticalGroup(
+            jPanelClientePagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelClientePagamentoLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(jPanelClientePagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelClientePagamento)
+                    .addComponent(jTextFieldClientePagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jFormattedTextFieldCpfPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelCpfPagamento))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelClientePagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldEmailPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelEmailPagamento)
+                    .addComponent(jLabelPagamento)
+                    .addComponent(jComboBoxPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+                .addGroup(jPanelClientePagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelBuscaPagamento)
+                    .addComponent(jTextFieldBuscaPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonPesquisaPagamento))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonAdcionarUsuarioPagamento)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanelFilmeJogoPagamento.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Filmes e Jogos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+
+        jLabelValorTotalDiarias.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabelValorTotalDiarias.setText("Valor Total das Diarias:");
+
+        jTextFieldValorTotalDiarias.setEditable(false);
+        jTextFieldValorTotalDiarias.setEnabled(false);
+
+        jButtonRemoverPagamento.setText("Remover");
+        jButtonRemoverPagamento.setEnabled(false);
+        jButtonRemoverPagamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRemoverPagamentoActionPerformed(evt);
+            }
+        });
+
+        jTableFilmesJogosPagamento.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jTableFilmesJogosPagamento.setEnabled(false);
+        jTableFilmesJogosPagamento.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableFilmesJogosPagamentoMouseClicked(evt);
+            }
+        });
+        jScrollPane5.setViewportView(jTableFilmesJogosPagamento);
+
+        javax.swing.GroupLayout jPanelFilmeJogoPagamentoLayout = new javax.swing.GroupLayout(jPanelFilmeJogoPagamento);
+        jPanelFilmeJogoPagamento.setLayout(jPanelFilmeJogoPagamentoLayout);
+        jPanelFilmeJogoPagamentoLayout.setHorizontalGroup(
+            jPanelFilmeJogoPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelFilmeJogoPagamentoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelFilmeJogoPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
+                    .addGroup(jPanelFilmeJogoPagamentoLayout.createSequentialGroup()
+                        .addComponent(jLabelValorTotalDiarias)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextFieldValorTotalDiarias, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonRemoverPagamento)))
+                .addContainerGap())
+        );
+        jPanelFilmeJogoPagamentoLayout.setVerticalGroup(
+            jPanelFilmeJogoPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelFilmeJogoPagamentoLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelFilmeJogoPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldValorTotalDiarias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelValorTotalDiarias)
+                    .addComponent(jButtonRemoverPagamento))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jButtonRealizarPagamento.setText("Realizar Pagamento");
+        jButtonRealizarPagamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRealizarPagamentoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelPagamentoLayout = new javax.swing.GroupLayout(jPanelPagamento);
         jPanelPagamento.setLayout(jPanelPagamentoLayout);
         jPanelPagamentoLayout.setHorizontalGroup(
             jPanelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1209, Short.MAX_VALUE)
+            .addGroup(jPanelPagamentoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanelClientePagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelPagamentoLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                        .addComponent(jPanelFilmeJogoPagamento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPagamentoLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonRealizarPagamento)))
+                .addContainerGap())
         );
         jPanelPagamentoLayout.setVerticalGroup(
             jPanelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 712, Short.MAX_VALUE)
+            .addGroup(jPanelPagamentoLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(jPanelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelPagamentoLayout.createSequentialGroup()
+                        .addComponent(jPanelFilmeJogoPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonRealizarPagamento))
+                    .addComponent(jPanelClientePagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(257, Short.MAX_VALUE))
         );
 
         jTabbedPane.addTab("Pagamento", jPanelPagamento);
 
-        jMenuConsultas.setText("Consultas");
-
-        jMenuItemGeneros.setText("Generos");
-        jMenuItemGeneros.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemGenerosActionPerformed(evt);
-            }
-        });
-        jMenuConsultas.add(jMenuItemGeneros);
-
-        jMenuBarOpcoes.add(jMenuConsultas);
-
-        jMenuPagamentos.setText("Pagamentos");
-
-        jMenuItemTiposPagamentos.setText("Tipos de Pagamentos");
-        jMenuItemTiposPagamentos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemTiposPagamentosActionPerformed(evt);
-            }
-        });
-        jMenuPagamentos.add(jMenuItemTiposPagamentos);
-
-        jMenuBarOpcoes.add(jMenuPagamentos);
-
         jMenuCadastros.setText("Cadastros");
+
+        jMenuItemCadastrarFilmeEJogos.setText("Cadastrar Filmes e Jogos");
+        jMenuItemCadastrarFilmeEJogos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemCadastrarFilmeEJogosActionPerformed(evt);
+            }
+        });
+        jMenuCadastros.add(jMenuItemCadastrarFilmeEJogos);
 
         jMenuItemCadastrarUsuario.setText("Cadastrar Usuários");
         jMenuItemCadastrarUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -412,13 +650,21 @@ public class DashboardView extends javax.swing.JFrame {
         });
         jMenuCadastros.add(jMenuItemCadastrarUsuario);
 
-        jMenuItemCadastrarFilmeEJogos.setText("Cadastrar Filmes e Jogos");
-        jMenuItemCadastrarFilmeEJogos.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemGeneros.setText("Cadastrar Generos");
+        jMenuItemGeneros.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemCadastrarFilmeEJogosActionPerformed(evt);
+                jMenuItemGenerosActionPerformed(evt);
             }
         });
-        jMenuCadastros.add(jMenuItemCadastrarFilmeEJogos);
+        jMenuCadastros.add(jMenuItemGeneros);
+
+        jMenuItemTiposPagamentos.setText("Cadastrar Tipos de Pagamentos");
+        jMenuItemTiposPagamentos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemTiposPagamentosActionPerformed(evt);
+            }
+        });
+        jMenuCadastros.add(jMenuItemTiposPagamentos);
 
         jMenuBarOpcoes.add(jMenuCadastros);
 
@@ -477,7 +723,7 @@ public class DashboardView extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonPesquisaClienteActionPerformed
 
     private void jTableClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableClienteMouseClicked
-        jButtonAdicionarCliente.setEnabled(true);
+        this.jButtonAdicionarCliente.setEnabled(true);
     }//GEN-LAST:event_jTableClienteMouseClicked
 
     private void jButtonAdicionarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarClienteActionPerformed
@@ -561,7 +807,109 @@ public class DashboardView extends javax.swing.JFrame {
     private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
         this.carregarUsuarios("");
         this.carregarFilmesJogos("");
+        this.carregarUsuariosPagamento("");
     }//GEN-LAST:event_formWindowGainedFocus
+
+    private void jButtonPesquisaPagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisaPagamentoActionPerformed
+        carregarUsuariosPagamento(this.jTextFieldBuscaPagamento.getText().toLowerCase());
+    }//GEN-LAST:event_jButtonPesquisaPagamentoActionPerformed
+
+    private void jTableClientePagamentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableClientePagamentoMouseClicked
+        this.jButtonAdcionarUsuarioPagamento.setEnabled(true);
+    }//GEN-LAST:event_jTableClientePagamentoMouseClicked
+
+    private void jButtonAdcionarUsuarioPagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdcionarUsuarioPagamentoActionPerformed
+        this.idUsuario = Integer.parseInt((String) this.jTableClientePagamento.getValueAt(getSelectedRowClientePagamento(), 0));
+        Object valueNome = this.jTableClientePagamento.getValueAt(getSelectedRowClientePagamento(), 1);
+        Object valueEmail = this.jTableClientePagamento.getValueAt(getSelectedRowClientePagamento(), 2);
+        Object valueCpf = this.jTableClientePagamento.getValueAt(getSelectedRowClientePagamento(), 3);
+
+        this.carregarLocacoes(String.valueOf(this.idUsuario));
+        this.jTextFieldClientePagamento.setText(String.valueOf(valueNome));
+        this.jTextFieldEmailPagamento.setText(String.valueOf(valueEmail));
+        this.jFormattedTextFieldCpfPagamento.setText(String.valueOf(valueCpf));
+        this.jTextFieldValorTotalDiarias.setText(String.format("%.2f", this.calcularLocacoesTotais()));
+        this.jButtonAdcionarUsuarioPagamento.setEnabled(false);
+        this.jTableClientePagamento.clearSelection();
+        this.jTableFilmesJogosPagamento.setEnabled(true);
+        this.jButtonRemoverPagamento.setEnabled(false);
+    }//GEN-LAST:event_jButtonAdcionarUsuarioPagamentoActionPerformed
+
+    private void jButtonRemoverPagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverPagamentoActionPerformed
+        this.jTextFieldValorTotalDiarias.setText(String.format("%.2f", this.removerLocacao()));
+
+        int row = getSelectedRowFilmeJogoPagamento();
+        this.listaPagamento.remove(row - 1);
+        ((AbstractTableModel) jTableFilmesJogosPagamento.getModel()).fireTableDataChanged();
+        this.jTableFilmesJogosPagamento.repaint();
+    }//GEN-LAST:event_jButtonRemoverPagamentoActionPerformed
+
+    private void jTableFilmesJogosPagamentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableFilmesJogosPagamentoMouseClicked
+        this.jButtonRemoverPagamento.setEnabled(true);
+    }//GEN-LAST:event_jTableFilmesJogosPagamentoMouseClicked
+
+    private void jButtonRealizarPagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRealizarPagamentoActionPerformed
+        switch (validaCamposPagamento()) {
+            case 1:
+                JOptionPane.showMessageDialog(null, "Selecione um cliente", "Erro", JOptionPane.ERROR_MESSAGE);
+                break;
+            case 2:
+                JOptionPane.showMessageDialog(null, "Selecione o método de pagamento", "Erro", JOptionPane.ERROR_MESSAGE);
+                break;
+            case 3:
+                JOptionPane.showMessageDialog(null, "Não existe nenhum filme ou jogo locado para esse cliente", "Erro", JOptionPane.ERROR_MESSAGE);
+                break;
+            default:
+                for (int i = 0; i < this.jTableFilmesJogosPagamento.getRowCount(); i++) {
+                    int idFilmeJogo = Integer.parseInt((String) this.jTableFilmesJogosPagamento.getValueAt(i, 0));
+                    String tipo = (String) this.jTableFilmesJogosPagamento.getValueAt(i, 2);
+                    double valorLocacao = Double.parseDouble((String) this.jTableFilmesJogosPagamento.getValueAt(i, 3));
+
+                    if (tipo.equals("Jogo")) {
+                        LocacaoModel locacao = new LocacaoModel(this.idUsuario, valorLocacao, idFilmeJogo);
+                        LocacaoController locacaoController = new LocacaoController();
+                        locacaoController.update(locacao);
+                    } else {
+                        LocacaoModel locacao = new LocacaoModel(this.idUsuario, idFilmeJogo, valorLocacao);
+                        LocacaoController locacaoController = new LocacaoController();
+                        locacaoController.update(locacao);
+                    }
+                }
+
+                ItemCombo comboGenero = (ItemCombo) this.jComboBoxPagamento.getSelectedItem();
+                int genero = comboGenero.getId();
+
+                PagamentoModel pagamento = new PagamentoModel(genero, String.valueOf(LocalDate.now()));
+                PagamentoController pagamentoController = new PagamentoController();
+                pagamentoController.create(pagamento);
+
+                JOptionPane.showMessageDialog(null, "Pagamento realizado com sucesso", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                this.limparCamposPagamento();
+                break;
+        }
+    }//GEN-LAST:event_jButtonRealizarPagamentoActionPerformed
+
+    private void jComboBoxPagamentoAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jComboBoxPagamentoAncestorAdded
+        this.jComboBoxPagamento.removeAllItems();
+        this.jComboBoxPagamento.addItem("");
+        TipoPagamentoController tipoPagamentoController = new TipoPagamentoController();
+        ArrayList<TipoPagamentoModel> lista = tipoPagamentoController.readAll();
+        for (TipoPagamentoModel tipoPagamentoModel : lista) {
+            this.jComboBoxPagamento.addItem(new ItemCombo(tipoPagamentoModel.getId(), tipoPagamentoModel.getNome()));
+        }
+    }//GEN-LAST:event_jComboBoxPagamentoAncestorAdded
+
+    public void carregarUsuariosPagamento(String busca) {
+        if (!busca.isEmpty()) {
+            UsuarioController usuarioController = new UsuarioController();
+            ArrayList<UsuarioModel> listaUsuario = usuarioController.readClienteNome(busca);
+            this.jTableClientePagamento.setModel(new ClienteTableModel(listaUsuario));
+        } else {
+            UsuarioController usuarioController = new UsuarioController();
+            ArrayList<UsuarioModel> listaUsuario = usuarioController.readCliente();
+            this.jTableClientePagamento.setModel(new ClienteTableModel(listaUsuario));
+        }
+    }
 
     public void carregarUsuarios(String busca) {
         if (!busca.isEmpty()) {
@@ -596,6 +944,25 @@ public class DashboardView extends javax.swing.JFrame {
         columnModel.removeColumn(columnToHide);
         columnToHide = columnModel.getColumn(3);
         columnModel.removeColumn(columnToHide);
+        columnToHide = columnModel.getColumn(4);
+        columnModel.removeColumn(columnToHide);
+    }
+
+    public void carregarLocacoes(String id) {
+        FilmeController FilmeController = new FilmeController();
+        this.listaPagamento = FilmeController.readLocacoes(id);
+        this.jTableFilmesJogosPagamento.setModel(new FilmesTableModel(this.listaPagamento));
+
+        TableColumnModel columnModel = this.jTableFilmesJogosPagamento.getColumnModel();
+        TableColumn columnToHide;
+        columnToHide = columnModel.getColumn(3);
+        columnModel.removeColumn(columnToHide);
+        columnToHide = columnModel.getColumn(3);
+        columnModel.removeColumn(columnToHide);
+        columnToHide = columnModel.getColumn(3);
+        columnModel.removeColumn(columnToHide);
+        columnToHide = columnModel.getColumn(3);
+        columnModel.removeColumn(columnToHide);
     }
 
     public void carregarLocacaoFilmesJogos(String busca) {
@@ -604,6 +971,14 @@ public class DashboardView extends javax.swing.JFrame {
 
     public int getSelectedRowCliente() {
         return this.jTableCliente.getSelectedRow();
+    }
+
+    public int getSelectedRowClientePagamento() {
+        return this.jTableClientePagamento.getSelectedRow();
+    }
+
+    public int getSelectedRowFilmeJogoPagamento() {
+        return (1 + this.jTableFilmesJogosPagamento.getSelectedRow());
     }
 
     public int getSelectedRowFilmeJogo() {
@@ -631,6 +1006,52 @@ public class DashboardView extends javax.swing.JFrame {
         return 0;
     }
 
+    public int validaCamposPagamento() {
+        String nome = this.jTextFieldClientePagamento.getText();
+        String email = this.jTextFieldEmailPagamento.getText();
+        String cpf = this.jFormattedTextFieldCpfPagamento.getText().replaceAll("[.\\-\\s]", "");
+        String pagament = String.valueOf(this.jComboBoxPagamento.getSelectedItem());
+
+        if (nome.isEmpty() || email.isEmpty() || cpf.length() < 11) {
+            return 1;
+        } else if (pagament.equals("")) {
+            return 2;
+        } else if (this.jTableFilmesJogosPagamento.getRowCount() == 0) {
+            return 3;
+        }
+        return 0;
+    }
+
+    public double calcularLocacoesTotais() {
+        double valorTotal = 0;
+
+        for (int i = 0; i < this.jTableFilmesJogosPagamento.getRowCount(); i++) {
+            LocalDate dt_inicio = LocalDate.parse(String.valueOf(this.jTableFilmesJogosPagamento.getValueAt(i, 4)));
+            LocalDate dt_fim = LocalDate.now();
+            double diarias = Double.parseDouble(String.valueOf(contarMesesEntreDatas(dt_inicio, dt_fim)));
+            diarias *= Double.parseDouble((String) this.jTableFilmesJogosPagamento.getValueAt(i, 3));
+            valorTotal += diarias;
+        }
+        return valorTotal;
+    }
+
+    public double removerLocacao() {
+        double valorTotal = 0;
+        LocalDate dt_fim = LocalDate.now();
+
+        for (int i = 0; i < this.jTableFilmesJogosPagamento.getRowCount(); i++) {
+            LocalDate dt_inicio = LocalDate.parse(String.valueOf(this.jTableFilmesJogosPagamento.getValueAt(i, 4)));
+            double diarias = Double.parseDouble(String.valueOf(contarMesesEntreDatas(dt_inicio, dt_fim)));
+            diarias *= Double.parseDouble((String) this.jTableFilmesJogosPagamento.getValueAt(i, 3));
+            valorTotal += diarias;
+        }
+        LocalDate dt_inicio = LocalDate.parse(String.valueOf(this.jTableFilmesJogosPagamento.getValueAt(getSelectedRowFilmeJogoPagamento() - 1, 4)));
+        double locacaoRemovida = contarMesesEntreDatas(dt_inicio, dt_fim) * Double.parseDouble((String) jTableFilmesJogosPagamento.getValueAt(getSelectedRowFilmeJogoPagamento() - 1, 3));
+
+        valorTotal -= locacaoRemovida;
+        return valorTotal;
+    }
+
     public void limparCampos() {
         this.idUsuario = 0;
         this.jTextFieldCliente.setText("");
@@ -649,45 +1070,94 @@ public class DashboardView extends javax.swing.JFrame {
             this.jTableLocacaoFilmesJogos.setModel(this.lista);
         }
     }
+
+    public void limparCamposPagamento() {
+        this.idUsuario = 0;
+        this.jTextFieldClientePagamento.setText("");
+        this.jTextFieldEmailPagamento.setText("");
+        this.jFormattedTextFieldCpfPagamento.setText("");
+        this.jComboBoxPagamento.setSelectedIndex(0);
+        this.jTableClientePagamento.clearSelection();
+        this.jTableFilmesJogosPagamento.clearSelection();
+        this.jTextFieldValorTotalDiarias.setText("");
+        this.jButtonRemoverPagamento.setEnabled(false);
+        this.jButtonAdcionarUsuarioPagamento.setEnabled(false);
+
+        int row = this.jTableFilmesJogosPagamento.getRowCount();
+        for (int i = 0; i < row; i++) {
+            this.listaPagamento.remove(0);
+            ((AbstractTableModel) jTableFilmesJogosPagamento.getModel()).fireTableDataChanged();
+            this.jTableFilmesJogosPagamento.repaint();
+        }
+    }
+
+    public long contarMesesEntreDatas(LocalDate dataInicio, LocalDate dataFim) {
+        long mesesEntreDatas = ChronoUnit.DAYS.between(dataInicio, dataFim);
+
+        if (dataFim.getDayOfMonth() < dataInicio.getDayOfMonth()) {
+            mesesEntreDatas--;
+        }
+        return String.valueOf(mesesEntreDatas).equals("0") ? 1 : mesesEntreDatas;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonAdcionarUsuarioPagamento;
     private javax.swing.JButton jButtonAdicionarCliente;
     private javax.swing.JButton jButtonAdicionarFilmeJogo;
     private javax.swing.JButton jButtonLocacao;
     private javax.swing.JButton jButtonPesquisaCliente;
     private javax.swing.JButton jButtonPesquisaFilmeJogo;
+    private javax.swing.JButton jButtonPesquisaPagamento;
+    private javax.swing.JButton jButtonRealizarPagamento;
     private javax.swing.JButton jButtonRemover;
+    private javax.swing.JButton jButtonRemoverPagamento;
+    private javax.swing.JComboBox jComboBoxPagamento;
     private javax.swing.JFormattedTextField jFormattedTextFieldCpf;
+    private javax.swing.JFormattedTextField jFormattedTextFieldCpfPagamento;
     private javax.swing.JLabel jLabelBuscaCliente;
     private javax.swing.JLabel jLabelBuscaFilmeJogo;
+    private javax.swing.JLabel jLabelBuscaPagamento;
     private javax.swing.JLabel jLabelCliente;
+    private javax.swing.JLabel jLabelClientePagamento;
     private javax.swing.JLabel jLabelCpf;
+    private javax.swing.JLabel jLabelCpfPagamento;
     private javax.swing.JLabel jLabelEmail;
+    private javax.swing.JLabel jLabelEmailPagamento;
+    private javax.swing.JLabel jLabelPagamento;
     private javax.swing.JLabel jLabelValorDiaria;
+    private javax.swing.JLabel jLabelValorTotalDiarias;
     private javax.swing.JMenuBar jMenuBarOpcoes;
     private javax.swing.JMenu jMenuCadastros;
-    private javax.swing.JMenu jMenuConsultas;
     private javax.swing.JMenuItem jMenuItemCadastrarFilmeEJogos;
     private javax.swing.JMenuItem jMenuItemCadastrarUsuario;
     private javax.swing.JMenuItem jMenuItemGeneros;
     private javax.swing.JMenuItem jMenuItemRelatoriosMensais;
     private javax.swing.JMenuItem jMenuItemTiposPagamentos;
-    private javax.swing.JMenu jMenuPagamentos;
     private javax.swing.JMenu jMenuRelatorios;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanelCliente;
+    private javax.swing.JPanel jPanelClientePagamento;
+    private javax.swing.JPanel jPanelFilmeJogo;
+    private javax.swing.JPanel jPanelFilmeJogoPagamento;
     private javax.swing.JPanel jPanelLocacao;
     private javax.swing.JPanel jPanelPagamento;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane;
     private javax.swing.JTable jTableCliente;
+    private javax.swing.JTable jTableClientePagamento;
     private javax.swing.JTable jTableFilmesJogos;
+    private javax.swing.JTable jTableFilmesJogosPagamento;
     private javax.swing.JTable jTableLocacaoFilmesJogos;
     private javax.swing.JTextField jTextFieldBuscaCliente;
     private javax.swing.JTextField jTextFieldBuscaFilmeJogo;
+    private javax.swing.JTextField jTextFieldBuscaPagamento;
     private javax.swing.JTextField jTextFieldCliente;
+    private javax.swing.JTextField jTextFieldClientePagamento;
     private javax.swing.JTextField jTextFieldEmail;
+    private javax.swing.JTextField jTextFieldEmailPagamento;
     private javax.swing.JTextField jTextFieldValorDiaria;
+    private javax.swing.JTextField jTextFieldValorTotalDiarias;
     // End of variables declaration//GEN-END:variables
 }

@@ -15,6 +15,8 @@ import Support.PriceDocumentFilter;
 import TablesModel.FilmesTableModel;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 import javax.swing.text.AbstractDocument;
 
 /**
@@ -430,11 +432,16 @@ public class CadastroFilmeJogoView extends javax.swing.JFrame {
         FilmeController FilmeController = new FilmeController();
         ArrayList<FilmeModel> lista = FilmeController.readFilmeJogo(true);
         this.jTableFilmesJogos.setModel(new FilmesTableModel(lista));
+        
+        TableColumnModel columnModel = this.jTableFilmesJogos.getColumnModel();
+        TableColumn columnToHide;
+        columnToHide = columnModel.getColumn(8);
+        columnModel.removeColumn(columnToHide);
     }
 
     public void limparCampos() {
         this.jTextFieldNome.setText("");
-        this.jTextFieldPreco.setText("0");
+        this.jTextFieldPreco.setText("");
         this.jComboBoxClasIndicativa.setSelectedIndex(0);
         this.jComboBoxTipo.setSelectedIndex(0);
         this.jComboBoxGenero.setSelectedIndex(0);

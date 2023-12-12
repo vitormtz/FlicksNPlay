@@ -19,6 +19,7 @@ public class FilmeModel {
     private boolean disponivel;
     private double vl_locacao;
     private char tipo;
+    private String data;
 
     public FilmeModel(int id, String genero1, String nome, String descricao, int classificacao_indicativa, boolean disponivel, double vl_locacao, char tipo) {
         this.id = id;
@@ -29,6 +30,18 @@ public class FilmeModel {
         this.disponivel = disponivel;
         this.vl_locacao = vl_locacao;
         this.tipo = tipo;
+    }
+    
+        public FilmeModel(int id, String genero1, String nome, String descricao, int classificacao_indicativa, boolean disponivel, double vl_locacao, char tipo, String data) {
+        this.id = id;
+        this.genero1 = genero1;
+        this.nome = nome;
+        this.descricao = descricao;
+        this.classificacao_indicativa = classificacao_indicativa;
+        this.disponivel = disponivel;
+        this.vl_locacao = vl_locacao;
+        this.tipo = tipo;
+        this.data = data;
     }
 
     public FilmeModel(int id, int genero2, String nome, String descricao, int classificacao_indicativa, boolean disponivel, double vl_locacao, char tipo) {
@@ -50,6 +63,14 @@ public class FilmeModel {
         this.disponivel = disponivel;
         this.vl_locacao = vl_locacao;
         this.tipo = tipo;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
     }
 
     public int getId() {

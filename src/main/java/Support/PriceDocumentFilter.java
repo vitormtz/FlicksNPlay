@@ -45,6 +45,6 @@ public class PriceDocumentFilter extends DocumentFilter {
 
     private boolean isValidPrice(String text) {
         // Adapte a lógica conforme necessário para validar o formato do preço
-        return text.matches("^\\d+(\\.\\d{0,2})?$");
+        return text.isEmpty() || text.matches("^\\d+(\\.\\d{0,2})?$");
     }
 }

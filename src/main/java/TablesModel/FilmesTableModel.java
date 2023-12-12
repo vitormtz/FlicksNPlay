@@ -7,13 +7,14 @@ package TablesModel;
 import Models.FilmeModel;
 import java.util.ArrayList;
 import javax.swing.event.TableModelListener;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
 /**
  *
  * @author vitor
  */
-public class FilmesTableModel implements TableModel {
+public class FilmesTableModel extends AbstractTableModel implements TableModel {
 
     private ArrayList<FilmeModel> vetor;
 
@@ -28,12 +29,12 @@ public class FilmesTableModel implements TableModel {
 
     @Override
     public int getColumnCount() {
-        return 8;
+        return 9;
     }
 
     @Override
     public String getColumnName(int columnIndex) {
-        String[] colName = {"ID", "Nome", "Tipo", "Gênero", "Descrição", "Classificação Indicativa", "Disponivel", "Valor da Locação"};
+        String[] colName = {"ID", "Nome", "Tipo", "Gênero", "Descrição", "Classificação Indicativa", "Disponivel", "Valor da Locação", "Data da Locação"};
         return colName[columnIndex];
     }
 
@@ -59,7 +60,8 @@ public class FilmesTableModel implements TableModel {
             filme.getDescricao() + "",
             filme.getClassificacao_indicativa() + "",
             filme.getDisponivel() + "",
-            filme.getVl_locacao() + ""};
+            filme.getVl_locacao() + "",
+            filme.getData() + ""};
 
         return aux[columnIndex];
     }

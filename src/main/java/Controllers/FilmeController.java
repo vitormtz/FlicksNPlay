@@ -187,4 +187,48 @@ public class FilmeController extends Adapter<FilmeModel, Integer> {
         }
         return filmes;
     }
+
+    public ArrayList<FilmeModel> readLocacoes(String idUsuario) {
+        ArrayList<FilmeModel> filmes = new ArrayList();
+
+        DataBaseConnectionManager dbcm;
+        try {
+            dbcm = ConectionController.getInstance().getDB();
+
+            String sql = "SELECT f.id_filme, g.nome AS genero, f.nome, f.descricao, f.classificacao_indicativa, f.disponivel, f.vl_locacao, f.tipo, l.dt_inicio\n"
+                    + "FROM filmes f INNER JOIN generos g ON f.id_genero = g.id_genero LEFT JOIN locacoes l ON f.id_filme = l.id_filme\n"
+                    + "WHERE f.id_filme IN (SELECT DISTINCT id_filme FROM locacoes WHERE dt_fim IS NULL AND id_usuario = " + idUsuario + ") AND l.id_usuario = " + idUsuario + "\n"
+                    + "UNION ALL\n"
+                    + "SELECT j.id_jogo, g.nome AS genero, j.nome, j.descricao, j.classificacao_indicativa, j.disponivel, j.vl_locacao, j.tipo, l.dt_inicio\n"
+                    + "FROM jogos j INNER JOIN generos g ON j.id_genero = g.id_genero LEFT JOIN locacoes l ON j.id_jogo = l.id_jogo\n"
+                    + "WHERE j.id_jogo IN (SELECT DISTINCT id_jogo FROM locacoes WHERE dt_fim IS NULL AND id_usuario = " + idUsuario + ") AND l.id_usuario = " + idUsuario + ";";
+
+            ResultSet rs = dbcm.runQuerySQL(sql);
+
+            if (rs.isBeforeFirst()) // acho alguma coisa?
+            {
+                rs.next();
+
+                while (!rs.isAfterLast()) {
+                    int id = rs.getInt("id_filme");
+                    String genero = rs.getString("genero");
+                    String nome = rs.getString("nome");
+                    String descricao = rs.getString("descricao");
+                    int classificacao_indicativa = rs.getInt("classificacao_indicativa");
+                    boolean disponivel = rs.getBoolean("disponivel");
+                    double vl_locacao = rs.getDouble("vl_locacao");
+                    char tipo = (char) rs.getString("tipo").charAt(0);
+                    String data = rs.getString("dt_inicio");
+
+                    FilmeModel filme = new FilmeModel(id, genero, nome, descricao, classificacao_indicativa, disponivel, vl_locacao, tipo, data);
+                    filmes.add(filme);
+
+                    rs.next();
+                }
+            }
+        } catch (DataBaseException | SQLException ex) {
+            System.out.println("Algo de errado aconteceu");
+        }
+        return filmes;
+    }
 }
