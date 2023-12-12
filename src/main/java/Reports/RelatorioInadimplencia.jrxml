@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 8.2.0.final using JasperReports Library version 6.20.3-415f9428cffdb6805c6f85bbb29ebaf18813a2ab  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioInadimplencia" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="61154c1b-8850-4dbe-a551-03dd6d03c109">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.jrdax"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<queryString>
+		<![CDATA[SELECT u.id_usuario, u.nome, COALESCE(f.nome, j.nome) AS filme_jogo, COALESCE(f.tipo, j.tipo) AS tipo, l.vl_total, l.dt_inicio
+FROM usuarios u INNER JOIN locacoes l ON u.id_usuario = l.id_usuario
+LEFT JOIN filmes f ON f.id_filme = l.id_filme
+LEFT JOIN jogos j ON j.id_jogo = l.id_jogo]]>
+	</queryString>
+	<field name="id_usuario" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id_usuario"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_usuario"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="usuarios"/>
+		<fieldDescription><![CDATA[idUsuario]]></fieldDescription>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nome"/>
+		<property name="com.jaspersoft.studio.field.label" value="nome"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="usuarios"/>
+		<fieldDescription><![CDATA[usuario]]></fieldDescription>
+	</field>
+	<field name="filme_jogo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="filme_jogo"/>
+		<property name="com.jaspersoft.studio.field.label" value="filme_jogo"/>
+		<fieldDescription><![CDATA[filme_Jogo]]></fieldDescription>
+	</field>
+	<field name="tipo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="tipo"/>
+		<property name="com.jaspersoft.studio.field.label" value="tipo"/>
+		<fieldDescription><![CDATA[tipo]]></fieldDescription>
+	</field>
+	<field name="vl_total" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="vl_total"/>
+		<property name="com.jaspersoft.studio.field.label" value="vl_total"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="locacoes"/>
+		<fieldDescription><![CDATA[vl_locacao]]></fieldDescription>
+	</field>
+	<field name="dt_inicio" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="dt_inicio"/>
+		<property name="com.jaspersoft.studio.field.label" value="dt_inicio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="locacoes"/>
+		<fieldDescription><![CDATA[dt_inicio]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="50" splitType="Stretch">
+			<staticText>
+				<reportElement x="167" y="15" width="220" height="20" uuid="c5d899cc-7aaa-4de7-b843-5a38fd496c0b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Sistema de Locadora - FlicksNPlay]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="0" width="50" height="50" uuid="3bea7981-4b56-4ec9-87db-cacee664121c"/>
+				<imageExpression><![CDATA["Imagens/video-camera.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="19" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="554" height="1" uuid="cae7eb84-a962-4d41-bc9b-11f908acd8ed"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="0" width="136" height="18" uuid="59f84e5e-8aca-48d0-a09b-1c826f45e1aa"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Relatório de Inadimplência]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="440" y="0" width="114" height="18" uuid="9b6e9b83-6441-4de7-9d8c-1e422079285a"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Impresso em: " + new java.text.SimpleDateFormat("dd/MM/yyyy").format(new Date())]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="35" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="554" height="1" uuid="3018cfe9-2715-43b2-a5a5-68555baaf68c"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="9" width="80" height="16" uuid="bfe0c1e7-06e9-49f2-bdd3-e07e63b9c71e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d84b95ce-3d08-4c31-85b0-e21d42f2c6ed"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="88" y="9" width="84" height="16" uuid="d26481a3-8a57-4f58-89f1-eab71823a89a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d46a403b-fe47-4338-ada5-d085e8f1f844"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="188" y="9" width="84" height="16" uuid="e219f34e-6646-412f-b499-26df8146ccf7">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5073367b-b2ff-4acb-b929-85594e80f403"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Filme/Jogo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="287" y="9" width="84" height="16" uuid="7f1ed2e5-40c3-4402-89ba-4b037fee9ac7">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="62fc7ae8-a874-40ef-bd05-d5235b589134"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Tipo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="387" y="9" width="84" height="16" uuid="8bb7acb5-3424-4f24-b914-0f94898f5686">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d2489963-d3c9-4bd5-a072-f375bff45a66"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Valor da Locação]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="481" y="4" width="72" height="26" uuid="267949c4-4201-4d01-97ea-3472ef8d7e91">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c0159a42-81d1-4622-b5a6-4a629568ef00"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Data da Locação]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="34" width="554" height="1" uuid="ad727d58-ee5a-4c97-b64c-b1d91a95156d"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="35" splitType="Stretch">
+			<textField>
+				<reportElement x="5" y="10" width="70" height="14" uuid="cd25c846-d879-4a97-a2a6-1b7b0e27511d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d84b95ce-3d08-4c31-85b0-e21d42f2c6ed"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{id_usuario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="10" width="100" height="14" uuid="5282fc35-9e8c-4986-add2-94600cf09b7c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d46a403b-fe47-4338-ada5-d085e8f1f844"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="10" width="100" height="14" uuid="3fb383fb-7933-487b-bc89-5b9270498b16">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5073367b-b2ff-4acb-b929-85594e80f403"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{filme_jogo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="294" y="10" width="70" height="14" uuid="9ecb2d5a-735a-45d6-85ad-9c5c8b3dfc67">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="62fc7ae8-a874-40ef-bd05-d5235b589134"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{tipo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="394" y="10" width="70" height="14" uuid="2481f0a2-fb7a-4ab3-8e3c-6d2383204cf1">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d2489963-d3c9-4bd5-a072-f375bff45a66"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{vl_total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="482" y="10" width="70" height="14" uuid="f0ce3380-ec36-45ed-b134-1fe4cc4bbe34">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c0159a42-81d1-4622-b5a6-4a629568ef00"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{dt_inicio}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="31" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="554" height="1" uuid="0ca7fa83-6a7e-4023-b804-f2bf2537d9fa"/>
+			</line>
+			<textField>
+				<reportElement x="400" y="1" width="152" height="30" uuid="932f85dd-af83-4c17-9afd-4ef6e31b00f4"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

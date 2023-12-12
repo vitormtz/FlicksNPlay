@@ -18,14 +18,23 @@ import Support.CPFFormattedTextField;
 import Support.ItemCombo;
 import TablesModel.ClienteTableModel;
 import TablesModel.FilmesTableModel;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.swing.JRViewer;
 
 /**
  *
@@ -124,7 +133,9 @@ public class DashboardView extends javax.swing.JFrame {
         jMenuItemGeneros = new javax.swing.JMenuItem();
         jMenuItemTiposPagamentos = new javax.swing.JMenuItem();
         jMenuRelatorios = new javax.swing.JMenu();
-        jMenuItemRelatoriosMensais = new javax.swing.JMenuItem();
+        jMenuItemRelatorioReceita = new javax.swing.JMenuItem();
+        jMenuItemRelatorioInadimplencia = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("FlicksNPlay");
@@ -670,8 +681,24 @@ public class DashboardView extends javax.swing.JFrame {
 
         jMenuRelatorios.setText("Relatórios");
 
-        jMenuItemRelatoriosMensais.setText("Relatórios Mensais");
-        jMenuRelatorios.add(jMenuItemRelatoriosMensais);
+        jMenuItemRelatorioReceita.setText("Relatório de Receita");
+        jMenuItemRelatorioReceita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemRelatorioReceitaActionPerformed(evt);
+            }
+        });
+        jMenuRelatorios.add(jMenuItemRelatorioReceita);
+
+        jMenuItemRelatorioInadimplencia.setText("Relatório de Inadimplência");
+        jMenuItemRelatorioInadimplencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemRelatorioInadimplenciaActionPerformed(evt);
+            }
+        });
+        jMenuRelatorios.add(jMenuItemRelatorioInadimplencia);
+
+        jMenuItem1.setText("Relatório de Popularidade de Gênero");
+        jMenuRelatorios.add(jMenuItem1);
 
         jMenuBarOpcoes.add(jMenuRelatorios);
 
@@ -898,6 +925,35 @@ public class DashboardView extends javax.swing.JFrame {
             this.jComboBoxPagamento.addItem(new ItemCombo(tipoPagamentoModel.getId(), tipoPagamentoModel.getNome()));
         }
     }//GEN-LAST:event_jComboBoxPagamentoAncestorAdded
+
+    private void jMenuItemRelatorioReceitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRelatorioReceitaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItemRelatorioReceitaActionPerformed
+
+    private void jMenuItemRelatorioInadimplenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRelatorioInadimplenciaActionPerformed
+        try {
+            JasperReport relatorioCompilado = JasperCompileManager.compileReport("src/main/java/Reports/RelatorioInadimplencia.jrxml");
+
+            JasperPrint relatorioPreenchido = JasperFillManager.fillReport(relatorioCompilado, null,
+                    new JRBeanCollectionDataSource(new LocacaoController().readInadimplentes()));
+
+            JDialog tela = new JDialog(this, "Relatório de Inadimplentes", true);
+
+            JRViewer painelRelatorio = new JRViewer(relatorioPreenchido);
+            tela.getContentPane().add(painelRelatorio);
+
+            tela.setSize(1000, 1000);
+
+            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+            int x = (screenSize.width - tela.getWidth()) / 2;
+            int y = (screenSize.height - tela.getHeight()) / 2;
+            tela.setLocation(x, y);
+
+            tela.setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao gerar relatório: " + e);
+        }
+    }//GEN-LAST:event_jMenuItemRelatorioInadimplenciaActionPerformed
 
     public void carregarUsuariosPagamento(String busca) {
         if (!busca.isEmpty()) {
@@ -1127,10 +1183,12 @@ public class DashboardView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelValorTotalDiarias;
     private javax.swing.JMenuBar jMenuBarOpcoes;
     private javax.swing.JMenu jMenuCadastros;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItemCadastrarFilmeEJogos;
     private javax.swing.JMenuItem jMenuItemCadastrarUsuario;
     private javax.swing.JMenuItem jMenuItemGeneros;
-    private javax.swing.JMenuItem jMenuItemRelatoriosMensais;
+    private javax.swing.JMenuItem jMenuItemRelatorioInadimplencia;
+    private javax.swing.JMenuItem jMenuItemRelatorioReceita;
     private javax.swing.JMenuItem jMenuItemTiposPagamentos;
     private javax.swing.JMenu jMenuRelatorios;
     private javax.swing.JPanel jPanelCliente;

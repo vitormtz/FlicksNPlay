@@ -48,9 +48,25 @@
             <Property name="text" type="java.lang.String" value="Relat&#xf3;rios"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemRelatoriosMensais">
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemRelatorioReceita">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Relat&#xf3;rios Mensais"/>
+                <Property name="text" type="java.lang.String" value="Relat&#xf3;rio de Receita"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemRelatorioReceitaActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemRelatorioInadimplencia">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Relat&#xf3;rio de Inadimpl&#xea;ncia"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemRelatorioInadimplenciaActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Relat&#xf3;rio de Popularidade de G&#xea;nero"/>
               </Properties>
             </MenuItem>
           </SubComponents>
