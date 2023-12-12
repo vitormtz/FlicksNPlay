@@ -52,8 +52,14 @@ public class LocacaoModel {
         this.filme_Jogo = filme_Jogo;
         this.tipo = tipo;
     }
-    
-    
+
+    public LocacaoModel(int id, String filme_Jogo, String tipo, double vl_locacao, String dt_fim) {
+        this.id = id;
+        this.vl_locacao = vl_locacao;
+        this.dt_fim = dt_fim;
+        this.filme_Jogo = filme_Jogo;
+        this.tipo = tipo;
+    }
 
     public String getUsuario() {
         return usuario;

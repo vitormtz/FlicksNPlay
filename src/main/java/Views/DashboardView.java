@@ -24,6 +24,8 @@ import java.awt.Toolkit;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
@@ -933,7 +935,28 @@ public class DashboardView extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBoxPagamentoAncestorAdded
 
     private void jMenuItemRelatorioReceitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRelatorioReceitaActionPerformed
-        // TODO add your handling code here:
+        try {
+            JasperReport relatorioCompilado = JasperCompileManager.compileReport("src/main/java/Reports/RelatorioReceita.jrxml");
+
+            JasperPrint relatorioPreenchido = JasperFillManager.fillReport(relatorioCompilado, null,
+                    new JRBeanCollectionDataSource(new LocacaoController().readReceita()));
+
+            JDialog tela = new JDialog(this, "Relatório de Receita", true);
+
+            JRViewer painelRelatorio = new JRViewer(relatorioPreenchido);
+            tela.getContentPane().add(painelRelatorio);
+
+            tela.setSize(1000, 1000);
+
+            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+            int x = (screenSize.width - tela.getWidth()) / 2;
+            int y = (screenSize.height - tela.getHeight()) / 2;
+            tela.setLocation(x, y);
+
+            tela.setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao gerar relatório: " + e);
+        }
     }//GEN-LAST:event_jMenuItemRelatorioReceitaActionPerformed
 
     private void jMenuItemRelatorioInadimplenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRelatorioInadimplenciaActionPerformed

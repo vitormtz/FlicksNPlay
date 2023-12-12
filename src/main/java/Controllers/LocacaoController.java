@@ -126,4 +126,42 @@ public class LocacaoController extends Adapter<LocacaoModel, Integer> {
         }
         return locacoes;
     }
+
+    public ArrayList<LocacaoModel> readReceita() {
+
+        ArrayList<LocacaoModel> locacoes = new ArrayList();
+
+        DataBaseConnectionManager dbcm;
+        try {
+            dbcm = ConectionController.getInstance().getDB();
+
+            String sql = "SELECT l.id_locacao, COALESCE(f.nome, j.nome) AS filme_jogo, COALESCE(f.tipo, j.tipo) AS tipo, l.vl_total, l.dt_fim\n"
+                    + "FROM locacoes l LEFT JOIN filmes f ON f.id_filme = l.id_filme\n"
+                    + "LEFT JOIN jogos j ON j.id_jogo = l.id_jogo\n"
+                    + "WHERE l.dt_fim IS NOT NULL;";
+
+            ResultSet rs = dbcm.runQuerySQL(sql);
+
+            if (rs.isBeforeFirst()) // acho alguma coisa?
+            {
+                rs.next();
+                while (!rs.isAfterLast()) {
+                    int id = rs.getInt("id_locacao");
+                    String filme_Jogo = rs.getString("filme_jogo");
+                    String tipo = rs.getString("tipo");
+                    double vl_locacao = rs.getDouble("vl_total");
+                    String dt_fim = rs.getString("dt_fim");
+
+                    LocacaoModel usuario = new LocacaoModel(id, filme_Jogo, tipo, vl_locacao, dt_fim);
+                    locacoes.add(usuario);
+
+                    rs.next();
+                }
+            }
+
+        } catch (DataBaseException | SQLException ex) {
+            System.out.println("Algo de errado aconteceu");
+        }
+        return locacoes;
+    }
 }
